@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Notka.Database.Data
+namespace NotkaAPI.Models
 {
 	public abstract class BaseDatatable
 	{

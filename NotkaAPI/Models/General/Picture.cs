@@ -1,7 +1,7 @@
-﻿using Notka.Database.Data.Notes;
-using Notka.Database.Data.Users;
+﻿using NotkaAPI.Models.Notes;
+using NotkaAPI.Models.Users;
 
-namespace Notka.Database.Data.General
+namespace NotkaAPI.Models.General
 {
 	public class Picture : BaseDatatable
 	{
@@ -10,6 +10,7 @@ namespace Notka.Database.Data.General
         public bool IsProfile { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-		public List<Note>? Notes { get; set; } = new();
+        public int NoteId { get; set; }
+        public Note Note { get; set; }
     }
 }

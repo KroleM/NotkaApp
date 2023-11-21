@@ -1,15 +1,13 @@
-﻿using Notka.Database.Data.Users;
-
-namespace Notka.Database.Data.Notes
+﻿namespace NotkaAPI.Models.Notes
 {
-    public enum ListType2
+    public enum ListType
     {
         OneTime, Repeated, Investment 
     }
 	public class List : ANote
 	{
-        public List<ListElement> ListElements { get; set; } = new();
-        // To może być enum ??
-        public ListType2 ListType { get; set; }
+        public List<ListTag> ListTags { get; set; } = new();
+		public List<ListElement> ListElements { get; set; } = new();
+        public ListType ListType { get; set; }
     }
 }

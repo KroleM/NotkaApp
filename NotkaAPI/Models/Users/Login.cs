@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Notka.Database.Data.Users
+namespace NotkaAPI.Models.Users
 {
 	public class Login : BaseDatatable
 	{

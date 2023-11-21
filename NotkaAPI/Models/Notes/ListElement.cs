@@ -1,7 +1,6 @@
-﻿using Notka.Database.Data.Users;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Notka.Database.Data.Notes
+namespace NotkaAPI.Models.Notes
 {
 	public class ListElement : DictionaryTable
 	{

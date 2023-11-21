@@ -1,14 +1,13 @@
-﻿using Notka.Database.Data.Notes;
-using Notka.Database.Data.Users;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using NotkaAPI.Models.Notes;
+using NotkaAPI.Models.Users;
 
-namespace Notka.Database.Data.General
+namespace NotkaAPI.Models.General
 {
 	public class Request : BaseDatatable 
 	{
         public required int SenderId { get; set; }
 		//[ForeignKey(nameof(SenderId))]
-		public User Sender { get; set; } = null!; //lista?!
+		public User Sender { get; set; } = null!;
 		//public IEnumerable<User> Senders { get; set; }
 		public required int ReceiverId { get; set; }
 		//[ForeignKey(nameof(ReceiverId))]
@@ -17,5 +16,7 @@ namespace Notka.Database.Data.General
         public Note? Note { get; set; }
         public int? ListId { get; set; }
         public List? List { get; set; }
-    }
+		public int? TaskId { get; set; }
+		public Notes.Task? Task { get; set; }
+	}
 }

@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using NotkaAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<NotkaDatabaseContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("NotkaDatabaseContext") 
+	?? throw new InvalidOperationException("Connection string 'NotkaDatabaseContext' not found.")));
 
 // Add services to the container.
 

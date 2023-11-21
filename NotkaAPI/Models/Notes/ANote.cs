@@ -1,13 +1,11 @@
-﻿using Notka.Database.Data.General;
-using Notka.Database.Data.Users;
+﻿using NotkaAPI.Models.General;
+using NotkaAPI.Models.Users;
 
-namespace Notka.Database.Data.Notes
+namespace NotkaAPI.Models.Notes
 {
 	public abstract class ANote : DictionaryTable
 	{
         public int UserId { get; set; }
         public User User { get; set; }
-        public List<Tag> Tags { get; set; } = new();
-        public List<Picture> Pictures { get; set; } = new();
     }
 }

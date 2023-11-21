@@ -1,7 +1,7 @@
-﻿namespace Notka.Database.Data.Users
+﻿namespace NotkaAPI.Models.Users
 {
 	public class Role : DictionaryTable
 	{
-		public List<User> Users { get; set; } = new();
+		public List<RoleUser> RoleUsers { get; set; } = new();
     }
 }
