@@ -33,8 +33,6 @@ namespace NotkaAPI.Data
 		#region Methods
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			//base.OnModelCreating(modelBuilder);
-
 			modelBuilder.Entity<User>()
 				.HasMany(e => e.RequestSender)
 				.WithMany(e => e.RequestReceiver)
@@ -42,14 +40,6 @@ namespace NotkaAPI.Data
 					l => l.HasOne(e => e.Receiver).WithMany(e => e.Receivers).HasForeignKey(e => e.ReceiverId),
 					r => r.HasOne(e => e.Sender).WithMany(e => e.Senders).HasForeignKey(e => e.SenderId));
 		}
-		/*
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			base.OnConfiguring(optionsBuilder);
-
-			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=NotkaContext;Trusted_Connection=True;MultipleActiveResultSets=true");
-		}
-		*/
 		#endregion
 	}
 }
