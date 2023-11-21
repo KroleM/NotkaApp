@@ -1,0 +1,6 @@
+@NotkaAPI_HostAddress = http://localhost:5238
+
+GET {{NotkaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
