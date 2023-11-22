@@ -3,7 +3,7 @@
 	public class Task : ANote
 	{
 		public List<TaskTag> TaskTag { get; set; } = new();
-		public DateTime Deadline { get; set; }
-		public DateTime CompletionTime { get; set; }
+		public DateTime? Deadline { get; set; }
+		public DateTime? CompletionTime { get; set; }
 	}
 }

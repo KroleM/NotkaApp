@@ -2,7 +2,7 @@
 
 namespace NotkaAPI.Models.Notes
 {
-	public class Tag : BaseDatatable
+	public class Tag : DictionaryTable
 	{
         public int UserId { get; set; }
         public User User { get; set; }
