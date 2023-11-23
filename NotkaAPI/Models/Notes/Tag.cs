@@ -1,7 +1,9 @@
-﻿using NotkaAPI.Models.Users;
+﻿using Microsoft.EntityFrameworkCore;
+using NotkaAPI.Models.Users;
 
 namespace NotkaAPI.Models.Notes
 {
+	[Index(nameof(Name), IsUnique = true)]
 	public class Tag : DictionaryTable
 	{
         public int UserId { get; set; }

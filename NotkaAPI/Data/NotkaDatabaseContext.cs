@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Models.General;
+using NotkaAPI.Models.Investments;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 
