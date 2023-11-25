@@ -9,6 +9,14 @@ namespace NotkaAPI.Models.Investments
 		[Required]
 		[StringLength(6)]
 		public string Ticker { get; set; }
-        public List<StockNote> StockNotes { get; set; } = new();
-	}
+        public int StockExchangeId { get; set; }
+        public StockExchange StockExchange { get; set; }
+        public int CurrencyId { get; set; }
+        public Currency Currency { get; set; }
+        public List<StockPrice> StockPrices { get; set; } = new();
+		public List<StockNote> StockNotes { get; set; } = new();
+        public List<PortfolioStock> PortfolioStocks { get; set; } = new();
+        public List<WatchlistStock> WatchlistStocks { get; set; } = new();
+        // Powiązane spółki??
+    }
 }

@@ -26,5 +26,6 @@ namespace NotkaAPI.Models.Users
 		public List<User> RequestReceiver { get; set; } = new(); // ??
         public List<Request> Senders { get; set; } = new();
 		public List<Request> Receivers { get; set; } = new();
+		//FIXME Are all these navigation lists necessary?
 	}
 }

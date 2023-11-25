@@ -2,7 +2,7 @@
 
 namespace NotkaAPI.Models.Investments
 {
-	public class StockNote
+	public class StockNote : BaseDatatable
 	{
         public int StockId { get; set; }
 		public Stock Stock { get; set;}
