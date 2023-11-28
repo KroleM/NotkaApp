@@ -4,12 +4,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:NotkaMobile"
+    xmlns:views="clr-namespace:NotkaMobile.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="NotkaMobile">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellItem>
+        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
+    </ShellItem>
+
+    <TabBar >
+        <Tab Title="Strona domowa"
+             Route="MainPage"
+             Icon="material_home">
+            <ShellContent
+                Title="Strona główna"
+                ContentTemplate="{DataTemplate views:MainPage}" />
+        </Tab>
+        <Tab Title="Notatki"
+             Route="NotesModulePage"
+             Icon="material_notes">
+            <ShellContent
+                Title="Notatki"
+                ContentTemplate="{DataTemplate views:NotesModulePage}" />
+        </Tab>
+        <!--Tu powinny znaleźć się kolejne analogiczne taby-->
+    </TabBar>
 
 </Shell>

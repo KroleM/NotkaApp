@@ -1,4 +1,4 @@
-﻿namespace NotkaMobile
+﻿namespace NotkaMobile.Views
 {
 	public partial class MainPage : ContentPage
 	{

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using NotkaMobile.ViewModels;
+using NotkaMobile.Views;
 
 namespace NotkaMobile
 {
@@ -33,11 +35,12 @@ namespace NotkaMobile
 		public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
 		{
 			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
+			mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
 		{
-			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
+			mauiAppBuilder.Services.AddSingleton<LoginPage>();
 			return mauiAppBuilder;
 		}
 	}

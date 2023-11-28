@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.LoginPage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels"
+             x:DataType="viewmodel:LoginViewModel"
+             Title="LoginPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="E-mail"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry />
+        <Label 
+            Text="Hasło"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry />
+        <Button Text="Zaloguj się" 
+                Command="{Binding GoToMainPageCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>
