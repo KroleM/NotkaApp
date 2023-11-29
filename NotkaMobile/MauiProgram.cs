@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
 using NotkaMobile.Views;
 
@@ -30,6 +31,9 @@ namespace NotkaMobile
 		{
 			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
 			//DependencyService.Register<UserDataStore>();
+			mauiAppBuilder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+			mauiAppBuilder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+			mauiAppBuilder.Services.AddSingleton<LoginDataStore>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)

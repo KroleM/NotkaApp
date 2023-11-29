@@ -4075,6 +4075,53 @@
         }
       }
     },
+    "/api/User/{email}/{hash}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hash",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Watchlist": {
       "get": {
         "tags": [
@@ -5425,7 +5472,7 @@
       },
       "User": {
         "required": [
-          "nick",
+          "email",
           "passwordHash"
         ],
         "type": "object",
@@ -5445,7 +5492,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "nick": {
+          "email": {
             "minLength": 1,
             "type": "string"
           },
@@ -5466,7 +5513,7 @@
             "format": "date-time",
             "nullable": true
           },
-          "email": {
+          "nick": {
             "type": "string",
             "nullable": true
           },

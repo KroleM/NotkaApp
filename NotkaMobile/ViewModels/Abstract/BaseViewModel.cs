@@ -5,9 +5,9 @@ namespace NotkaMobile.ViewModels.Abstract
     public abstract partial class BaseViewModel : ObservableObject
     {
 		[ObservableProperty]
-		bool isBusy = false;
+		bool _isBusy = false;
 
 		[ObservableProperty]
-		string title = string.Empty;
+		string _title = string.Empty;
 	}
 }

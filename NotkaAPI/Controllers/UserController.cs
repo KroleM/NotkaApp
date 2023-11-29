@@ -28,8 +28,8 @@ namespace NotkaAPI.Controllers
             return await _context.User.ToListAsync();
         }
 
-        // GET: api/User/5
-        [HttpGet("{id}")]
+		// GET: api/User/5
+		[HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.User.FindAsync(id);
@@ -42,9 +42,26 @@ namespace NotkaAPI.Controllers
             return user;
         }
 
-        // PUT: api/User/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+		[HttpGet("{email}/{hash}")]
+		public async Task<ActionResult<User>> GetUser(string email, string hash)
+		{
+            var user = await _context.User.SingleOrDefaultAsync(u => u.Email == email);
+
+			if (user == null)
+			{
+				return NotFound();
+			}
+            if (hash != user.PasswordHash)
+            {
+                return NotFound();
+            }
+
+			return user;
+		}
+
+		// PUT: api/User/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.Id)
@@ -81,7 +98,8 @@ namespace NotkaAPI.Controllers
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return Ok(user);
         }
 
         // DELETE: api/User/5

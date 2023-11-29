@@ -10,13 +10,13 @@
             Text="E-mail"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry />
+        <Entry Text="{Binding Email}"/>
         <Label 
             Text="Hasło"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry />
+        <Entry Text="{Binding Password}"/>
         <Button Text="Zaloguj się" 
-                Command="{Binding GoToMainPageCommand}"/>
+                Command="{Binding LoginCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
