@@ -39,8 +39,8 @@ namespace NotkaMobile.ViewModels
 			{
 				if (_connectivity.NetworkAccess != NetworkAccess.Internet)
 				{
-					await Shell.Current.DisplayAlert("No connectivity!",
-						$"Please check internet and try again.", "OK");
+					await Shell.Current.DisplayAlert("Brak połączenia!",
+						$"Sprawdź połączenie z internetem i spróbuj ponownie.", "OK");
 					return;
 				}
 
@@ -57,7 +57,7 @@ namespace NotkaMobile.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine($"Unable to get data: {ex.Message}");
-				await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+				await Shell.Current.DisplayAlert("Błąd!", ex.Message, "OK");
 			}
 			finally
 			{

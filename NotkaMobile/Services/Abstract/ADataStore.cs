@@ -10,7 +10,7 @@ namespace NotkaMobile.Services.Abstract
 			//Use this code to test locally - localhost does not have SSL certificate
 			var handler = new HttpClientHandler();
 #if DEBUG
-			//ręczne ustawienie certyfikatu
+			//manual certificate setup
 			handler.ClientCertificateOptions = ClientCertificateOption.Manual;
 			handler.ServerCertificateCustomValidationCallback =
 				(httpRequestMessage, cert, cetChain, policyErrors) =>
@@ -19,8 +19,12 @@ namespace NotkaMobile.Services.Abstract
 				};
 #endif
 			var client = new HttpClient(handler);
+			
 			//local Swagger RestAPI address
-			_service = new NotkaMobileService("https://localhost:7089/", client);
+			//_service = new NotkaMobileService("https://localhost:7089/", client);
+
+			//Swagger RestAPI address for Android (use only one!)
+			_service = new NotkaMobileService("https://10.0.2.2:7089/", client);
 		}
 	}
 }

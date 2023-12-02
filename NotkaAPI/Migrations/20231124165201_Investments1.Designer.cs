@@ -788,7 +788,7 @@ namespace NotkaAPI.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("Logged")
+                    b.Property<bool>("IsLogged")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedDate")

@@ -7,7 +7,7 @@ namespace NotkaAPI.Models.Users
         public int UserId { get; set; }
 		[ForeignKey(nameof(UserId))]
 		public User User { get; set; }
-        public bool Logged { get; set; }
+        public bool IsLogged { get; set; }
         public int DeviceId { get; set; }
     }
 }

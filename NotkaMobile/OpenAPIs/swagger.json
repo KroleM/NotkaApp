@@ -4714,7 +4714,7 @@
           "user": {
             "$ref": "#/components/schemas/User"
           },
-          "logged": {
+          "isLogged": {
             "type": "boolean"
           },
           "deviceId": {
@@ -5515,44 +5515,6 @@
           },
           "nick": {
             "type": "string",
-            "nullable": true
-          },
-          "login": {
-            "$ref": "#/components/schemas/Login"
-          },
-          "roleUsers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RoleUser"
-            },
-            "nullable": true
-          },
-          "pictures": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Picture"
-            },
-            "nullable": true
-          },
-          "notes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Note"
-            },
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Tag"
-            },
-            "nullable": true
-          },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/List"
-            },
             "nullable": true
           },
           "requestSender": {

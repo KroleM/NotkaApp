@@ -9,7 +9,9 @@
     Title="NotkaMobile">
 
     <ShellItem>
-        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
+        <ShellContent 
+            Title="Logowanie"
+            ContentTemplate="{DataTemplate views:LoginPage}" />
     </ShellItem>
 
     <TabBar >
@@ -20,11 +22,14 @@
                 Title="Strona główna"
                 ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
-        <Tab Title="Notatki"
+        <Tab Title="Notatnik"
              Route="NotesModulePage"
              Icon="material_notes">
             <ShellContent
                 Title="Notatki"
+                ContentTemplate="{DataTemplate views:NotesModulePage}" />
+            <ShellContent
+                Title="Listy"
                 ContentTemplate="{DataTemplate views:NotesModulePage}" />
         </Tab>
         <!--Tu powinny znaleźć się kolejne analogiczne taby-->

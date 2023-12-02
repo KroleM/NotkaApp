@@ -9479,8 +9479,8 @@ namespace NotkaMobile.Service.Reference
         [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public User User { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("logged", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Logged { get; set; }
+        [Newtonsoft.Json.JsonProperty("isLogged", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsLogged { get; set; }
 
         [Newtonsoft.Json.JsonProperty("deviceId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int DeviceId { get; set; }
@@ -10079,24 +10079,6 @@ namespace NotkaMobile.Service.Reference
 
         [Newtonsoft.Json.JsonProperty("nick", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Nick { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("login", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Login Login { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("roleUsers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<RoleUser> RoleUsers { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pictures", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Picture> Pictures { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("notes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Note> Notes { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<Tag> Tags { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("lists", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<List> Lists { get; set; }
 
         [Newtonsoft.Json.JsonProperty("requestSender", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<User> RequestSender { get; set; }
