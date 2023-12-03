@@ -16,6 +16,8 @@ namespace NotkaMobile
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+					fonts.AddFont("SansitaSwashed-Regular.ttf", "SansitaSwashedRegular");
+					fonts.AddFont("SansitaSwashed-Bold.ttf", "SansitaSwashedBold");
 				})
 				.RegisterAppServices()
 				.RegisterViewModels()
