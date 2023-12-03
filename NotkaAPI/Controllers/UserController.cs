@@ -50,6 +50,7 @@ namespace NotkaAPI.Controllers
 			if (user == null)
 			{
 				return NotFound();
+                //return StatusCode(404);
 			}
             if (hash != user.PasswordHash)
             {

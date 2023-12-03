@@ -19,6 +19,7 @@ namespace NotkaMobile.Services.Abstract
 				};
 #endif
 			var client = new HttpClient(handler);
+			client.Timeout = TimeSpan.FromSeconds(5);
 			
 			//local Swagger RestAPI address
 			//_service = new NotkaMobileService("https://localhost:7089/", client);

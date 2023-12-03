@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
 using NotkaMobile.Views;
@@ -12,6 +13,7 @@ namespace NotkaMobile
 			var builder = MauiApp.CreateBuilder();
 			builder
 				.UseMauiApp<App>()
+				.UseMauiCommunityToolkit()
 				.ConfigureFonts(fonts =>
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -34,7 +36,6 @@ namespace NotkaMobile
 			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
 			//DependencyService.Register<UserDataStore>();
 			mauiAppBuilder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
-			mauiAppBuilder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
 			mauiAppBuilder.Services.AddSingleton<LoginDataStore>();
 			return mauiAppBuilder;
 		}
