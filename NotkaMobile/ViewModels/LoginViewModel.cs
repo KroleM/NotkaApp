@@ -12,7 +12,7 @@ namespace NotkaMobile.ViewModels
 {
 	public partial class LoginViewModel : BaseViewModel
 	{
-		public User User { get; set; } = new();
+		public User User { get; private set; } = new();
         [ObservableProperty]
 		private string _email = string.Empty;
 		[ObservableProperty]
@@ -53,6 +53,8 @@ namespace NotkaMobile.ViewModels
 				{
 					User = await _loginDataStore.LoginUser(userEmail, passwordHash);
 				}
+
+				Preferences.Default.Set("userId", User.Id);
 				await GoToMainPage();
 			}
 			catch (Exception ex)
@@ -94,7 +96,7 @@ namespace NotkaMobile.ViewModels
 				Preferences.Default.Set("userEmail", Email);
 				Preferences.Default.Set("passwordHash", Password);
 				Preferences.Default.Set("userId", User.Id);
-				await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+				await GoToMainPage();
 			}
 			catch (ApiException ex)
 			{

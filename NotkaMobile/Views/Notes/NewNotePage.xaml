@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Notes.NewNotePage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
+             x:DataType="viewmodel:NewNoteViewModel"
+             Title="Nowa notatka">
+    <VerticalStackLayout>
+        <Label 
+            Text="Nowa notatka!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

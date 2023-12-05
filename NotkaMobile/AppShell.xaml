@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:NotkaMobile"
     xmlns:views="clr-namespace:NotkaMobile.Views"
+    xmlns:notes="clr-namespace:NotkaMobile.Views.Notes"
     Shell.FlyoutBehavior="Disabled"
     Title="NotkaMobile">
 
@@ -20,17 +21,20 @@
              Icon="material_home">
             <ShellContent
                 Title="Strona główna"
-                ContentTemplate="{DataTemplate views:MainPage}" />
+                ContentTemplate="{DataTemplate views:MainPage}"
+                Route="MainPage"/>
         </Tab>
         <Tab Title="Notatnik"
              Route="NotesModulePage"
              Icon="material_notes">
             <ShellContent
                 Title="Notatki"
-                ContentTemplate="{DataTemplate views:NotesModulePage}" />
+                ContentTemplate="{DataTemplate notes:NotesPage}" 
+                Route="NotesPage"/>
             <ShellContent
                 Title="Listy"
-                ContentTemplate="{DataTemplate views:NotesModulePage}" />
+                ContentTemplate="{DataTemplate notes:NotesPage}" 
+                Route="ListsPage"/>
         </Tab>
         <!--Tu powinny znaleźć się kolejne analogiczne taby-->
     </TabBar>

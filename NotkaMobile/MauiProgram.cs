@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Logging;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
+using NotkaMobile.ViewModels.NoteVM;
 using NotkaMobile.Views;
+using NotkaMobile.Views.Notes;
 
 namespace NotkaMobile
 {
@@ -43,11 +45,17 @@ namespace NotkaMobile
 		{
 			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
 			mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
+			mauiAppBuilder.Services.AddTransient<NotesViewModel>();
+			mauiAppBuilder.Services.AddTransient<NewNoteViewModel>();
+			mauiAppBuilder.Services.AddTransient<NoteDetailsViewModel>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
 		{
 			mauiAppBuilder.Services.AddSingleton<LoginPage>();
+			mauiAppBuilder.Services.AddTransient<NotesPage>();
+			mauiAppBuilder.Services.AddTransient<NewNotePage>();
+
 			return mauiAppBuilder;
 		}
 	}

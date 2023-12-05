@@ -5,7 +5,7 @@
              x:Class="NotkaMobile.Views.LoginPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels"
              x:DataType="viewmodel:LoginViewModel"
-             Title="LoginPage">
+             Title="Logowanie">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" /> 
     </ContentPage.Behaviors>
