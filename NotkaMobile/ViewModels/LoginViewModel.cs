@@ -17,6 +17,8 @@ namespace NotkaMobile.ViewModels
 		private string _email = string.Empty;
 		[ObservableProperty]
 		private string _password = string.Empty;
+		[ObservableProperty]
+		private bool _isHidden = true;
 		private LoginDataStore _loginDataStore;
 		private IConnectivity _connectivity;
 

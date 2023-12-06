@@ -5,8 +5,9 @@ namespace NotkaMobile.ViewModels.Abstract
 	public abstract class ANewViewModel<T> : BaseViewModel
 	{
 		public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		public ANewViewModel()
+		public ANewViewModel(string title)
 		{
+			Title = title;
 			SaveCommand = new Command(OnSave, ValidateSave);
 			CancelCommand = new Command(OnCancel);
 			this.PropertyChanged +=

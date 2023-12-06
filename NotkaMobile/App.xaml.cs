@@ -17,13 +17,14 @@ namespace NotkaMobile
 		{
 			Window window = base.CreateWindow(activationState);
 
-			window.Created += OnDestroying;
+			window.Destroying += OnDestroying;	// FIXME doesn't work on Android
 
 			return window;
 		}
 		private void OnDestroying(object? sender, EventArgs e)
 		{
 			Preferences.Default.Remove("userId");
+			Preferences.Default.Remove("passwordHash");
 		}
 	}
 }

@@ -4,7 +4,10 @@
              x:Class="NotkaMobile.Views.Notes.NotesPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              x:DataType="viewmodel:NotesViewModel"
-             Title="Logowanie">
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add +" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
     <VerticalStackLayout>
         <Button Text="Nowa notatka" 
                 Command="{Binding AddItemCommand}"/>

@@ -10,7 +10,7 @@ namespace NotkaAPI.Models.General
         public bool IsProfile { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        //public int NoteId { get; set; }
-        //public Note Note { get; set; }
+        public int? NoteId { get; set; }
+        public Note? Note { get; set; }
     }
 }

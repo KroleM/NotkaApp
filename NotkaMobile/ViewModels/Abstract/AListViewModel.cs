@@ -7,7 +7,7 @@ namespace NotkaMobile.ViewModels.Abstract
 	public abstract class AListViewModel<T> : BaseViewModel
 	{
 		public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		private T _selectedItem;
+		private T? _selectedItem;
 		public ObservableCollection<T> Items { get; }
 		public Command LoadItemsCommand { get; }
 		public Command AddItemCommand { get; }
@@ -49,7 +49,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			SelectedItem = default(T);
 		}
 
-		public T SelectedItem
+		public T? SelectedItem
 		{
 			get => _selectedItem;
 			set

@@ -5,7 +5,7 @@
              x:Class="NotkaMobile.Views.LoginPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels"
              x:DataType="viewmodel:LoginViewModel"
-             Title="Logowanie">
+             Title="{Binding Title}">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" /> 
     </ContentPage.Behaviors>
@@ -19,7 +19,14 @@
             Text="Hasło"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Text="{Binding Password}"/>
+        <Entry Text="{Binding Password}"
+               IsPassword="{Binding IsHidden}"/>
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding IsHidden}" />
+            <Label
+                Text="Pokaż hasło"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
         <Button Text="Zaloguj się" 
                 Command="{Binding LoginCommand}"/>
         <Button Text="Rejestracja" 

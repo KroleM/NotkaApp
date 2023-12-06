@@ -1,24 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.ViewModels.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Task = System.Threading.Tasks.Task;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
 	public partial class NewNoteViewModel : ANewViewModel<Note>
 	{
-		public NewNoteViewModel()
-			: base()
+		public NewNoteViewModel() 
+			: base("Nowa notatka")
 		{
 		}
 		#region Fields & Properties
+		public ObservableCollection<Tag> Tags { get; } = new();
+
 		[ObservableProperty]
-		string _title = string.Empty;
+		string _noteTitle = string.Empty;
+
 		[ObservableProperty]
 		string _text = string.Empty;
 		//FIXME tag?
@@ -29,14 +30,35 @@ namespace NotkaMobile.ViewModels.NoteVM
 			{
 				Id = 0,
 				IsActive = true,
-				Name = this.Title,
+				Name = this.NoteTitle,
 				Description = this.Text,
 			};
 		}
-
 		public override bool ValidateSave()
 		{
 			return !string.IsNullOrEmpty(Title);
+		}
+		[RelayCommand]
+		private async Task Appearing()	//LoadTags
+		{
+			IsBusy = true;
+			try
+			{
+				Tags.Clear();
+				var items = await DataStore.GetItemsAsync(true);
+				foreach (var item in items)
+				{
+					Tags.Add(item);
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
+			finally
+			{
+				IsBusy = false;
+			}
 		}
 	}
 }
