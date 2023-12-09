@@ -9,6 +9,9 @@ namespace NotkaMobile
 		{
 			InitializeComponent();
 
+			DependencyService.Register<TagDataStore>();
+			DependencyService.Register<NoteDataStore>();
+
 			MainPage = new AppShell();
 		}
 

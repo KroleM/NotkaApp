@@ -96,6 +96,10 @@ namespace NotkaAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if (await _context.User.AnyAsync(u => u.Email == user.Email))
+            {
+                return Forbid();
+            }
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 

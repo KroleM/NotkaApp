@@ -3,7 +3,7 @@ using NotkaAPI.Models.Users;
 
 namespace NotkaAPI.Models.Notes
 {
-	[Index(nameof(Name), IsUnique = true)]
+	[Index(nameof(Name), nameof(UserId), IsUnique = true)]
 	public class Tag : DictionaryTable
 	{
         public int UserId { get; set; }

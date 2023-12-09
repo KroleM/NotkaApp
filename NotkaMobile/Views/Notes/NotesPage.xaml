@@ -6,7 +6,7 @@
              x:DataType="viewmodel:NotesViewModel"
              Title="{Binding Title}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add +" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
     <VerticalStackLayout>
         <Button Text="Nowa notatka" 

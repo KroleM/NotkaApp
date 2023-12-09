@@ -22,21 +22,25 @@ namespace NotkaAPI.Controllers
         }
 
         // GET: api/Note
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Note>>> GetNote()
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<Note>>> GetNote(int userId)
         {
-            return await _context.Note.ToListAsync();
+            return await _context.Note.Where(n => n.UserId == userId).OrderByDescending(n => n.ModifiedDate).ToListAsync();
         }
 
         // GET: api/Note/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Note>> GetNote(int id)
+        [HttpGet("{userId}/{id}")]
+        public async Task<ActionResult<Note>> GetNote(int userId, int id)
         {
             var note = await _context.Note.FindAsync(id);
 
             if (note == null)
             {
                 return NotFound();
+            }
+            if (note.UserId != userId)
+            {
+                return Forbid();
             }
 
             return note;
@@ -81,20 +85,25 @@ namespace NotkaAPI.Controllers
             _context.Note.Add(note);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNote", new { id = note.Id }, note);
+            //return CreatedAtAction("GetNote", new { id = note.Id }, note);
+            return Ok(note);
         }
 
         // DELETE: api/Note/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNote(int id)
+        public async Task<IActionResult> DeleteNote(int userId, int id)
         {
             var note = await _context.Note.FindAsync(id);
             if (note == null)
             {
                 return NotFound();
             }
+			if (note.UserId != userId)
+			{
+				return Forbid();
+			}
 
-            _context.Note.Remove(note);
+			_context.Note.Remove(note);
             await _context.SaveChangesAsync();
 
             return NoContent();

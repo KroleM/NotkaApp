@@ -22,15 +22,15 @@ namespace NotkaAPI.Controllers
         }
 
         // GET: api/Tag
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tag>>> GetTag()
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<Tag>>> GetTag(int userId)
         {
-            return await _context.Tag.ToListAsync();
+            return await _context.Tag.Where(t => t.UserId == userId).OrderByDescending(t => t.Name).ToListAsync();
         }
 
         // GET: api/Tag/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Tag>> GetTag(int id)
+        [HttpGet("{userId}/{id}")]
+        public async Task<ActionResult<Tag>> GetTag(int userId, int id)
         {
             var tag = await _context.Tag.FindAsync(id);
 
@@ -38,8 +38,12 @@ namespace NotkaAPI.Controllers
             {
                 return NotFound();
             }
+			if (tag.UserId != userId)
+			{
+				return Forbid();
+			}
 
-            return tag;
+			return tag;
         }
 
         // PUT: api/Tag/5
@@ -81,20 +85,25 @@ namespace NotkaAPI.Controllers
             _context.Tag.Add(tag);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTag", new { id = tag.Id }, tag);
+            //return CreatedAtAction("GetTag", new { id = tag.Id }, tag);
+            return Ok(tag);
         }
 
         // DELETE: api/Tag/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTag(int id)
+        [HttpDelete("{userId}/{id}")]
+        public async Task<IActionResult> DeleteTag(int userId, int id)
         {
             var tag = await _context.Tag.FindAsync(id);
             if (tag == null)
             {
                 return NotFound();
             }
+			if (tag.UserId != userId)
+			{
+				return Forbid();
+			}
 
-            _context.Tag.Remove(tag);
+			_context.Tag.Remove(tag);
             await _context.SaveChangesAsync();
 
             return NoContent();

@@ -24,7 +24,7 @@
         <HorizontalStackLayout>
             <CheckBox IsChecked="{Binding IsHidden}" />
             <Label
-                Text="Pokaż hasło"
+                Text="Ukryj hasło"
                 VerticalOptions="Center" />
         </HorizontalStackLayout>
         <Button Text="Zaloguj się" 
