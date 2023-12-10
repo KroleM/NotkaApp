@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.NotesPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              x:DataType="viewmodel:NotesViewModel"
              Title="{Binding Title}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="10">
         <Button Text="Nowa notatka" 
                 Command="{Binding AddItemCommand}"/>
         <!--<SearchBar/>-->

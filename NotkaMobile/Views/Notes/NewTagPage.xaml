@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Notes.NewTagPage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.TagVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             x:DataType="viewmodel:NewTagViewModel"
+             Title="{Binding Title}">
+    <Grid RowDefinitions="40, 40, *, 40"
+          ColumnDefinitions="100, *" 
+          Padding="10">
+        <Label Grid.Row="0" Grid.Column="0" 
+               Text="Nazwa:"
+               VerticalOptions="Center" 
+               HorizontalTextAlignment="Start" />
+        <Entry Grid.Row="0" Grid.Column="1"  
+               Text="{Binding TagName}"
+               Placeholder="Wpisz krótki, ale znaczący tag"
+               ClearButtonVisibility="WhileEditing"/>
+        <Label Grid.Row="1" Grid.Column="0" 
+               Text="Opis:"
+               VerticalOptions="Center" 
+               HorizontalTextAlignment="Start" />
+        <Editor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="{Binding Description}"
+                Placeholder="Opis tagu"/>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Dodaj tag"
+                Command="{Binding SaveCommand}"/>
+    </Grid>
+</ContentPage>

@@ -36,6 +36,14 @@
                 ContentTemplate="{DataTemplate notes:NotesPage}" 
                 Route="ListsPage"/>
         </Tab>
+        <Tab Title="Tagi"
+             Route="TagsModulePage"
+             Icon="material_tag">
+            <ShellContent
+                Title="Tagi"
+                ContentTemplate="{DataTemplate notes:TagsPage}"
+                Route="TagsModulePage"/>
+        </Tab>
         <!--Tu powinny znaleźć się kolejne analogiczne taby-->
     </TabBar>
 

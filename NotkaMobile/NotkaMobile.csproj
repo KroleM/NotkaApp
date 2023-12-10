@@ -60,6 +60,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\SansitaSwashed-Bold.ttf" />
 	  <None Remove="Resources\Fonts\SansitaSwashed-Regular.ttf" />
+	  <None Remove="Resources\Images\material_tag.svg" />
 	  <None Remove="Resources\Images\notka_splash_big.png" />
 	  <None Remove="Resources\Images\notka_splash_vbig.png" />
 	</ItemGroup>
@@ -105,7 +106,13 @@
 	  <MauiXaml Update="Views\Notes\NewNotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Notes\NewTagPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Notes\NotesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Notes\TagsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

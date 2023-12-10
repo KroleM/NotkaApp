@@ -9,6 +9,7 @@ namespace NotkaMobile
 			InitializeComponent();
 
 			Routing.RegisterRoute(nameof(NewNotePage), typeof(NewNotePage));
+			Routing.RegisterRoute(nameof(NewTagPage), typeof(NewTagPage));
 		}
 	}
 }

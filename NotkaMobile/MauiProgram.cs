@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
 using NotkaMobile.ViewModels.NoteVM;
+using NotkaMobile.ViewModels.TagVM;
 using NotkaMobile.Views;
 using NotkaMobile.Views.Notes;
 
@@ -48,6 +49,8 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<NotesViewModel>();
 			mauiAppBuilder.Services.AddTransient<NewNoteViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteDetailsViewModel>();
+			mauiAppBuilder.Services.AddTransient<TagsViewModel>();
+			mauiAppBuilder.Services.AddTransient<NewTagViewModel>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
@@ -55,6 +58,8 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<LoginPage>();
 			mauiAppBuilder.Services.AddTransient<NotesPage>();
 			mauiAppBuilder.Services.AddTransient<NewNotePage>();
+			mauiAppBuilder.Services.AddTransient<TagsPage>();
+			mauiAppBuilder.Services.AddTransient<NewTagPage>();
 
 			return mauiAppBuilder;
 		}

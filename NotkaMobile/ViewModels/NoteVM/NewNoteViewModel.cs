@@ -73,7 +73,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 		public override bool ValidateSave()
 		{
-			return !string.IsNullOrEmpty(Title);
+			return !string.IsNullOrEmpty(NoteTitle);
 		}
 
 		[RelayCommand]
@@ -116,10 +116,5 @@ namespace NotkaMobile.ViewModels.NoteVM
 			}
 		}
 
-		[RelayCommand]
-		async Task AddNote()
-		{
-
-		}
 	}
 }

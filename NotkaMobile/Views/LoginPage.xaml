@@ -14,7 +14,8 @@
             Text="E-mail"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Text="{Binding Email}"/>
+        <Entry Text="{Binding Email}"
+               Keyboard="Email"/>
         <Label 
             Text="Hasło"
             VerticalOptions="Center" 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Notes.TagsPage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.TagVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             x:DataType="viewmodel:TagsViewModel"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+        <Label 
+            Text="Wszystkie Twoje tagi"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <RefreshView x:DataType="viewmodel:TagsViewModel"
+            Command="{Binding LoadItemsCommand}"
+            IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding Items}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:Tag}">
+                        <Frame HeightRequest="120">
+                            <!--<Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=ItemTapped}"
+                                            CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>-->
+                            <Grid RowDefinitions="40, *" Padding="10">
+                                <Label Grid.Row="0" Text="{Binding Name}" FontSize="20"/>
+                                <Label Grid.Row="1" Text="{Binding Description}"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </VerticalStackLayout>
+</ContentPage>
