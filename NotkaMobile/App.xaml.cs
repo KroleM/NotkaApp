@@ -20,7 +20,8 @@ namespace NotkaMobile
 		{
 			Window window = base.CreateWindow(activationState);
 
-			window.Destroying += OnDestroying;	// FIXME doesn't work on Android
+			window.Deactivated += OnDestroying;
+			//window.Destroying += OnDestroying;	// FIXME doesn't work on Android
 
 			return window;
 		}

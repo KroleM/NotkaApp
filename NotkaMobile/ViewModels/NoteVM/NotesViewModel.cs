@@ -1,4 +1,5 @@
 ﻿using NotkaMobile.Service.Reference;
+using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes;
 
@@ -6,7 +7,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 {
 	public class NotesViewModel : AListViewModel<Note>
 	{
-		public NotesViewModel() : base("Notatki")
+		public NotesViewModel(NoteDataStore dataStore) 
+			: base("Notatki", dataStore)
 		{
 		}
 

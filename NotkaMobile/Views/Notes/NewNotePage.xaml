@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
@@ -30,63 +30,33 @@
                Text="Tytuł:"
                VerticalOptions="Center" 
                HorizontalTextAlignment="Start" />
-        <Entry Grid.Column="1" Grid.Row="0" 
+        <Entry Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
                Text="{Binding NoteTitle}"/>
         <Label Grid.Column="0" Grid.Row="1"
                Text="Tagi:"
                VerticalOptions="Center" 
                HorizontalTextAlignment="Start" />
-        <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
-            <Entry HorizontalOptions="Fill" Placeholder="Tag" Text="{Binding CurrentTag}"/>
-            <Button HorizontalOptions="End" Text="+" Command="{Binding AddTagCommand}"/>
-        </HorizontalStackLayout>
-        <ListView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" 
-                  MaximumHeightRequest="200"
-                  VerticalOptions="StartAndExpand"
-                  ItemsSource="{Binding PromptedTags}">
-            <ListView.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="ItemTapped"
-                                                    Command="{Binding SelectTagCommand}" 
-                                                    EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-            </ListView.Behaviors>
-            <!--<ListView.GestureRecognizers>
-                    <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=SelectTag}"		
-                                CommandParameter="{Binding .}">
-                    </TapGestureRecognizer>
-                </ListView.GestureRecognizers>-->
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:Tag}">
-                    <ViewCell>
-                        <Frame Margin="1">
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="#"/>
-                                        <Span Text="nazwa"/>
-                                        <!--<Span Text="{Binding Name}"/>-->
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                        </Frame>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid Grid.Column="1" Grid.Row="1" 
+              ColumnDefinitions="*, Auto"
+              HorizontalOptions="Fill">
+            <Entry HorizontalOptions="FillAndExpand" Placeholder="Tag" Text="{Binding CurrentTag}"/>
+            <Button Grid.Column="1" HorizontalOptions="End" Text="+" Command="{Binding AddTagCommand}" />
+        </Grid>
+        
         <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
                         HorizontalOptions="StartAndExpand"
                         ItemsLayout="HorizontalList"
                         ItemsSource="{Binding SelectedTags}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Tag}">
-                    <Frame>
-                        <HorizontalStackLayout Padding="1">
+                    <Border StrokeThickness="2">
+                        <HorizontalStackLayout Padding="1" >
                             <Label Text="{Binding Name}"/>
-                            <Button Text=" X " Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveTagCommand}"
+                            <Button Text=" X "
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveTagCommand}"
                                     CommandParameter="{Binding .}"/>
                         </HorizontalStackLayout>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -96,5 +66,36 @@
         <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
                 Text="Dodaj notatkę"
                 Command="{Binding SaveCommand}"/>
+
+        <ListView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" 
+                  VerticalOptions="StartAndExpand"
+                  ItemsSource="{Binding PromptedTags}">
+            <ListView.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="ItemTapped"
+                                            Command="{Binding SelectTagCommand}" 
+                                            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+            </ListView.Behaviors>
+            <!--<ListView.GestureRecognizers>
+                <TapGestureRecognizer 
+                        NumberOfTapsRequired="1"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=SelectTag}"		
+                        CommandParameter="{Binding .}">
+                </TapGestureRecognizer>
+            </ListView.GestureRecognizers>-->
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:Tag}">
+                    <ViewCell Height="15">
+                        <Label VerticalTextAlignment="Center" Padding="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text=" #"/>
+                                    <Span Text="{Binding Name}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentPage>

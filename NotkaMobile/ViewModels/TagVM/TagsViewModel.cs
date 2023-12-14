@@ -1,17 +1,14 @@
-﻿using NotkaMobile.Service.Reference;
+﻿using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tag = NotkaMobile.Service.Reference.Tag;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
-    public class TagsViewModel : AListViewModel<Tag>
+	public class TagsViewModel : AListViewModel<Tag>
 	{
-		public TagsViewModel() : base("Tagi")
+		public TagsViewModel(TagDataStore dataStore) 
+			: base("Tagi", dataStore)
 		{
 		}
 

@@ -15,6 +15,7 @@ namespace NotkaMobile.ViewModels.TagVM
 			: base("Nowy tag")
 		{
 		}
+
 		[ObservableProperty]
 		string _tagName = string.Empty;
 		[ObservableProperty]

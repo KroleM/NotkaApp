@@ -17,6 +17,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 			_tagDataStore = new TagDataStore();
 			_tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.items;
+			//tymczasowo
+			//PromptedTags = new ObservableCollection<Tag>(Tags);
 		}
 		#region Fields & Properties
 		private TagDataStore _tagDataStore;
@@ -47,16 +49,21 @@ namespace NotkaMobile.ViewModels.NoteVM
 				OnPropertyChanging(nameof(CurrentTag));
 
 				_currentTag = value;
+				
 				if (!string.IsNullOrWhiteSpace(_currentTag))
 				{
 					PromptedTags.Clear();
-					var tags = Tags.Where(t => t.Name.StartsWith(_currentTag)).ToList();
+					var tags = Tags.Where(t => t.Name.ToLower().StartsWith(_currentTag.ToLower())).ToList();
 					foreach (var tag in tags)
 					{
 						PromptedTags.Add(tag);
 					}
 				}
-
+				else
+				{
+					PromptedTags.Clear();
+				}
+				
 				OnPropertyChanged(nameof(CurrentTag));
 			}
 		}
@@ -69,6 +76,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 				IsActive = true,
 				Name = this.NoteTitle,
 				Description = this.Text,
+				CreatedDate = DateTime.Now,
+				ModifiedDate = DateTime.Now,
 			};
 		}
 		public override bool ValidateSave()
@@ -105,6 +114,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			}
 			SelectedTags.Add(tag);
 			CurrentTag = string.Empty;
+			PromptedTags.Clear();
 		}
 
 		[RelayCommand]
@@ -115,6 +125,17 @@ namespace NotkaMobile.ViewModels.NoteVM
 				SelectedTags.Remove(tag);
 			}
 		}
-
+		protected override async void OnSave()
+		{
+			foreach (var tag in SelectedTags)
+			{
+				if (Tags.Contains(tag)) { return; }
+				await _tagDataStore.AddItemAsync(tag);
+			}
+			
+			await DataStore.AddItemAsync(SetItem());
+			// This will pop the current page off the navigation stack
+			await Shell.Current.GoToAsync("..");
+		}
 	}
 }

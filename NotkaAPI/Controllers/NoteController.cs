@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Data;
+using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
+using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
 {
@@ -23,9 +25,25 @@ namespace NotkaAPI.Controllers
 
         // GET: api/Note
         [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<Note>>> GetNote(int userId)
+        public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId)
         {
-            return await _context.Note.Where(n => n.UserId == userId).OrderByDescending(n => n.ModifiedDate).ToListAsync();
+            if (_context.Note.Where(n => n.UserId == userId) == null) 
+            {
+                return NotFound();
+            }
+            var notes = await _context
+                .Note
+				.Where(n => n.UserId == userId)
+				.Include(note => note.NoteTag)
+                //.Include(note => note.Picture)
+                .ToListAsync();
+
+            return notes
+                .Select(note => ModelConverters.ConvertToNoteForView(note))
+                .OrderByDescending(n => n.ModifiedDate)
+				.ToList();
+
+            //return await _context.Note.Where(n => n.UserId == userId).OrderByDescending(n => n.ModifiedDate).ToListAsync();
         }
 
         // GET: api/Note/5

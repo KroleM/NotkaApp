@@ -22,7 +22,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			await Shell.Current.GoToAsync("..");
 		}
 		public abstract T SetItem();
-		private async void OnSave()
+		protected virtual async void OnSave()
 		{
 			await DataStore.AddItemAsync(SetItem());
 			// This will pop the current page off the navigation stack

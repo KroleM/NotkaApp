@@ -1,21 +1,24 @@
-﻿using NotkaMobile.Services.Abstract;
+﻿using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Services.Abstract;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
-	public abstract class AListViewModel<T> : BaseViewModel
+	public abstract partial class AListViewModel<T> : BaseViewModel
 	{
-		public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
+		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
+		public IDataStore<T> DataStore { get; private set; }
 		private T? _selectedItem;
 		public ObservableCollection<T> Items { get; }
 		public Command LoadItemsCommand { get; }
 		public Command AddItemCommand { get; }
 		public Command<T> ItemTapped { get; }
 
-		public AListViewModel(string title)
+		public AListViewModel(string title, IDataStore<T> dataStore)
 		{
 			Title = title;
+			DataStore = dataStore;
 			Items = new ObservableCollection<T>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 			ItemTapped = new Command<T>(OnItemSelected);
@@ -47,6 +50,12 @@ namespace NotkaMobile.ViewModels.Abstract
 		{
 			IsBusy = true;
 			SelectedItem = default(T);
+		}
+
+		[RelayCommand]
+		void Appearing()
+		{
+			IsBusy = true;
 		}
 
 		public T? SelectedItem
