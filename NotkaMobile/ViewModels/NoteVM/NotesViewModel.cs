@@ -5,7 +5,7 @@ using NotkaMobile.Views.Notes;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
-	public class NotesViewModel : AListViewModel<Note>
+	public class NotesViewModel : AListViewModel<NoteForView>
 	{
 		public NotesViewModel(NoteDataStore dataStore) 
 			: base("Notatki", dataStore)
@@ -17,7 +17,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			await Shell.Current.GoToAsync(nameof(NewNotePage));
 		}
 
-		public override async void OnItemSelected(Note item)
+		public override async void OnItemSelected(NoteForView item)
 		{
 			if (item == null)
 			{

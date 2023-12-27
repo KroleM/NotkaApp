@@ -4,29 +4,29 @@ using NotkaMobile.Services.Abstract;
 
 namespace NotkaMobile.Services
 {
-	public class NoteDataStore : AListDataStore<Note>
+	public class NoteDataStore : AListDataStore<NoteForView>
 	{
 		public NoteDataStore()
 			: base()
 		{
 		}
 
-		public override async Task<Note> AddItemToService(Note item)
+		public override async Task<NoteForView> AddItemToService(NoteForView item)
 		{
 			return await _service.NotePOSTAsync(item);
 		}
 
-		public override async Task<bool> DeleteItemFromService(Note item)
+		public override async Task<bool> DeleteItemFromService(NoteForView item)
 		{
 			return await _service.NoteDELETEAsync(Preferences.Default.Get("userId", 0), item.Id).HandleRequest();
 		}
 
-		public override async Task<Note> Find(Note item)
+		public override async Task<NoteForView> Find(NoteForView item)
 		{
 			return await _service.NoteGETAsync(Preferences.Default.Get("userId", 0), item.Id);
 		}
 
-		public override async Task<Note> Find(int id)
+		public override async Task<NoteForView> Find(int id)
 		{
 			return await _service.NoteGETAsync(Preferences.Default.Get("userId", 0), id);
 		}
@@ -36,7 +36,7 @@ namespace NotkaMobile.Services
 			items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0)).Result.ToList();
 		}
 
-		public override async Task<bool> UpdateItemInService(Note item)
+		public override async Task<bool> UpdateItemInService(NoteForView item)
 		{
 			return await _service.NotePUTAsync(item.Id, item).HandleRequest();
 		}

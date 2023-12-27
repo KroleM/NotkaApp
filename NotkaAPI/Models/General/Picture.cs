@@ -9,8 +9,8 @@ namespace NotkaAPI.Models.General
 		public string PictureFormat { get; set; }
         public bool IsProfile { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
+        //public User User { get; set; }  // czy potrzebne?
         public int? NoteId { get; set; }
-        public Note? Note { get; set; }
-    }
+        //public Note? Note { get; set; }  // czy potrzebne?
+	}
 }

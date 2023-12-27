@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Data;
+using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
@@ -46,9 +47,9 @@ namespace NotkaAPI.Controllers
             //return await _context.Note.Where(n => n.UserId == userId).OrderByDescending(n => n.ModifiedDate).ToListAsync();
         }
 
-        // GET: api/Note/5
+        // GET: api/Note/1/5
         [HttpGet("{userId}/{id}")]
-        public async Task<ActionResult<Note>> GetNote(int userId, int id)
+        public async Task<ActionResult<NoteForView>> GetNote(int userId, int id)
         {
             var note = await _context.Note.FindAsync(id);
 
@@ -61,13 +62,13 @@ namespace NotkaAPI.Controllers
                 return Forbid();
             }
 
-            return note;
+            return ModelConverters.ConvertToNoteForView(note);
         }
 
         // PUT: api/Note/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNote(int id, Note note)
+        public async Task<IActionResult> PutNote(int id, NoteForView note)
         {
             if (id != note.Id)
             {
@@ -98,13 +99,14 @@ namespace NotkaAPI.Controllers
         // POST: api/Note
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Note>> PostNote(Note note)
+        public async Task<ActionResult<NoteForView>> PostNote(NoteForView note)
         {
-            _context.Note.Add(note);
+            var noteToAdd = new Note().CopyProperties(note);
+            _context.Note.Add(noteToAdd);
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetNote", new { id = note.Id }, note);
-            return Ok(note);
+            return Ok(ModelConverters.ConvertToNoteForView(noteToAdd));
         }
 
         // DELETE: api/Note/5
@@ -129,7 +131,8 @@ namespace NotkaAPI.Controllers
 
         private bool NoteExists(int id)
         {
-            return _context.Note.Any(e => e.Id == id);
-        }
+            //return _context.Note.Any(e => e.Id == id);
+			return (_context.Note?.Any(e => e.Id == id)).GetValueOrDefault();
+		}
     }
 }
