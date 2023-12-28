@@ -22,10 +22,9 @@
                      Command="{Binding LoadItemsCommand}"
                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <!--<CollectionView ItemsSource="{Binding AllTags}">-->
-            <CollectionView ItemsSource="{Binding Items}"
-                            SelectionMode="None">
+            <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:Note}">
+                    <DataTemplate x:DataType="{x:Type model:TagForView}">
                         <Frame BackgroundColor="Purple">
                             <!--<Frame.GestureRecognizers>
                                 <TapGestureRecognizer 

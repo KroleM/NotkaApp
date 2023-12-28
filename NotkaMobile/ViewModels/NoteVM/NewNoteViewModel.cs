@@ -127,10 +127,11 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 		protected override async void OnSave()
 		{
+			//zmienić na obliczenia po stronie API i wyrzucić ten override?
 			foreach (var tag in SelectedTags)
 			{
-				if (Tags.Contains(tag)) { return; }
-				await _tagDataStore.AddItemAsync(tag);
+				if (!Tags.Contains(tag))
+					await _tagDataStore.AddItemAsync(tag);
 			}
 			
 			await DataStore.AddItemAsync(SetItem());

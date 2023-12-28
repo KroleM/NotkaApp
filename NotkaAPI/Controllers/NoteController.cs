@@ -36,6 +36,7 @@ namespace NotkaAPI.Controllers
                 .Note
 				.Where(n => n.UserId == userId)
 				.Include(note => note.NoteTag)
+                .ThenInclude(notetag => notetag.Tag)
                 //.Include(note => note.Picture)
                 .ToListAsync();
 
@@ -103,6 +104,12 @@ namespace NotkaAPI.Controllers
         {
             var noteToAdd = new Note().CopyProperties(note);
             _context.Note.Add(noteToAdd);
+
+            foreach (var tag in note.TagsForView)
+            {
+                // Jeśli tag ma id=0 to dodać do tabeli Tag; wszystkie tagi skojarzyć z notatką w tabeli NoteTag
+            }
+
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetNote", new { id = note.Id }, note);

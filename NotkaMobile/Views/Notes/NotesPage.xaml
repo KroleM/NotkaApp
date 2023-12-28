@@ -9,6 +9,7 @@
              Title="{Binding Title}">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+        <!--W powyższym event Appearing można by zamienić na nowocześniejszy: NavigatedFrom-->
     </ContentPage.Behaviors>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
@@ -16,22 +17,39 @@
     <RefreshView x:DataType="viewmodel:NotesViewModel"
                      Command="{Binding LoadItemsCommand}"
                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <!--<CollectionView ItemsSource="{Binding AllTags}">-->
-        <CollectionView ItemsSource="{Binding Items}"
-                            SelectionMode="None">
+        <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:Tag}">
-                    <Frame BackgroundColor="Purple">
-                        <!--<Frame.GestureRecognizers>
+                <DataTemplate x:DataType="{x:Type model:NoteForView}">
+                    <Grid Padding="5">
+                        <Border BackgroundColor="Purple" Padding="5,0,5,5" HeightRequest="80">
+                            <!--<Border.GestureRecognizers>
                                 <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=ItemTapped}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
                                             CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>-->
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Name}" FontSize="20"/>
-                            <Label Text="{Binding Description}"/>
-                        </VerticalStackLayout>
-                    </Frame>
+                            </Border.GestureRecognizers>-->
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"/>
+                                <BoxView Color="Gray"
+                                         HeightRequest="2"
+                                         HorizontalOptions="Fill" />
+                                <Label Text="{Binding Description}"
+                                       LineBreakMode="TailTruncation"/>
+                                <HorizontalStackLayout>
+                                    <Label Text="Tagi:"/>
+                                    <!--Konwerter zmieniający listę na string?-->
+                                    <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="{x:Type model:TagForView}">
+                                                <Label Text="{Binding Name}" Margin="5,0,0,0"/>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
