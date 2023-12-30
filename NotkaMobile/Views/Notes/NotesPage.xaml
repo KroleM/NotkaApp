@@ -42,7 +42,15 @@
                                     <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate x:DataType="{x:Type model:TagForView}">
-                                                <Label Text="{Binding Name}" Margin="5,0,0,0"/>
+                                                <!--<Label Text="{Binding Name}" Margin="5,0,0,0"/>-->
+                                                <Label Margin="5,0,0,0">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="#"/>
+                                                            <Span Text="{Binding Name}"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
                                             </DataTemplate>
                                         </CollectionView.ItemTemplate>
                                     </CollectionView>

@@ -15,5 +15,9 @@ namespace NotkaAPI.Models.BusinessLogic
 				//PictureForView = note?.Picture ?? new PictureForView().CopyProperties(note?.Picture),
 			}.CopyProperties(note);
 		}
+		public static TagForView ConvertToTagForView(Tag tag)
+		{
+			return new TagForView().CopyProperties(tag);
+		}
 	}
 }

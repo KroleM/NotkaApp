@@ -1,18 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using NotkaMobile.Service.Reference;
+using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
-	public partial class NewTagViewModel : ANewViewModel<Tag>
+	public partial class NewTagViewModel : ANewViewModel<TagForView>
 	{
-		public NewTagViewModel() 
-			: base("Nowy tag")
+		public NewTagViewModel(TagDataStore dataStore) 
+			: base("Nowy tag", dataStore)
 		{
 		}
 
@@ -20,9 +16,9 @@ namespace NotkaMobile.ViewModels.TagVM
 		string _tagName = string.Empty;
 		[ObservableProperty]
 		string _description = string.Empty;
-		public override Tag SetItem()
+		public override TagForView SetItem()
 		{
-			return new Tag
+			return new TagForView
 			{
 				Id = 0,
 				IsActive = true,

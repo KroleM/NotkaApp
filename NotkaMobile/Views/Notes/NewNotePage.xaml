@@ -40,7 +40,7 @@
               ColumnDefinitions="*, Auto"
               HorizontalOptions="Fill">
             <Entry HorizontalOptions="FillAndExpand" Placeholder="Tag" Text="{Binding CurrentTag}"/>
-            <Button Grid.Column="1" HorizontalOptions="End" Text="+" Command="{Binding AddTagCommand}" />
+            <Button Grid.Column="1" HorizontalOptions="End" Text="+" Command="{Binding AddSelectedTagCommand}" />
         </Grid>
         
         <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
@@ -48,12 +48,12 @@
                         ItemsLayout="HorizontalList"
                         ItemsSource="{Binding SelectedTags}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:Tag}">
+                <DataTemplate x:DataType="{x:Type model:TagForView}">
                     <Border StrokeThickness="2">
                         <HorizontalStackLayout Padding="1" >
                             <Label Text="{Binding Name}"/>
                             <Button Text=" X "
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveTagCommand}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveSelectedTagCommand}"
                                     CommandParameter="{Binding .}"/>
                         </HorizontalStackLayout>
                     </Border>
@@ -83,12 +83,12 @@
                 </TapGestureRecognizer>
             </ListView.GestureRecognizers>-->
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:Tag}">
+                <DataTemplate x:DataType="{x:Type model:TagForView}">
                     <ViewCell Height="15">
                         <Label VerticalTextAlignment="Center" Padding="2">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text=" #"/>
+                                    <Span Text="#"/>
                                     <Span Text="{Binding Name}"/>
                                 </FormattedString>
                             </Label.FormattedText>

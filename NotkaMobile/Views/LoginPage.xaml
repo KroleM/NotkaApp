@@ -9,7 +9,7 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" /> 
     </ContentPage.Behaviors>
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="10" MaximumWidthRequest="300">
         <Label 
             Text="E-mail"
             VerticalOptions="Center" 
@@ -29,8 +29,10 @@
                 VerticalOptions="Center" />
         </HorizontalStackLayout>
         <Button Text="Zaloguj się" 
-                Command="{Binding LoginCommand}"/>
+                Command="{Binding LoginCommand}"
+                Margin="0,3"/>
         <Button Text="Rejestracja" 
-                Command="{Binding LoginCommand}"/>
+                Command="{Binding LoginCommand}"
+                Margin="0,3"/>
     </VerticalStackLayout>
 </ContentPage>

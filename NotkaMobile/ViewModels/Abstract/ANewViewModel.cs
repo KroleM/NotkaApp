@@ -4,10 +4,12 @@ namespace NotkaMobile.ViewModels.Abstract
 {
 	public abstract class ANewViewModel<T> : BaseViewModel
 	{
-		public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		public ANewViewModel(string title)
+		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
+		public IDataStore<T> DataStore { get; private set; }
+		public ANewViewModel(string title, IDataStore<T> dataStore)
 		{
 			Title = title;
+			DataStore = dataStore;
 			SaveCommand = new Command(OnSave, ValidateSave);
 			CancelCommand = new Command(OnCancel);
 			this.PropertyChanged +=
@@ -22,7 +24,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			await Shell.Current.GoToAsync("..");
 		}
 		public abstract T SetItem();
-		protected virtual async void OnSave()
+		protected async void OnSave()
 		{
 			await DataStore.AddItemAsync(SetItem());
 			// This will pop the current page off the navigation stack

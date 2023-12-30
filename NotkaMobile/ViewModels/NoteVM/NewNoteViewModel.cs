@@ -8,27 +8,25 @@ using Task = System.Threading.Tasks.Task;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
-	public partial class NewNoteViewModel : ANewViewModel<Note>
+	public partial class NewNoteViewModel : ANewViewModel<NoteForView>
 	{
 
-		public NewNoteViewModel() 
-			: base("Nowa notatka")
+		public NewNoteViewModel(NoteDataStore dataStore) 
+			: base("Nowa notatka", dataStore)
 		{
 			_tagDataStore = new TagDataStore();
 			_tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.items;
-			//tymczasowo
-			//PromptedTags = new ObservableCollection<Tag>(Tags);
 		}
 		#region Fields & Properties
 		private TagDataStore _tagDataStore;
-		public List<Tag> Tags { get; set; } = new();
+		public List<TagForView> Tags { get; set; } = new();
 
 		[ObservableProperty]
-		ObservableCollection<Tag> _selectedTags = new();
+		ObservableCollection<TagForView> _selectedTags = new();
 
 		[ObservableProperty]
-		ObservableCollection<Tag> _promptedTags = new();
+		ObservableCollection<TagForView> _promptedTags = new();
 
 		[ObservableProperty]
 		string _noteTitle = string.Empty;
@@ -68,9 +66,9 @@ namespace NotkaMobile.ViewModels.NoteVM
 			}
 		}
 		#endregion
-		public override Note SetItem()
+		public override NoteForView SetItem()
 		{
-			return new Note
+			return new NoteForView
 			{
 				Id = 0,
 				IsActive = true,
@@ -78,6 +76,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 				Description = this.Text,
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
+				UserId = Preferences.Default.Get("userId", 0),
+				TagsForView = SelectedTags,
 			};
 		}
 		public override bool ValidateSave()
@@ -86,13 +86,13 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 
 		[RelayCommand]
-		void SelectTag(Tag tag)
+		void SelectTag(TagForView tag)
 		{
 			CurrentTag = tag.Name;
 		}
 
 		[RelayCommand]
-		void AddTag()
+		void AddSelectedTag()
 		{
 			if (string.IsNullOrWhiteSpace(CurrentTag))
 			{
@@ -101,7 +101,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			var tag = Tags.Find(tag => tag.Name == CurrentTag);
 			if (tag == null)
 			{
-				tag = new Tag
+				tag = new TagForView
 				{
 					Id = 0,
 					IsActive = true,
@@ -118,25 +118,12 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 
 		[RelayCommand]
-		void RemoveTag(Tag tag)
+		void RemoveSelectedTag(TagForView tag)
 		{
 			if (SelectedTags.Contains(tag))
 			{
 				SelectedTags.Remove(tag);
 			}
-		}
-		protected override async void OnSave()
-		{
-			//zmienić na obliczenia po stronie API i wyrzucić ten override?
-			foreach (var tag in SelectedTags)
-			{
-				if (!Tags.Contains(tag))
-					await _tagDataStore.AddItemAsync(tag);
-			}
-			
-			await DataStore.AddItemAsync(SetItem());
-			// This will pop the current page off the navigation stack
-			await Shell.Current.GoToAsync("..");
 		}
 	}
 }

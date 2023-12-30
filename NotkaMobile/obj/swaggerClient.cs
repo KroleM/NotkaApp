@@ -2104,21 +2104,25 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task NotePUTAsync(int id, NoteForView body)
+        public virtual System.Threading.Tasks.Task NoteDELETEAsync(int userId, int id)
         {
-            return NotePUTAsync(id, body, System.Threading.CancellationToken.None);
+            return NoteDELETEAsync(userId, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task NotePUTAsync(int id, NoteForView body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task NoteDELETEAsync(int userId, int id, System.Threading.CancellationToken cancellationToken)
         {
+            if (userId == null)
+                throw new System.ArgumentNullException("userId");
+
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Note/{id}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Note/{userId}/{id}");
+            urlBuilder_.Replace("{userId}", System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -2127,11 +2131,7 @@ namespace NotkaMobile.Service.Reference
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2180,27 +2180,22 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task NoteDELETEAsync(int? userId, int id)
+        public virtual System.Threading.Tasks.Task NotePUTAsync(int id, NoteForView body)
         {
-            return NoteDELETEAsync(userId, id, System.Threading.CancellationToken.None);
+            return NotePUTAsync(id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task NoteDELETEAsync(int? userId, int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task NotePUTAsync(int id, NoteForView body, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Note/{id}?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Note/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-            if (userId != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("userId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2208,7 +2203,11 @@ namespace NotkaMobile.Service.Reference
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6493,7 +6492,7 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Tag>> TagAllAsync(int userId)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TagForView>> TagAllAsync(int userId)
         {
             return TagAllAsync(userId, System.Threading.CancellationToken.None);
         }
@@ -6501,7 +6500,7 @@ namespace NotkaMobile.Service.Reference
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Tag>> TagAllAsync(int userId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TagForView>> TagAllAsync(int userId, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
@@ -6542,7 +6541,7 @@ namespace NotkaMobile.Service.Reference
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Tag>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<TagForView>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -6571,7 +6570,7 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Tag> TagGETAsync(int userId, int id)
+        public virtual System.Threading.Tasks.Task<TagForView> TagGETAsync(int userId, int id)
         {
             return TagGETAsync(userId, id, System.Threading.CancellationToken.None);
         }
@@ -6579,7 +6578,7 @@ namespace NotkaMobile.Service.Reference
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Tag> TagGETAsync(int userId, int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TagForView> TagGETAsync(int userId, int id, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
@@ -6624,7 +6623,7 @@ namespace NotkaMobile.Service.Reference
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Tag>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TagForView>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -6729,7 +6728,7 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task TagPUTAsync(int id, Tag body)
+        public virtual System.Threading.Tasks.Task TagPUTAsync(int id, TagForView body)
         {
             return TagPUTAsync(id, body, System.Threading.CancellationToken.None);
         }
@@ -6737,7 +6736,7 @@ namespace NotkaMobile.Service.Reference
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task TagPUTAsync(int id, Tag body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task TagPUTAsync(int id, TagForView body, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -6805,7 +6804,7 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Tag> TagPOSTAsync(Tag body)
+        public virtual System.Threading.Tasks.Task<TagForView> TagPOSTAsync(TagForView body)
         {
             return TagPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -6813,7 +6812,7 @@ namespace NotkaMobile.Service.Reference
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Tag> TagPOSTAsync(Tag body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TagForView> TagPOSTAsync(TagForView body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tag");
@@ -6854,7 +6853,7 @@ namespace NotkaMobile.Service.Reference
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Tag>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TagForView>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -9568,6 +9567,9 @@ namespace NotkaMobile.Service.Reference
 
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Description { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int UserId { get; set; }
 
         [Newtonsoft.Json.JsonProperty("tagsForView", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<TagForView> TagsForView { get; set; }

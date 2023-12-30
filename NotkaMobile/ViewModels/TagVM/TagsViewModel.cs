@@ -1,11 +1,11 @@
 ﻿using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes;
-using Tag = NotkaMobile.Service.Reference.Tag;
+using TagForView = NotkaMobile.Service.Reference.TagForView;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
-	public class TagsViewModel : AListViewModel<Tag>
+	public class TagsViewModel : AListViewModel<TagForView>
 	{
 		public TagsViewModel(TagDataStore dataStore) 
 			: base("Tagi", dataStore)
@@ -17,7 +17,7 @@ namespace NotkaMobile.ViewModels.TagVM
 			await Shell.Current.GoToAsync(nameof(NewTagPage));
 		}
 
-		public override async void OnItemSelected(Tag item)
+		public override async void OnItemSelected(TagForView item)
 		{
 			if (item == null)
 			{

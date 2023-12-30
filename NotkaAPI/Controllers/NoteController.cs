@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
+using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
@@ -24,6 +26,8 @@ namespace NotkaAPI.Controllers
             _context = context;
         }
 
+        //FIXME dodatkowy GET, który przyjmowałby 3 argumenty, a 3. byłaby liczba do ".Take(xx)"??
+
         // GET: api/Note
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId)
@@ -32,15 +36,17 @@ namespace NotkaAPI.Controllers
             {
                 return NotFound();
             }
-            var notes = await _context
-                .Note
+            var notes = await _context.Note
 				.Where(n => n.UserId == userId)
 				.Include(note => note.NoteTag)
                 .ThenInclude(notetag => notetag.Tag)
                 //.Include(note => note.Picture)
                 .ToListAsync();
 
-            return notes
+			// Include->Picture powyżej prowadzi do duplikowania danych zdjęcia dla każdego wiersza tabeli (bo wiele NoteTagów dla jednej notatki).
+            // Propozycja optymalizacji - Split Queries:https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
+
+			return notes
                 .Select(note => ModelConverters.ConvertToNoteForView(note))
                 .OrderByDescending(n => n.ModifiedDate)
 				.ToList();
@@ -52,6 +58,7 @@ namespace NotkaAPI.Controllers
         [HttpGet("{userId}/{id}")]
         public async Task<ActionResult<NoteForView>> GetNote(int userId, int id)
         {
+            //var note = await _context.Note.FindAsync(id);
             var note = await _context.Note.FindAsync(id);
 
             if (note == null)
@@ -103,21 +110,49 @@ namespace NotkaAPI.Controllers
         public async Task<ActionResult<NoteForView>> PostNote(NoteForView note)
         {
             var noteToAdd = new Note().CopyProperties(note);
-            _context.Note.Add(noteToAdd);
 
-            foreach (var tag in note.TagsForView)
+            if (note == null) return Forbid();
+
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
-                // Jeśli tag ma id=0 to dodać do tabeli Tag; wszystkie tagi skojarzyć z notatką w tabeli NoteTag
+				_context.Note.Add(noteToAdd);
+				await _context.SaveChangesAsync();
+
+				if (!note.TagsForView.IsNullOrEmpty())
+                {
+					foreach (var tagForView in note.TagsForView)
+                    {
+                        var tag = new Tag().CopyProperties(tagForView);
+                        if (tagForView.Id == 0)
+                        {
+                            _context.Tag.Add(tag);
+                            await _context.SaveChangesAsync();
+                        }
+
+                        _context.NoteTag.Add(new NoteTag
+                        {
+                            Id = 0,
+                            IsActive = true,
+                            NoteId = noteToAdd.Id,
+                            TagId = tag.Id,
+                        });
+						await _context.SaveChangesAsync();                      
+                    }
+                }
+
+                dbContextTransaction.Commit();
             }
 
-            await _context.SaveChangesAsync();
+            var uploadedNote = await _context.Note
+                .Include(note => note.NoteTag)
+                .ThenInclude(notetag => notetag.Tag)
+                .SingleOrDefaultAsync(note => note.Id == noteToAdd.Id);
+			//await _context.Entry(uploadedNote).ReloadAsync();
+			return Ok(ModelConverters.ConvertToNoteForView(uploadedNote));
+		}
 
-            //return CreatedAtAction("GetNote", new { id = note.Id }, note);
-            return Ok(ModelConverters.ConvertToNoteForView(noteToAdd));
-        }
-
-        // DELETE: api/Note/5
-        [HttpDelete("{id}")]
+		// DELETE: api/Note/5
+		[HttpDelete("{userId}/{id}")]
         public async Task<IActionResult> DeleteNote(int userId, int id)
         {
             var note = await _context.Note.FindAsync(id);

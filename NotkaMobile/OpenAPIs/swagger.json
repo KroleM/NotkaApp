@@ -1026,6 +1026,36 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Note"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/api/Note/{id}": {
@@ -1063,35 +1093,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Note"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -3206,7 +3207,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Tag"
+                    "$ref": "#/components/schemas/TagForView"
                   }
                 }
               },
@@ -3214,7 +3215,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Tag"
+                    "$ref": "#/components/schemas/TagForView"
                   }
                 }
               },
@@ -3222,7 +3223,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Tag"
+                    "$ref": "#/components/schemas/TagForView"
                   }
                 }
               }
@@ -3262,17 +3263,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagForView"
                 }
               }
             }
@@ -3330,17 +3331,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Tag"
+                "$ref": "#/components/schemas/TagForView"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Tag"
+                "$ref": "#/components/schemas/TagForView"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Tag"
+                "$ref": "#/components/schemas/TagForView"
               }
             }
           }
@@ -3361,17 +3362,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Tag"
+                "$ref": "#/components/schemas/TagForView"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Tag"
+                "$ref": "#/components/schemas/TagForView"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Tag"
+                "$ref": "#/components/schemas/TagForView"
               }
             }
           }
@@ -3382,17 +3383,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagForView"
                 }
               }
             }
@@ -4865,6 +4866,10 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
           },
           "tagsForView": {
             "type": "array",
