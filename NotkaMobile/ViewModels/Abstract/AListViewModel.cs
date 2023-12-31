@@ -25,7 +25,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			AddItemCommand = new Command(OnAddItem);
 		}
 
-		async Task ExecuteLoadItemsCommand()
+		protected async Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
 			try
@@ -77,7 +77,6 @@ namespace NotkaMobile.ViewModels.Abstract
 		{
 			if (item == null)
 				return;
-			//await Shell.Current.GoToAsync($"{nameof(ClientDetailPage)}?{nameof(ClientDetailViewModel.ItemId)}={item.IdClient}");
 		}
 	}
 }

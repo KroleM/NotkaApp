@@ -61,6 +61,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<LoginPage>();
 			mauiAppBuilder.Services.AddTransient<NotesPage>();
 			mauiAppBuilder.Services.AddTransient<NewNotePage>();
+			mauiAppBuilder.Services.AddTransient<NoteDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<TagsPage>();
 			mauiAppBuilder.Services.AddTransient<NewTagPage>();
 
