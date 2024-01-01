@@ -24,7 +24,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			{
 				return;
 			}
-			//await Shell.Current.GoToAsync($"{nameof(NoteDetailsPage)}?{nameof(NoteDetailsViewModel.ItemId)}={item.Id}");
+			await Shell.Current.GoToAsync($"{nameof(NoteDetailsPage)}?{nameof(NoteDetailsViewModel.ItemId)}={item.Id}");
 		}
 		[RelayCommand]
 		private async System.Threading.Tasks.Task Delete(NoteForView note)

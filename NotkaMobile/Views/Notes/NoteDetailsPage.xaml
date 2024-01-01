@@ -2,11 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.NoteDetailsPage"
-             Title="NoteDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+             x:DataType="viewmodel:NoteDetailsViewModel">
+    <StackLayout Spacing="20" Padding="15">
+        <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
+        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+            <Label Text="Data utworzenia:" FontSize="Small" />
+            <Label Grid.Column="1"  Margin="15,0,0,0" 
+                   Text="{Binding CreatedDate}" FontSize="Small"/>
+            <Label Grid.Row="1"
+                   Text="Data modyfikacji:" FontSize="Small" />
+            <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
+                   Text="{Binding ModifiedDate}" FontSize="Small"/>
+        </Grid>
+        <HorizontalStackLayout>
+            <Label Text="Tagi:" FontSize="Medium"/>
+            <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
+                <CollectionView.ItemTemplate>
+                    <!--Dodać styl, który jasno pokazywałby odrębność tagów (Border?)-->
+                    <DataTemplate x:DataType="{x:Type model:TagForView}">
+                        <Label Margin="5,0,0,0">
+                            <!--<Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
+                                          CommandParameter="{Binding .}"/>
+                            </Label.GestureRecognizers>-->
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="#" FontSize="Medium"/>
+                                    <Span Text="{Binding Name}" FontSize="Medium"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </HorizontalStackLayout>
+        <Label Text="{Binding Description}" FontSize="Small"/>
+
+        <!--<StackLayout Orientation="Horizontal">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Delete" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="AddToCart" Command="{Binding AddToCartCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>-->
+    </StackLayout>
 </ContentPage>

@@ -8,7 +8,7 @@ namespace NotkaMobile.ViewModels.Abstract
 	public abstract partial class AListViewModel<T> : BaseViewModel
 	{
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		public IDataStore<T> DataStore { get; private set; }
+		public IDataStore<T> DataStore { get; }
 		private T? _selectedItem;
 		public ObservableCollection<T> Items { get; }
 		public Command LoadItemsCommand { get; }

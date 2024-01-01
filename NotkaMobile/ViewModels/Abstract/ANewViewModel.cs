@@ -5,7 +5,7 @@ namespace NotkaMobile.ViewModels.Abstract
 	public abstract class ANewViewModel<T> : BaseViewModel
 	{
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		public IDataStore<T> DataStore { get; private set; }
+		public IDataStore<T> DataStore { get; }
 		public ANewViewModel(string title, IDataStore<T> dataStore)
 		{
 			Title = title;

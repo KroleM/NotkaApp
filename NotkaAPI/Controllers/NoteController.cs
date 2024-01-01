@@ -59,18 +59,20 @@ namespace NotkaAPI.Controllers
         public async Task<ActionResult<NoteForView>> GetNote(int userId, int id)
         {
             //var note = await _context.Note.FindAsync(id);
-            var note = await _context.Note.FindAsync(id);
-
-            if (note == null)
-            {
+            if (!await _context.Note.AnyAsync(n => n.Id == id))
+            { 
                 return NotFound();
             }
-            if (note.UserId != userId)
+			var note = await _context.Note
+	            .Include(note => note.NoteTag)
+	            .ThenInclude(notetag => notetag.Tag)
+	            .SingleOrDefaultAsync(note => note.Id == id);
+			if (note.UserId != userId)
             {
                 return Forbid();
             }
 
-            return ModelConverters.ConvertToNoteForView(note);
+			return ModelConverters.ConvertToNoteForView(note);
         }
 
         // PUT: api/Note/5
