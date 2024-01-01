@@ -3,73 +3,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NotkaMobile.Views.Notes.NotesPage"
+             xmlns:view="clr-namespace:NotkaMobile.Views.Notes"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              x:DataType="viewmodel:NotesViewModel"
              Title="{Binding Title}">
+    <!--SwipeView użyty w CollectionView (albo RefreshView) powoduje krytyczny błąd w aplikacji na Windows. Zastosowałem tu obejście wzorowane na odpowiedzi 'Rabidgoalie' z 14.11.2023:
+    https://github.com/dotnet/maui/issues/8870-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate
+                x:Key="WithDesktop"
+                x:DataType="{x:Type model:NoteForView}">
+                <Grid Padding="5">
+                    <Border BackgroundColor="SlateBlue" Padding="5,0,5,5" HeightRequest="80">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
+                                          CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*, 80">
+                            <view:NoteListElement Grid.Column="0"/>
+                            <Button Grid.Column="1"
+                                    HeightRequest="80"
+                                    WidthRequest="80"
+                                    Text="Usuń"
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate
+                x:Key="WithoutDesktop"
+                x:DataType="{x:Type model:NoteForView}">
+                <Grid Padding="5">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Usuń"
+                                       BackgroundColor="Red"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=DeleteCommand}"
+                                       CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border BackgroundColor="SlateBlue" Padding="5,0,5,5" HeightRequest="80">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
+                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            <view:NoteListElement Grid.Column="0"/>
+                        </Border>
+                    </SwipeView>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
         <!--W powyższym event Appearing można by zamienić na nowocześniejszy: NavigatedFrom-->
     </ContentPage.Behaviors>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
+
     <RefreshView x:DataType="viewmodel:NotesViewModel"
-                     Command="{Binding LoadItemsCommand}"
-                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:NoteForView}">
-                    <Grid Padding="5">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Usuń"
-                                           BackgroundColor="Red"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=DeleteCommand}"
-                                           CommandParameter="{Binding .}"/>
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Border BackgroundColor="SlateBlue" Padding="5,0,5,5" HeightRequest="80">
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
-                                                          CommandParameter="{Binding .}"/>
-                                </Border.GestureRecognizers>
-                                <VerticalStackLayout>
-                                    <Label Text="{Binding Name}" 
-                                       FontSize="20"
-                                       FontAttributes="Bold"/>
-                                    <BoxView Color="Gray"
-                                         HeightRequest="2"
-                                         HorizontalOptions="Fill" />
-                                    <Label Text="{Binding Description}"
-                                       LineBreakMode="TailTruncation"/>
-                                    <HorizontalStackLayout>
-                                        <Label Text="Tagi:"/>
-                                        <!--Konwerter zmieniający listę na string?-->
-                                        <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
-                                            <CollectionView.ItemTemplate>
-                                                <DataTemplate x:DataType="{x:Type model:TagForView}">
-                                                    <!--<Label Text="{Binding Name}" Margin="5,0,0,0"/>-->
-                                                    <Label Margin="5,0,0,0">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="#"/>
-                                                                <Span Text="{Binding Name}"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                </DataTemplate>
-                                            </CollectionView.ItemTemplate>
-                                        </CollectionView>
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
-                            </Border>
-                        </SwipeView>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                 Command="{Binding LoadItemsCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView 
+            ItemsSource="{Binding Items}"
+            ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
+            SelectionMode="None">
         </CollectionView>
     </RefreshView>
 </ContentPage>
