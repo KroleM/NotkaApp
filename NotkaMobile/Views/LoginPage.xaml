@@ -4,10 +4,12 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"           
              x:Class="NotkaMobile.Views.LoginPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewmodel:LoginViewModel"
              Title="{Binding Title}">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" /> 
+
     </ContentPage.Behaviors>
     <VerticalStackLayout Padding="10" MaximumWidthRequest="300">
         <Label 
@@ -29,10 +31,13 @@
                 VerticalOptions="Center" />
         </HorizontalStackLayout>
         <Button Text="Zaloguj się" 
+                Margin="0,3"
                 Command="{Binding LoginCommand}"
-                Margin="0,3"/>
+                windows:VisualElement.AccessKey="A"
+                windows:VisualElement.AccessKeyPlacement="Right"/>
         <Button Text="Rejestracja" 
                 Command="{Binding LoginCommand}"
+                windows:VisualElement.AccessKey="B"
                 Margin="0,3"/>
     </VerticalStackLayout>
 </ContentPage>

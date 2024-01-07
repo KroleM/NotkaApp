@@ -20,10 +20,33 @@ namespace NotkaMobile
 		{
 			Window window = base.CreateWindow(activationState);
 
+			window.Activated += OnActivated;
 			window.Deactivated += OnDestroying;
 			//window.Destroying += OnDestroying;	// FIXME doesn't work on Android
 
 			return window;
+		}
+		private async void OnActivated(object? sender, EventArgs e)
+		{
+		#if WINDOWS
+				const int DefaultWidth = 480;
+				const int DefaultHeight = 800;
+
+				var window = sender as Window;
+
+				// change window size.
+				window.Width = DefaultWidth;
+				window.Height = DefaultHeight;
+
+				// give it some time to complete window resizing task.
+				await window.Dispatcher.DispatchAsync(() => { });
+
+				var disp = DeviceDisplay.Current.MainDisplayInfo;
+
+				// move to screen center
+				window.X = (disp.Width / disp.Density - window.Width) / 2;
+				window.Y = (disp.Height / disp.Density - window.Height) / 2;
+		#endif
 		}
 		private void OnDestroying(object? sender, EventArgs e)
 		{

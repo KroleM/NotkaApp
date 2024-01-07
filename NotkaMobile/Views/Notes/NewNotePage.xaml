@@ -20,17 +20,18 @@
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0"
                Text="Tytuł:"
                VerticalOptions="Center" 
                HorizontalTextAlignment="Start" />
         <Entry Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
+               Margin="0,2"
                Text="{Binding NoteTitle}"/>
         <Label Grid.Column="0" Grid.Row="1"
                Text="Tagi:"
@@ -39,36 +40,12 @@
         <Grid Grid.Column="1" Grid.Row="1" 
               ColumnDefinitions="*, Auto"
               HorizontalOptions="Fill">
-            <Entry HorizontalOptions="FillAndExpand" Placeholder="Tag" Text="{Binding CurrentTag}"/>
-            <Button Grid.Column="1" HorizontalOptions="End" Text="+" Command="{Binding AddSelectedTagCommand}" />
+            <Entry HorizontalOptions="FillAndExpand" Placeholder="Tag" Margin="0,2" Text="{Binding CurrentTag}"/>
+            <Button Grid.Column="1" HorizontalOptions="End" Text="+" FontSize="Medium" Margin="2" Command="{Binding AddSelectedTagCommand}" />
         </Grid>
-        
-        <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
-                        HorizontalOptions="StartAndExpand"
-                        ItemsLayout="HorizontalList"
-                        ItemsSource="{Binding SelectedTags}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:TagForView}">
-                    <Border StrokeThickness="2">
-                        <HorizontalStackLayout Padding="1" >
-                            <Label Text="{Binding Name}"/>
-                            <Button Text=" X "
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveSelectedTagCommand}"
-                                    CommandParameter="{Binding .}"/>
-                        </HorizontalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <Editor Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"
-                Placeholder="Treść notatki"
-                Text="{Binding Text}"/>
-        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
-                Text="Dodaj notatkę"
-                Command="{Binding SaveCommand}"/>
 
         <ListView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" 
-                  VerticalOptions="StartAndExpand"
+                  VerticalOptions="StartAndExpand" ZIndex="2"
                   ItemsSource="{Binding PromptedTags}">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped"
@@ -84,8 +61,8 @@
             </ListView.GestureRecognizers>-->
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:TagForView}">
-                    <ViewCell Height="15">
-                        <Label VerticalTextAlignment="Center" Padding="2">
+                    <ViewCell>
+                        <Label VerticalTextAlignment="Center" Margin="5" FontSize="Small">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="#"/>
@@ -97,5 +74,34 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsLayout="HorizontalList"
+                        ItemsSource="{Binding SelectedTags}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:TagForView}">
+                    <Border Style="{StaticResource SimpleBorder}" Margin="0,5,5,5" MinimumHeightRequest="40">
+                        <HorizontalStackLayout >
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="14" Padding="0,0,5,0"/>
+                            <Button Text="X" Padding="1" MinimumHeightRequest="30" MinimumWidthRequest="30"
+                                    Style="{StaticResource SmallButton}"
+                                    VerticalOptions="Center"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveSelectedTagCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Editor Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"
+                Margin="0,2"
+                Placeholder="Treść notatki"
+                Text="{Binding Text}"/>
+        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
+                Margin="0,4"
+                Text="Dodaj notatkę"
+                Command="{Binding SaveCommand}"/>
+
     </Grid>
 </ContentPage>

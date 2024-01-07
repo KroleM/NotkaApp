@@ -15,8 +15,8 @@
             <DataTemplate
                 x:Key="WithDesktop"
                 x:DataType="{x:Type model:NoteForView}">
-                <Grid Padding="5">
-                    <Border BackgroundColor="SlateBlue" Padding="5,0,5,5" HeightRequest="80">
+                <Grid Padding="0,0,0,5">
+                    <Border Style="{StaticResource ListElementBorder}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
@@ -39,7 +39,7 @@
             <DataTemplate
                 x:Key="WithoutDesktop"
                 x:DataType="{x:Type model:NoteForView}">
-                <Grid Padding="5">
+                <Grid Padding="0,0,0,5">
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>
@@ -49,7 +49,7 @@
                                        CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Border BackgroundColor="SlateBlue" Padding="5,0,5,5" HeightRequest="80">
+                        <Border Style="{StaticResource ListElementBorder}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1"
                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
@@ -75,10 +75,12 @@
     <RefreshView x:DataType="viewmodel:NotesViewModel"
                  Command="{Binding LoadItemsCommand}"
                  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView 
-            ItemsSource="{Binding Items}"
-            ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
-            SelectionMode="None">
-        </CollectionView>
+        <Grid Padding="5">
+            <CollectionView 
+                ItemsSource="{Binding Items}"
+                ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
+                SelectionMode="None">
+            </CollectionView>
+        </Grid>
     </RefreshView>
 </ContentPage>

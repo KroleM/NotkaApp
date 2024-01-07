@@ -12,7 +12,9 @@
              HeightRequest="2"
              HorizontalOptions="Fill" />
         <Label Text="{Binding Description}"
-            LineBreakMode="TailTruncation"/>
+               LineBreakMode="TailTruncation"
+               HeightRequest="20"
+               Padding="0,0,5,0"/>
         <HorizontalStackLayout>
             <Label Text="Tagi:"/>
             <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
