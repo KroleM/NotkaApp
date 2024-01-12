@@ -4,6 +4,7 @@
              x:Class="NotkaMobile.Views.Notes.NewNotePage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             xmlns:helpers="clr-namespace:NotkaMobile.Helpers"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              x:DataType="viewmodel:NewNoteViewModel"
              Title="{Binding Title}">
@@ -11,7 +12,29 @@
         <ResourceDictionary>
             <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
         </ResourceDictionary>
+        <toolkit:IsNullConverter x:Key="isNull"/>
+        <toolkit:IsNotNullConverter x:Key="isNotNull"/>
+        <toolkit:InvertedBoolConverter x:Key="invertedBool"/>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Usuń zdjęcie" 
+                     Command="{Binding RemovePhotoCommand}"
+                     IsEnabled="{Binding PhotoSource, Converter={StaticResource isNotNull}}"/>
+        <ToolbarItem Text="Dodaj zdjęcie" 
+                     Command="{Binding SelectPhotoCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <!--<Shell.TitleView>
+        <HorizontalStackLayout HorizontalOptions="End">
+            <Button Text="Dodaj zdjęcie" 
+                    Command="{Binding SelectPhotoCommand}" 
+                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNull}}"/>
+            <Button Text="Usuń zdjęcie" 
+                    Command="{Binding RemovePhotoCommand}" 
+                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>-->
 
     <Grid Padding="10">
         <Grid.ColumnDefinitions>
@@ -52,13 +75,6 @@
                                             Command="{Binding SelectTagCommand}" 
                                             EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
             </ListView.Behaviors>
-            <!--<ListView.GestureRecognizers>
-                <TapGestureRecognizer 
-                        NumberOfTapsRequired="1"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=SelectTag}"		
-                        CommandParameter="{Binding .}">
-                </TapGestureRecognizer>
-            </ListView.GestureRecognizers>-->
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:TagForView}">
                     <ViewCell>
@@ -94,14 +110,47 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Editor Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"
-                Margin="0,2"
-                Placeholder="Treść notatki"
-                Text="{Binding Text}"/>
+
+        <ScrollView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
+            <Grid RowDefinitions="Auto, *">
+                <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}">
+                    <toolkit:Expander.Header>
+                        <Border Style="{StaticResource SimpleBorder}" Padding="5"
+                                Background="{StaticResource Bluegrey}">
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Label VerticalOptions="Center"
+                                       Text="Zdjęcie"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Start"
+                                       FontSize="Small" />
+                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBool}}"
+                                       VerticalOptions="Center" 
+                                       Grid.Column="2" 
+                                       Text="Rozwiń"
+                                       HorizontalOptions="End"/>
+                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded}" 
+                                       VerticalOptions="Center" 
+                                       Grid.Column="2" 
+                                       Text="Zwiń"
+                                       HorizontalOptions="End"/>
+                            </Grid>
+                        </Border>
+                    </toolkit:Expander.Header>
+                    <!--<toolkit:ByteArrayToImageSourceConverter/>-->
+                    <Image Aspect="Center"
+                           Source="{Binding PhotoSource}"/>
+                </toolkit:Expander>
+                <Editor Grid.Row="1" Margin="0,2"
+                        AutoSize="TextChanges"
+                        Placeholder="Treść notatki"
+                        Text="{Binding Text}"/>
+            </Grid>
+        </ScrollView>
         <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
                 Margin="0,4"
                 Text="Dodaj notatkę"
                 Command="{Binding SaveCommand}"/>
 
     </Grid>
+
 </ContentPage>

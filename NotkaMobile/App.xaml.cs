@@ -21,7 +21,7 @@ namespace NotkaMobile
 			Window window = base.CreateWindow(activationState);
 
 			window.Activated += OnActivated;
-			window.Deactivated += OnDestroying;
+			//window.Deactivated += OnDestroying;	// FIXME works on Android, but causes strange behaviour on Windows (e.g. logout when media picker window is opened)
 			//window.Destroying += OnDestroying;	// FIXME doesn't work on Android
 
 			return window;

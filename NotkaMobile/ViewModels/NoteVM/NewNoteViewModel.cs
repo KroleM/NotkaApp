@@ -3,7 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using Task = System.Threading.Tasks.Task;
 
 namespace NotkaMobile.ViewModels.NoteVM
@@ -11,15 +13,17 @@ namespace NotkaMobile.ViewModels.NoteVM
 	public partial class NewNoteViewModel : ANewViewModel<NoteForView>
 	{
 
-		public NewNoteViewModel(NoteDataStore dataStore) 
+		public NewNoteViewModel(NoteDataStore dataStore)
 			: base("Nowa notatka", dataStore)
 		{
 			_tagDataStore = new TagDataStore();
 			_tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.items;
 		}
+
 		#region Fields & Properties
 		private TagDataStore _tagDataStore;
+		private byte[] _bytesArray;
 		public List<TagForView> Tags { get; set; } = new();
 
 		[ObservableProperty]
@@ -34,6 +38,9 @@ namespace NotkaMobile.ViewModels.NoteVM
 		[ObservableProperty]
 		string _text = string.Empty;
 
+		[ObservableProperty]
+		ImageSource? _photoSource;
+
 		private string _currentTag = string.Empty;
 		public string CurrentTag
 		{
@@ -47,11 +54,11 @@ namespace NotkaMobile.ViewModels.NoteVM
 				OnPropertyChanging(nameof(CurrentTag));
 
 				_currentTag = value;
-				
+
 				if (!string.IsNullOrWhiteSpace(_currentTag))
 				{
 					PromptedTags.Clear();
-					var tags = Tags.Where(t => t.Name.ToLower().StartsWith(_currentTag.ToLower())).ToList();
+					var tags = Tags.Where(t => t.Name.ToLower().StartsWith(_currentTag.ToLower())).ToList().OrderByDescending(x => x.Name);
 					foreach (var tag in tags)
 					{
 						PromptedTags.Add(tag);
@@ -61,7 +68,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 				{
 					PromptedTags.Clear();
 				}
-				
+
 				OnPropertyChanged(nameof(CurrentTag));
 			}
 		}
@@ -85,6 +92,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			return !string.IsNullOrEmpty(NoteTitle);
 		}
 
+		#region Commands
 		[RelayCommand]
 		void SelectTag(TagForView tag)
 		{
@@ -125,5 +133,33 @@ namespace NotkaMobile.ViewModels.NoteVM
 				SelectedTags.Remove(tag);
 			}
 		}
+
+		[RelayCommand]
+		async Task SelectPhoto()
+		{
+			FileResult photoFile = await MediaPicker.Default.PickPhotoAsync();
+
+			if (photoFile == null)
+				return;
+
+			using var localFileStream = await photoFile.OpenReadAsync();
+			//this shorter version works but only when localFileStream doesn't have "using" statement, which will cause memory leak
+			//PhotoSource = ImageSource.FromStream(() => localFileStream);
+			
+			//MemoryStream, on the other hand, doesn't require disposing
+			MemoryStream memory = new MemoryStream();
+			localFileStream.CopyTo(memory);
+			_bytesArray = memory.ToArray();
+			PhotoSource = ImageSource.FromStream(() => new MemoryStream(_bytesArray));		
+		}
+
+		[RelayCommand]
+		void RemovePhoto()
+		{
+			_bytesArray = Array.Empty<byte>();
+			PhotoSource = null;
+		}
+
+		#endregion
 	}
 }

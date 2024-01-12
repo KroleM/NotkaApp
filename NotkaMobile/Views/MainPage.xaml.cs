@@ -11,6 +11,9 @@
 
 		private void OnCounterClicked(object sender, EventArgs e)
 		{
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+
 			count++;
 
 			if (count == 1)
