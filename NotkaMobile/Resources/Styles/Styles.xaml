@@ -435,7 +435,6 @@
     <Style TargetType="Border" x:Key="ListElementBorder">
         <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
         <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Bluegrey}, Dark={StaticResource Bluegrey}}"/>
-        <Setter Property="HeightRequest" Value="80"/>
         <Setter Property="Padding" Value="5,0,0,5"/>
     </Style>
 

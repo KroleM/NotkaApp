@@ -7,7 +7,8 @@
 		public AListDataStore()
 			: base()
 		{
-			RefreshListFromService();
+			//I comment it, because it causes double item loading
+			//RefreshListFromService();
 		}
 		public async Task<bool> AddItemAsync(T item)
 		{

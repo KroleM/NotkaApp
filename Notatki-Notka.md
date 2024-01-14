@@ -21,3 +21,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     Źródło:\
     https://stackoverflow.com/questions/40920441/how-to-specify-a-property-can-be-null-or-a-reference-with-swagger \
     https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1589
+
+
+`MAUI`
+* MAUI automatycznie konwertuje obrazy .svg na .png, dlatego w kodzie należy się odwoływać do pliku z rozszerzenim `.png`, mimo że w folderze `Images` będzie nadal tylko plik .svg.

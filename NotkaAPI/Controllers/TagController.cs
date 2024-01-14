@@ -39,7 +39,7 @@ namespace NotkaAPI.Controllers
 
 			return tags
 	            .Select(tag => ModelConverters.ConvertToTagForView(tag))
-	            .OrderByDescending(t => t.Name)
+	            .OrderBy(t => t.Name)
 	            .ToList();
 			//return await _context.Tag.Where(t => t.UserId == userId).OrderByDescending(t => t.Name).ToListAsync();
 		}

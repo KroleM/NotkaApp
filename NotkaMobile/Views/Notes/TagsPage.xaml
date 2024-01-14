@@ -7,38 +7,96 @@
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              x:DataType="viewmodel:TagsViewModel"
              Title="{Binding Title}">
+    <!--SwipeView użyty w CollectionView (albo RefreshView) powoduje krytyczny błąd w aplikacji na Windows. Zastosowałem tu obejście wzorowane na odpowiedzi 'Rabidgoalie' z 14.11.2023:
+    https://github.com/dotnet/maui/issues/8870-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate
+                x:Key="WithDesktop"
+                x:DataType="{x:Type model:TagForView}">
+                <Grid Padding="0,0,0,5">
+                    <Border Style="{StaticResource ListElementBorder}"
+                            HeightRequest="50">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=ItemTapped}"
+                                          CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*, 60">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding Name}" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}"
+                                       LineBreakMode="TailTruncation"
+                                       HeightRequest="20"
+                                       Padding="0,0,5,0"/>
+                            </VerticalStackLayout>
+                            <ImageButton Grid.Column="1"
+                                    HeightRequest="60"
+                                    WidthRequest="60"
+                                    Source="material_delete.png"
+                                    Padding="15"
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate
+                x:Key="WithoutDesktop"
+                x:DataType="{x:Type model:TagForView}">
+                <Grid Padding="0,0,0,5">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem IconImageSource="material_delete.png"
+                                       BackgroundColor="Red"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=DeleteCommand}"
+                                       CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border Style="{StaticResource ListElementBorder}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=ItemTapped}"
+                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding Name}" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}"
+                                       LineBreakMode="TailTruncation"
+                                       HeightRequest="20"
+                                       Padding="0,0,5,0"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </SwipeView>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
-    <!--<VerticalStackLayout Padding="10">
-        <Label 
-            Text="Wszystkie Twoje tagi"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />-->
-        <RefreshView x:DataType="viewmodel:TagsViewModel"
-                     Command="{Binding LoadItemsCommand}"
-                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <!--<CollectionView ItemsSource="{Binding AllTags}">-->
-            <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:TagForView}">
-                        <Frame BackgroundColor="Purple">
-                            <!--<Frame.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=ItemTapped}"
-                                            CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>-->
-                            <VerticalStackLayout>
-                                <Label Text="{Binding Name}" FontSize="20"/>
-                                <Label Text="{Binding Description}"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+
+    <RefreshView x:DataType="viewmodel:TagsViewModel"
+                 Command="{Binding LoadItemsCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <Grid Padding="5">
+            <CollectionView 
+                ItemsSource="{Binding Items}"
+                ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
+                SelectionMode="None">
             </CollectionView>
-        </RefreshView>
-    <!--</VerticalStackLayout>-->
+        </Grid>
+    </RefreshView>
+
 </ContentPage>

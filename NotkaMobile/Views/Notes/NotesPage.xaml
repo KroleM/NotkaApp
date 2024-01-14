@@ -16,7 +16,8 @@
                 x:Key="WithDesktop"
                 x:DataType="{x:Type model:NoteForView}">
                 <Grid Padding="0,0,0,5">
-                    <Border Style="{StaticResource ListElementBorder}">
+                    <Border Style="{StaticResource ListElementBorder}"
+                            HeightRequest="80">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
@@ -49,7 +50,8 @@
                                        CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Border Style="{StaticResource ListElementBorder}">
+                        <Border Style="{StaticResource ListElementBorder}"
+                                HeightRequest="80">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1"
                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
