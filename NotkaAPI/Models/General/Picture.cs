@@ -5,8 +5,8 @@ namespace NotkaAPI.Models.General
 {
 	public class Picture : BaseDatatable
 	{
-		public byte[] BitPicture { get; set; }
-		public string PictureFormat { get; set; }
+		public byte[] BitPicture { get; set; } = null!;
+		public string PictureFormat { get; set; } = null!;
         public bool IsProfile { get; set; }
         public int UserId { get; set; }
         //public User User { get; set; }  // czy potrzebne?

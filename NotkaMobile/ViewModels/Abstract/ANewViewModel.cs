@@ -29,6 +29,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			await DataStore.AddItemAsync(SetItem());
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
+			// Add navigation to details page?
 		}
 	}
 }

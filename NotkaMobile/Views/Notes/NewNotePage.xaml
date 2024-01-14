@@ -137,7 +137,7 @@
                         </Border>
                     </toolkit:Expander.Header>
                     <!--<toolkit:ByteArrayToImageSourceConverter/>-->
-                    <Image Aspect="Center"
+                    <Image Aspect="AspectFit"
                            Source="{Binding PhotoSource}"/>
                 </toolkit:Expander>
                 <Editor Grid.Row="1" Margin="0,2"

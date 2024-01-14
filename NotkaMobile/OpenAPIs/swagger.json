@@ -50,17 +50,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Currency"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Currency"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Currency"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                ]
               }
             }
           }
@@ -147,17 +159,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Currency"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Currency"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Currency"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Currency"
+                  }
+                ]
               }
             }
           }
@@ -235,17 +259,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/List"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/List"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/List"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/List"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/List"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/List"
+                  }
+                ]
               }
             }
           }
@@ -332,17 +368,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/List"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/List"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/List"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/List"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/List"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/List"
+                  }
+                ]
               }
             }
           }
@@ -420,17 +468,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListElement"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListElement"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListElement"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListElement"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ListElement"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListElement"
+                  }
+                ]
               }
             }
           }
@@ -517,17 +577,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListElement"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListElement"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListElement"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListElement"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ListElement"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListElement"
+                  }
+                ]
               }
             }
           }
@@ -605,17 +677,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListTag"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListTag"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ListTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListTag"
+                  }
+                ]
               }
             }
           }
@@ -702,17 +786,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListTag"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListTag"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ListTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListTag"
+                  }
+                ]
               }
             }
           }
@@ -790,17 +886,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                ]
               }
             }
           }
@@ -887,17 +995,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Login"
+                  }
+                ]
               }
             }
           }
@@ -1078,17 +1198,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteForView"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteForView"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteForView"
+                  }
+                ]
               }
             }
           }
@@ -1109,17 +1241,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteForView"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteForView"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteForView"
+                  }
+                ]
               }
             }
           }
@@ -1193,17 +1337,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteTag"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteTag"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteTag"
+                  }
+                ]
               }
             }
           }
@@ -1290,17 +1446,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteTag"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteTag"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NoteTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteTag"
+                  }
+                ]
               }
             }
           }
@@ -1378,17 +1546,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Picture"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Picture"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Picture"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Picture"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Picture"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Picture"
+                  }
+                ]
               }
             }
           }
@@ -1475,17 +1655,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Picture"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Picture"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Picture"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Picture"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Picture"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Picture"
+                  }
+                ]
               }
             }
           }
@@ -1563,17 +1755,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Portfolio"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Portfolio"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Portfolio"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Portfolio"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Portfolio"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Portfolio"
+                  }
+                ]
               }
             }
           }
@@ -1660,17 +1864,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Portfolio"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Portfolio"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Portfolio"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Portfolio"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Portfolio"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Portfolio"
+                  }
+                ]
               }
             }
           }
@@ -1748,17 +1964,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioStock"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioStock"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioStock"
+                  }
+                ]
               }
             }
           }
@@ -1845,17 +2073,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioStock"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioStock"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioStock"
+                  }
+                ]
               }
             }
           }
@@ -1933,17 +2173,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                ]
               }
             }
           }
@@ -2030,17 +2282,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                ]
               }
             }
           }
@@ -2118,17 +2382,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Role"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Role"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Role"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                ]
               }
             }
           }
@@ -2215,17 +2491,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Role"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Role"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Role"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                ]
               }
             }
           }
@@ -2303,17 +2591,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUser"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleUser"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUser"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleUser"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUser"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleUser"
+                  }
+                ]
               }
             }
           }
@@ -2400,17 +2700,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUser"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleUser"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUser"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleUser"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RoleUser"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleUser"
+                  }
+                ]
               }
             }
           }
@@ -2488,17 +2800,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Stock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Stock"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Stock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Stock"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Stock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Stock"
+                  }
+                ]
               }
             }
           }
@@ -2585,17 +2909,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Stock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Stock"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Stock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Stock"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Stock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Stock"
+                  }
+                ]
               }
             }
           }
@@ -2673,17 +3009,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockExchange"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchange"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockExchange"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchange"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StockExchange"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchange"
+                  }
+                ]
               }
             }
           }
@@ -2770,17 +3118,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockExchange"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchange"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockExchange"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchange"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StockExchange"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchange"
+                  }
+                ]
               }
             }
           }
@@ -2858,17 +3218,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockNote"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockNote"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockNote"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockNote"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StockNote"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockNote"
+                  }
+                ]
               }
             }
           }
@@ -2955,17 +3327,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockNote"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockNote"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockNote"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockNote"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StockNote"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockNote"
+                  }
+                ]
               }
             }
           }
@@ -3043,17 +3427,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockPrice"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockPrice"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockPrice"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockPrice"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StockPrice"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockPrice"
+                  }
+                ]
               }
             }
           }
@@ -3140,17 +3536,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockPrice"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockPrice"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StockPrice"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockPrice"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StockPrice"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockPrice"
+                  }
+                ]
               }
             }
           }
@@ -3331,17 +3739,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TagForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TagForView"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TagForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TagForView"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TagForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TagForView"
+                  }
+                ]
               }
             }
           }
@@ -3362,17 +3782,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TagForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TagForView"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TagForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TagForView"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TagForView"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TagForView"
+                  }
+                ]
               }
             }
           }
@@ -3446,17 +3878,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                ]
               }
             }
           }
@@ -3543,17 +3987,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                ]
               }
             }
           }
@@ -3631,17 +4087,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskTag"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskTag"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskTag"
+                  }
+                ]
               }
             }
           }
@@ -3728,17 +4196,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskTag"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskTag"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskTag"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskTag"
+                  }
+                ]
               }
             }
           }
@@ -3816,17 +4296,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Transaction"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Transaction"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Transaction"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                ]
               }
             }
           }
@@ -3913,17 +4405,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Transaction"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Transaction"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Transaction"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                ]
               }
             }
           }
@@ -4001,17 +4505,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
               }
             }
           }
@@ -4098,17 +4614,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/User"
+                  }
+                ]
               }
             }
           }
@@ -4233,17 +4761,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Watchlist"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Watchlist"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Watchlist"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Watchlist"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Watchlist"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Watchlist"
+                  }
+                ]
               }
             }
           }
@@ -4330,17 +4870,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Watchlist"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Watchlist"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Watchlist"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Watchlist"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Watchlist"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Watchlist"
+                  }
+                ]
               }
             }
           }
@@ -4418,17 +4970,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/WatchlistStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WatchlistStock"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/WatchlistStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WatchlistStock"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/WatchlistStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WatchlistStock"
+                  }
+                ]
               }
             }
           }
@@ -4515,17 +5079,29 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/WatchlistStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WatchlistStock"
+                  }
+                ]
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/WatchlistStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WatchlistStock"
+                  }
+                ]
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/WatchlistStock"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WatchlistStock"
+                  }
+                ]
               }
             }
           }
@@ -4654,7 +5230,11 @@
             "nullable": true
           },
           "listType": {
-            "$ref": "#/components/schemas/ListType"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ListType"
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -4694,7 +5274,12 @@
             "format": "int32"
           },
           "list": {
-            "$ref": "#/components/schemas/List"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/List"
+              }
+            ],
+            "nullable": true
           },
           "answer": {
             "type": "string",
@@ -4734,14 +5319,24 @@
             "format": "int32"
           },
           "list": {
-            "$ref": "#/components/schemas/List"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/List"
+              }
+            ],
+            "nullable": true
           },
           "tagId": {
             "type": "integer",
             "format": "int32"
           },
           "tag": {
-            "$ref": "#/components/schemas/Tag"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Tag"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4778,7 +5373,12 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           },
           "isLogged": {
             "type": "boolean"
@@ -4832,7 +5432,12 @@
             "nullable": true
           },
           "picture": {
-            "$ref": "#/components/schemas/Picture"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Picture"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4877,6 +5482,14 @@
               "$ref": "#/components/schemas/TagForView"
             },
             "nullable": true
+          },
+          "picture": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Picture"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4904,14 +5517,24 @@
             "format": "int32"
           },
           "note": {
-            "$ref": "#/components/schemas/Note"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Note"
+              }
+            ],
+            "nullable": true
           },
           "tagId": {
             "type": "integer",
             "format": "int32"
           },
           "tag": {
-            "$ref": "#/components/schemas/Tag"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Tag"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4993,7 +5616,12 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           },
           "portfolioStocks": {
             "type": "array",
@@ -5028,14 +5656,24 @@
             "format": "int32"
           },
           "portfolio": {
-            "$ref": "#/components/schemas/Portfolio"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Portfolio"
+              }
+            ],
+            "nullable": true
           },
           "stockId": {
             "type": "integer",
             "format": "int32"
           },
           "stock": {
-            "$ref": "#/components/schemas/Stock"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stock"
+              }
+            ],
+            "nullable": true
           },
           "quantity": {
             "type": "number",
@@ -5072,14 +5710,24 @@
             "format": "int32"
           },
           "sender": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           },
           "receiverId": {
             "type": "integer",
             "format": "int32"
           },
           "receiver": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           },
           "noteId": {
             "type": "integer",
@@ -5087,7 +5735,12 @@
             "nullable": true
           },
           "note": {
-            "$ref": "#/components/schemas/Note"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Note"
+              }
+            ],
+            "nullable": true
           },
           "listId": {
             "type": "integer",
@@ -5095,7 +5748,12 @@
             "nullable": true
           },
           "list": {
-            "$ref": "#/components/schemas/List"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/List"
+              }
+            ],
+            "nullable": true
           },
           "taskId": {
             "type": "integer",
@@ -5103,7 +5761,12 @@
             "nullable": true
           },
           "task": {
-            "$ref": "#/components/schemas/Task"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Task"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5171,14 +5834,24 @@
             "format": "int32"
           },
           "role": {
-            "$ref": "#/components/schemas/Role"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Role"
+              }
+            ],
+            "nullable": true
           },
           "userId": {
             "type": "integer",
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5224,14 +5897,24 @@
             "format": "int32"
           },
           "stockExchange": {
-            "$ref": "#/components/schemas/StockExchange"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StockExchange"
+              }
+            ],
+            "nullable": true
           },
           "currencyId": {
             "type": "integer",
             "format": "int32"
           },
           "currency": {
-            "$ref": "#/components/schemas/Currency"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Currency"
+              }
+            ],
+            "nullable": true
           },
           "stockPrices": {
             "type": "array",
@@ -5331,14 +6014,24 @@
             "format": "int32"
           },
           "stock": {
-            "$ref": "#/components/schemas/Stock"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stock"
+              }
+            ],
+            "nullable": true
           },
           "noteId": {
             "type": "integer",
             "format": "int32"
           },
           "note": {
-            "$ref": "#/components/schemas/Note"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Note"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5378,7 +6071,12 @@
             "format": "int32"
           },
           "stock": {
-            "$ref": "#/components/schemas/Stock"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stock"
+              }
+            ],
+            "nullable": true
           },
           "price": {
             "type": "number",
@@ -5559,14 +6257,24 @@
             "format": "int32"
           },
           "task": {
-            "$ref": "#/components/schemas/Task"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Task"
+              }
+            ],
+            "nullable": true
           },
           "tagId": {
             "type": "integer",
             "format": "int32"
           },
           "tag": {
-            "$ref": "#/components/schemas/Tag"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Tag"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5594,7 +6302,12 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           },
           "quantity": {
             "type": "number",
@@ -5609,7 +6322,12 @@
             "format": "int32"
           },
           "stock": {
-            "$ref": "#/components/schemas/Stock"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stock"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5727,7 +6445,12 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
           },
           "watchlistStocks": {
             "type": "array",
@@ -5762,14 +6485,24 @@
             "format": "int32"
           },
           "watchlist": {
-            "$ref": "#/components/schemas/Watchlist"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Watchlist"
+              }
+            ],
+            "nullable": true
           },
           "stockId": {
             "type": "integer",
             "format": "int32"
           },
           "stock": {
-            "$ref": "#/components/schemas/Stock"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stock"
+              }
+            ],
+            "nullable": true
           }
         },
         "additionalProperties": false

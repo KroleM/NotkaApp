@@ -21,6 +21,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 		DateTimeOffset _modifiedDate;
 		[ObservableProperty]
 		ICollection<TagForView> _tagsForView = new List<TagForView>();
+		[ObservableProperty]
+		ImageSource? _photoSource;
 
 		public override void LoadProperties(NoteForView item)
 		{
@@ -29,6 +31,14 @@ namespace NotkaMobile.ViewModels.NoteVM
 			CreatedDate = item.CreatedDate;
 			ModifiedDate = item.ModifiedDate;
 			TagsForView = item.TagsForView;
+			PhotoSource = LoadPhoto(item.Picture);
+		}
+
+		private ImageSource LoadPhoto(Picture? picture)
+		{
+			if (picture == null) return null;
+
+			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
 		}
 	}
 }

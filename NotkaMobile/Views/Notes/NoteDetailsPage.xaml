@@ -6,17 +6,22 @@
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              x:DataType="viewmodel:NoteDetailsViewModel">
+    <ContentPage.Resources>
+        <toolkit:IsNotNullConverter x:Key="isNotNull"/>
+        <toolkit:InvertedBoolConverter x:Key="invertedBool"/>
+    </ContentPage.Resources>
+    
     <ScrollView>
         <StackLayout Spacing="15" Padding="15">
             <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
             <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
-                <Label Text="Data utworzenia:" FontSize="Small" />
+                <Label Text="Data utworzenia:" />
                 <Label Grid.Column="1"  Margin="15,0,0,0" 
-                   Text="{Binding CreatedDate}" FontSize="Small"/>
+                   Text="{Binding CreatedDate}" />
                 <Label Grid.Row="1"
-                   Text="Data modyfikacji:" FontSize="Small" />
+                   Text="Data modyfikacji:" />
                 <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
-                   Text="{Binding ModifiedDate}" FontSize="Small"/>
+                   Text="{Binding ModifiedDate}" />
             </Grid>
             <HorizontalStackLayout>
                 <Label Text="Tagi:" FontSize="Medium" VerticalOptions="Center"/>
@@ -43,9 +48,41 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </HorizontalStackLayout>
-            <Border Style="{StaticResource SimpleBorder}">
-                <Label Text="{Binding Description}" FontSize="Small"/>
-            </Border>
+
+            <ScrollView>
+                <Grid RowDefinitions="Auto, *">
+                    <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}">
+                        <toolkit:Expander.Header>
+                            <Border Style="{StaticResource SimpleBorder}" Padding="5"
+                                Background="{StaticResource Bluegrey}">
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <Label VerticalOptions="Center"
+                                       Text="Zdjęcie"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Start"
+                                       FontSize="Small" />
+                                    <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBool}}"
+                                       VerticalOptions="Center" 
+                                       Grid.Column="2" 
+                                       Text="Rozwiń"
+                                       HorizontalOptions="End"/>
+                                    <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded}" 
+                                       VerticalOptions="Center" 
+                                       Grid.Column="2" 
+                                       Text="Zwiń"
+                                       HorizontalOptions="End"/>
+                                </Grid>
+                            </Border>
+                        </toolkit:Expander.Header>
+                        <!--<toolkit:ByteArrayToImageSourceConverter/>-->
+                        <Image Aspect="AspectFit"
+                               Source="{Binding PhotoSource}"/>
+                    </toolkit:Expander>
+                    <Border Grid.Row="1" Style="{StaticResource SimpleBorder}">
+                        <Label Text="{Binding Description}" FontSize="Small"/>
+                    </Border>
+                </Grid>
+            </ScrollView>
 
             <!--<StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>

@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
+using NotkaAPI.Models.General;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
@@ -44,7 +45,7 @@ namespace NotkaAPI.Controllers
                 .ToListAsync();
 
 			// Include->Picture powyżej prowadzi do duplikowania danych zdjęcia dla każdego wiersza tabeli (bo wiele NoteTagów dla jednej notatki).
-            // Propozycja optymalizacji - Split Queries:https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
+            // Propozycja optymalizacji - Split Queries: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
 
 			return notes
                 .Select(note => ModelConverters.ConvertToNoteForView(note))
@@ -66,6 +67,7 @@ namespace NotkaAPI.Controllers
 			var note = await _context.Note
 	            .Include(note => note.NoteTag)
 	            .ThenInclude(notetag => notetag.Tag)
+                .Include(note => note.Picture)
 	            .SingleOrDefaultAsync(note => note.Id == id);
 			if (note.UserId != userId)
             {
@@ -111,12 +113,13 @@ namespace NotkaAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<NoteForView>> PostNote(NoteForView note)
         {
-            var noteToAdd = new Note().CopyProperties(note);
+			if (note == null) return Forbid();
 
-            if (note == null) return Forbid();
+			var noteToAdd = new Note().CopyProperties(note);
 
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
+                //This goes first, because later noteToAdd.Id can be used
 				_context.Note.Add(noteToAdd);
 				await _context.SaveChangesAsync();
 
@@ -148,7 +151,8 @@ namespace NotkaAPI.Controllers
             var uploadedNote = await _context.Note
                 .Include(note => note.NoteTag)
                 .ThenInclude(notetag => notetag.Tag)
-                .SingleOrDefaultAsync(note => note.Id == noteToAdd.Id);
+				.Include(note => note.Picture)
+				.SingleOrDefaultAsync(note => note.Id == noteToAdd.Id);
 			//await _context.Entry(uploadedNote).ReloadAsync();
 			return Ok(ModelConverters.ConvertToNoteForView(uploadedNote));
 		}

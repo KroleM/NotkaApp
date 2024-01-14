@@ -25,6 +25,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		private TagDataStore _tagDataStore;
 		private byte[] _bytesArray;
 		public List<TagForView> Tags { get; set; } = new();
+		public Picture? Photo { get; set; } 
 
 		[ObservableProperty]
 		ObservableCollection<TagForView> _selectedTags = new();
@@ -85,6 +86,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 				ModifiedDate = DateTime.Now,
 				UserId = Preferences.Default.Get("userId", 0),
 				TagsForView = SelectedTags,
+				Picture = PhotoSource == null ? null : Photo
 			};
 		}
 		public override bool ValidateSave()
@@ -138,7 +140,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		async Task SelectPhoto()
 		{
 			FileResult photoFile = await MediaPicker.Default.PickPhotoAsync();
-
+			
 			if (photoFile == null)
 				return;
 
@@ -150,7 +152,20 @@ namespace NotkaMobile.ViewModels.NoteVM
 			MemoryStream memory = new MemoryStream();
 			localFileStream.CopyTo(memory);
 			_bytesArray = memory.ToArray();
-			PhotoSource = ImageSource.FromStream(() => new MemoryStream(_bytesArray));		
+			PhotoSource = ImageSource.FromStream(() => new MemoryStream(_bytesArray));
+
+			Photo = new Picture
+			{
+				Id = 0,
+				IsActive = true,
+				CreatedDate = DateTime.Now,
+				ModifiedDate = DateTime.Now,
+				IsProfile = false,
+				UserId = Preferences.Default.Get("userId", 0),
+				NoteId = 0,
+				BitPicture = _bytesArray,
+				PictureFormat = photoFile.ContentType
+			};
 		}
 
 		[RelayCommand]
