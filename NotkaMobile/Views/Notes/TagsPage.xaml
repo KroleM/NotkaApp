@@ -16,7 +16,7 @@
                 x:DataType="{x:Type model:TagForView}">
                 <Grid Padding="0,0,0,5">
                     <Border Style="{StaticResource ListElementBorder}"
-                            HeightRequest="50">
+                            HeightRequest="60">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagsViewModel}}, Path=ItemTapped}"
@@ -24,9 +24,17 @@
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="*, 60">
                             <VerticalStackLayout Grid.Column="0">
-                                <Label Text="{Binding Name}" 
+                                <!--<Label Text="{Binding Name}" 
                                        FontSize="20"
-                                       FontAttributes="Bold"/>
+                                       FontAttributes="Bold"/>-->
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="#" FontSize="Medium"/>
+                                            <Span Text="{Binding Name}" FontSize="Medium"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
                                 <Label Text="{Binding Description}"
                                        LineBreakMode="TailTruncation"
                                        HeightRequest="20"

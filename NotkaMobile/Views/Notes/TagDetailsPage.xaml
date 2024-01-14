@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Notes.TagDetailsPage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.TagVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+             x:DataType="viewmodel:TagDetailsViewModel">
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto, Auto, *" Padding="5">
+            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
+            <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+                <Label Text="Data utworzenia:" />
+                <Label Grid.Column="1"  Margin="15,0,0,0" 
+               Text="{Binding CreatedDate}" />
+                <Label Grid.Row="1"
+               Text="Data modyfikacji:" />
+                <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
+               Text="{Binding ModifiedDate}" />
+            </Grid>
+
+            <Border Grid.Row="2" Style="{StaticResource SimpleBorder}" VerticalOptions="FillAndExpand">
+                <Label Text="{Binding Description}" />
+            </Border>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
