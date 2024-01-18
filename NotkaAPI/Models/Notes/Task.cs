@@ -2,7 +2,7 @@
 {
 	public class Task : ANote
 	{
-		public List<TaskTag> TaskTag { get; set; } = new();
+		public List<TaskTag> TaskTags { get; set; } = new();
 		public DateTime? Deadline { get; set; }
 		public DateTime? CompletionTime { get; set; }
 	}

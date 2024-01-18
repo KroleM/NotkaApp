@@ -7,15 +7,7 @@ namespace NotkaMobile.ViewModels.Abstract
 {
 	public abstract partial class AListViewModel<T> : BaseViewModel
 	{
-		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		public IDataStore<T> DataStore { get; }
-		private T? _selectedItem;
-		public ObservableCollection<T> Items { get; }
-		public Command LoadItemsCommand { get; }
-		public Command AddItemCommand { get; }
-		public Command<T> ItemTapped { get; }
-
-		public AListViewModel(string title, IDataStore<T> dataStore)
+		protected AListViewModel(string title, IDataStore<T> dataStore)
 		{
 			Title = title;
 			DataStore = dataStore;
@@ -24,6 +16,14 @@ namespace NotkaMobile.ViewModels.Abstract
 			ItemTapped = new Command<T>(OnItemSelected);
 			AddItemCommand = new Command(OnAddItem);
 		}
+
+		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
+		private T? _selectedItem;
+		protected IDataStore<T> DataStore { get; }
+		public ObservableCollection<T> Items { get; }
+		public Command LoadItemsCommand { get; }
+		public Command AddItemCommand { get; }
+		public Command<T> ItemTapped { get; }
 
 		protected async Task ExecuteLoadItemsCommand()
 		{

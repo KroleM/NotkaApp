@@ -11,10 +11,9 @@ namespace NotkaMobile.ViewModels.Abstract
 			DataStore = dataStore;
 			CancelCommand = new Command(OnCancel);
 			DeleteCommand = new Command(OnDelete);
+			EditCommand = new Command(OnEdit);
 		}
-
-		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
-		public IDataStore<T> DataStore { get; }
+		protected IDataStore<T> DataStore { get; }
 		public Command DeleteCommand { get; }
 		public Command CancelCommand { get; }
 		public Command EditCommand { get; }
@@ -49,7 +48,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			}
 		}
 
-		public async void LoadItemId(int itemId)
+		private async void LoadItemId(int itemId)
 		{
 			try
 			{

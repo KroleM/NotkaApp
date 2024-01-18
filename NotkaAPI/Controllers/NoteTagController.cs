@@ -21,14 +21,14 @@ namespace NotkaAPI.Controllers
             _context = context;
         }
 
-        // GET: api/NoteTag
+        // GET: api/NoteTags
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NoteTag>>> GetNoteTag()
         {
             return await _context.NoteTag.ToListAsync();
         }
 
-        // GET: api/NoteTag/5
+        // GET: api/NoteTags/5
         [HttpGet("{id}")]
         public async Task<ActionResult<NoteTag>> GetNoteTag(int id)
         {
@@ -42,7 +42,7 @@ namespace NotkaAPI.Controllers
             return noteTag;
         }
 
-        // PUT: api/NoteTag/5
+        // PUT: api/NoteTags/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutNoteTag(int id, NoteTag noteTag)
@@ -73,7 +73,7 @@ namespace NotkaAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/NoteTag
+        // POST: api/NoteTags
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<NoteTag>> PostNoteTag(NoteTag noteTag)
@@ -84,7 +84,7 @@ namespace NotkaAPI.Controllers
             return CreatedAtAction("GetNoteTag", new { id = noteTag.Id }, noteTag);
         }
 
-        // DELETE: api/NoteTag/5
+        // DELETE: api/NoteTags/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNoteTag(int id)
         {

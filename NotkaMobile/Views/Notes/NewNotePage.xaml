@@ -143,6 +143,7 @@
                 <Editor Grid.Row="1" Margin="0,2"
                         AutoSize="TextChanges"
                         Placeholder="Treść notatki"
+                        MinimumHeightRequest="200"
                         Text="{Binding Text}"/>
             </Grid>
         </ScrollView>

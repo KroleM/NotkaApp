@@ -264,7 +264,7 @@ namespace NotkaAPI.Migrations
                     b.ToTable("Note");
                 });
 
-            modelBuilder.Entity("NotkaAPI.Models.Notes.NoteTag", b =>
+            modelBuilder.Entity("NotkaAPI.Models.Notes.NoteTags", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,7 +293,7 @@ namespace NotkaAPI.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("NoteTag");
+                    b.ToTable("NoteTags");
                 });
 
             modelBuilder.Entity("NotkaAPI.Models.Notes.Tag", b =>
@@ -364,7 +364,7 @@ namespace NotkaAPI.Migrations
                     b.ToTable("Task");
                 });
 
-            modelBuilder.Entity("NotkaAPI.Models.Notes.TaskTag", b =>
+            modelBuilder.Entity("NotkaAPI.Models.Notes.TaskTags", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -393,7 +393,7 @@ namespace NotkaAPI.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskTag");
+                    b.ToTable("TaskTags");
                 });
 
             modelBuilder.Entity("NotkaAPI.Models.Users.Login", b =>
@@ -642,10 +642,10 @@ namespace NotkaAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NotkaAPI.Models.Notes.NoteTag", b =>
+            modelBuilder.Entity("NotkaAPI.Models.Notes.NoteTags", b =>
                 {
                     b.HasOne("NotkaAPI.Models.Notes.Note", "Note")
-                        .WithMany("NoteTag")
+                        .WithMany("NoteTags")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -683,7 +683,7 @@ namespace NotkaAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NotkaAPI.Models.Notes.TaskTag", b =>
+            modelBuilder.Entity("NotkaAPI.Models.Notes.TaskTags", b =>
                 {
                     b.HasOne("NotkaAPI.Models.Notes.Tag", "Tag")
                         .WithMany("TaskTags")
@@ -692,7 +692,7 @@ namespace NotkaAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("NotkaAPI.Models.Notes.Task", "Task")
-                        .WithMany("TaskTag")
+                        .WithMany("TaskTags")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -741,7 +741,7 @@ namespace NotkaAPI.Migrations
 
             modelBuilder.Entity("NotkaAPI.Models.Notes.Note", b =>
                 {
-                    b.Navigation("NoteTag");
+                    b.Navigation("NoteTags");
 
                     b.Navigation("Pictures");
                 });
@@ -757,7 +757,7 @@ namespace NotkaAPI.Migrations
 
             modelBuilder.Entity("NotkaAPI.Models.Notes.Task", b =>
                 {
-                    b.Navigation("TaskTag");
+                    b.Navigation("TaskTags");
                 });
 
             modelBuilder.Entity("NotkaAPI.Models.Users.Role", b =>

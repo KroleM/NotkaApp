@@ -13,8 +13,8 @@
 
     <ScrollView>
         <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="5">
-            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"/>
-            <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="0,5"/>
+            <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
                 <Label Text="Data utworzenia:" />
                 <Label Grid.Column="1"  Margin="15,0,0,0" 
                    Text="{Binding CreatedDate}" />
@@ -23,7 +23,7 @@
                 <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
                    Text="{Binding ModifiedDate}" />
             </Grid>
-            <HorizontalStackLayout Grid.Row="2">
+            <HorizontalStackLayout Grid.Row="2" Margin="0,5">
                 <Label Text="Tagi:" FontSize="Medium" VerticalOptions="Center"/>
                 <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
                     <CollectionView.ItemTemplate>
@@ -82,11 +82,6 @@
                 </Border>
             </Grid>
 
-            <!--<StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Delete" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="AddToCart" Command="{Binding AddToCartCommand}" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>-->
         </Grid>
     </ScrollView>
 </ContentPage>

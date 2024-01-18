@@ -44,16 +44,20 @@ namespace NotkaAPI.Controllers
 			//return await _context.Tag.Where(t => t.UserId == userId).OrderByDescending(t => t.Name).ToListAsync();
 		}
 
-        // GET: api/Tag/5
+        // GET: api/Tag/1/5
         [HttpGet("{userId}/{id}")]
         public async Task<ActionResult<TagForView>> GetTag(int userId, int id)
         {
-            var tag = await _context.Tag.FindAsync(id);
-
-            if (tag == null)
-            {
-                return NotFound();
-            }
+			if (!await _context.Tag.AnyAsync(n => n.Id == id))
+			{
+				return NotFound();
+			}
+            var tag = await _context.Tag
+                .Include(tag => tag.NoteTags)
+                .ThenInclude(notetag => notetag.Note)
+				.ThenInclude(note => note.NoteTags)
+				.ThenInclude(notetag => notetag.Tag)
+				.SingleOrDefaultAsync(tag => tag.Id == id);
 			if (tag.UserId != userId)
 			{
 				return Forbid();

@@ -9537,8 +9537,8 @@ namespace NotkaMobile.Service.Reference
         [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int UserId { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("noteTag", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<NoteTag> NoteTag { get; set; }
+        [Newtonsoft.Json.JsonProperty("noteTags", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<NoteTag> NoteTags { get; set; }
 
         [Newtonsoft.Json.JsonProperty("picture", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Picture Picture { get; set; }
@@ -10052,8 +10052,8 @@ namespace NotkaMobile.Service.Reference
         [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int UserId { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("taskTag", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<TaskTag> TaskTag { get; set; }
+        [Newtonsoft.Json.JsonProperty("taskTags", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<TaskTag> TaskTags { get; set; }
 
         [Newtonsoft.Json.JsonProperty("deadline", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTimeOffset? Deadline { get; set; }

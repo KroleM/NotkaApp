@@ -5424,7 +5424,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "noteTag": {
+          "noteTags": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/NoteTag"
@@ -6214,7 +6214,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "taskTag": {
+          "taskTags": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TaskTag"

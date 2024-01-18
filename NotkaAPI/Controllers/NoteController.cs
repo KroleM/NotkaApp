@@ -39,7 +39,7 @@ namespace NotkaAPI.Controllers
             }
             var notes = await _context.Note
 				.Where(n => n.UserId == userId)
-				.Include(note => note.NoteTag)
+				.Include(note => note.NoteTags)
                 .ThenInclude(notetag => notetag.Tag)
                 //.Include(note => note.Picture)
                 .ToListAsync();
@@ -65,7 +65,7 @@ namespace NotkaAPI.Controllers
                 return NotFound();
             }
 			var note = await _context.Note
-	            .Include(note => note.NoteTag)
+	            .Include(note => note.NoteTags)
 	            .ThenInclude(notetag => notetag.Tag)
                 .Include(note => note.Picture)
 	            .SingleOrDefaultAsync(note => note.Id == id);
@@ -149,7 +149,7 @@ namespace NotkaAPI.Controllers
             }
 
             var uploadedNote = await _context.Note
-                .Include(note => note.NoteTag)
+                .Include(note => note.NoteTags)
                 .ThenInclude(notetag => notetag.Tag)
 				.Include(note => note.Picture)
 				.SingleOrDefaultAsync(note => note.Id == noteToAdd.Id);

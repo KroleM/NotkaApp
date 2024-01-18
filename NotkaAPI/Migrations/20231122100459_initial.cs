@@ -288,7 +288,7 @@ namespace NotkaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NoteTag",
+                name: "NoteTags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -363,7 +363,7 @@ namespace NotkaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskTag",
+                name: "TaskTags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -424,12 +424,12 @@ namespace NotkaAPI.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_NoteTag_NoteId",
-                table: "NoteTag",
+                table: "NoteTags",
                 column: "NoteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NoteTag_TagId",
-                table: "NoteTag",
+                table: "NoteTags",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
@@ -489,12 +489,12 @@ namespace NotkaAPI.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaskTag_TagId",
-                table: "TaskTag",
+                table: "TaskTags",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaskTag_TaskId",
-                table: "TaskTag",
+                table: "TaskTags",
                 column: "TaskId");
         }
 
@@ -511,7 +511,7 @@ namespace NotkaAPI.Migrations
                 name: "Login");
 
             migrationBuilder.DropTable(
-                name: "NoteTag");
+                name: "NoteTags");
 
             migrationBuilder.DropTable(
                 name: "Picture");
@@ -523,7 +523,7 @@ namespace NotkaAPI.Migrations
                 name: "RoleUser");
 
             migrationBuilder.DropTable(
-                name: "TaskTag");
+                name: "TaskTags");
 
             migrationBuilder.DropTable(
                 name: "List");
