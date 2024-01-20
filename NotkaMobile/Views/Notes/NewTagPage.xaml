@@ -6,25 +6,28 @@
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              x:DataType="viewmodel:NewTagViewModel"
              Title="{Binding Title}">
-    <Grid RowDefinitions="40, 40, *, 40"
+    <Grid RowDefinitions="Auto, *, Auto"
           ColumnDefinitions="100, *" 
-          Padding="10">
+          Padding="5">
         <Label Grid.Row="0" Grid.Column="0" 
                Text="Nazwa:"
                VerticalOptions="Center" 
                HorizontalTextAlignment="Start" />
         <Entry Grid.Row="0" Grid.Column="1"  
                Text="{Binding TagName}"
-               Placeholder="Wpisz krótki, ale znaczący tag"
+               Placeholder="Wpisz nazwę taga bez znaku #"
                ClearButtonVisibility="WhileEditing"/>
-        <Label Grid.Row="1" Grid.Column="0" 
-               Text="Opis:"
-               VerticalOptions="Center" 
-               HorizontalTextAlignment="Start" />
-        <Editor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+        <!--<ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                    Margin="0,4,0,0"
+                    VerticalOptions="FillAndExpand">-->
+        <Editor Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="0,4,0,0"
+                AutoSize="TextChanges"
                 Text="{Binding Description}"
                 Placeholder="Opis tagu"/>
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+        <!--</ScrollView>-->
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="0,4"
                 Text="Dodaj tag"
                 Command="{Binding SaveCommand}"/>
     </Grid>

@@ -10024,6 +10024,9 @@ namespace NotkaMobile.Service.Reference
         [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int UserId { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("notesForView", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<NoteForView> NotesForView { get; set; }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]

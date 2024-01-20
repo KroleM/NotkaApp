@@ -6176,6 +6176,13 @@
           "userId": {
             "type": "integer",
             "format": "int32"
+          },
+          "notesForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoteForView"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -36,7 +36,7 @@
         </HorizontalStackLayout>
     </Shell.TitleView>-->
 
-    <Grid Padding="10">
+    <Grid Padding="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -55,6 +55,7 @@
                HorizontalTextAlignment="Start" />
         <Entry Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
                Margin="0,2"
+               ClearButtonVisibility="WhileEditing"
                Text="{Binding NoteTitle}"/>
         <Label Grid.Column="0" Grid.Row="1"
                Text="Tagi:"
@@ -63,7 +64,11 @@
         <Grid Grid.Column="1" Grid.Row="1" 
               ColumnDefinitions="*, Auto"
               HorizontalOptions="Fill">
-            <Entry HorizontalOptions="FillAndExpand" Placeholder="Tag" Margin="0,2" Text="{Binding CurrentTag}"/>
+            <Entry HorizontalOptions="FillAndExpand" 
+                   Placeholder="Tag" 
+                   Margin="0,2" 
+                   ClearButtonVisibility="WhileEditing" 
+                   Text="{Binding CurrentTag}"/>
             <Button Grid.Column="1" HorizontalOptions="End" Text="+" FontSize="Medium" Margin="2" Command="{Binding AddSelectedTagCommand}" />
         </Grid>
 

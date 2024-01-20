@@ -115,17 +115,22 @@ namespace NotkaAPI.Controllers
         [HttpDelete("{userId}/{id}")]
         public async Task<IActionResult> DeleteTag(int userId, int id)
         {
-            var tag = await _context.Tag.FindAsync(id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
+			if (!await _context.Tag.AnyAsync(n => n.Id == id))
+			{
+				return NotFound();
+			}
+            //Proper relationship child (dependent) has to be included (loaded) in order to cascade-delete.
+			var tag = await _context.Tag
+                .Include(tag => tag.NoteTags)
+                .SingleOrDefaultAsync(tag => tag.Id == id);
+
 			if (tag.UserId != userId)
 			{
 				return Forbid();
 			}
 
-			_context.Tag.Remove(tag);
+			//_context.Tag.Remove(tag);
+			_context.Remove(tag);
             await _context.SaveChangesAsync();
 
             return NoContent();
