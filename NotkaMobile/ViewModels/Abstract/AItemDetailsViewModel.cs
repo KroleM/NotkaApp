@@ -29,9 +29,9 @@ namespace NotkaMobile.ViewModels.Abstract
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 		}
-		private async void OnEdit()
+		protected async virtual void OnEdit()	//FIXME virtual zablokuje wykonanie komendy?
 		{
-
+			//await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}?{nameof(NoteEditViewModel.ItemId)}={ItemId}");
 		}
 
 		private int itemId;

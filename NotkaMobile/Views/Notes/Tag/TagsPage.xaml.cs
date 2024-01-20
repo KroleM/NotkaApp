@@ -1,6 +1,6 @@
 using NotkaMobile.ViewModels.TagVM;
 
-namespace NotkaMobile.Views.Notes;
+namespace NotkaMobile.Views.Notes.Tag;
 
 public partial class TagsPage : ContentPage
 {

@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:NotkaMobile"
     xmlns:views="clr-namespace:NotkaMobile.Views"
-    xmlns:notes="clr-namespace:NotkaMobile.Views.Notes"
+    xmlns:notes="clr-namespace:NotkaMobile.Views.Notes.Note"
+    xmlns:tags="clr-namespace:NotkaMobile.Views.Notes.Tag"
     Shell.FlyoutBehavior="Disabled"
     Title="NotkaMobile">
 
@@ -41,7 +42,7 @@
              Icon="material_tag">
             <ShellContent
                 Title="Tagi"
-                ContentTemplate="{DataTemplate notes:TagsPage}"
+                ContentTemplate="{DataTemplate tags:TagsPage}"
                 Route="TagsModulePage"/>
         </Tab>
         <!--Tu powinny znaleźć się kolejne analogiczne taby-->

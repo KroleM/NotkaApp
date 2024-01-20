@@ -1,4 +1,4 @@
-namespace NotkaMobile.Views.Notes;
+namespace NotkaMobile.Views.Notes.Note;
 
 public partial class NoteListElement : ContentView
 {

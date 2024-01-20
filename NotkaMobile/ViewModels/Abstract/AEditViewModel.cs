@@ -17,6 +17,7 @@ namespace NotkaMobile.ViewModels.Abstract
 		public Command SaveCommand { get; }
 		public Command DeleteCommand { get; }
 		public Command CancelCommand { get; }
+		public T Item { get; set; }
 		private int _itemId;
 		public int ItemId
 		{

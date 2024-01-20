@@ -98,7 +98,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\Notes\NotesPage.xaml.cs">
+	  <Compile Update="Views\Notes\Note\NotesPage.xaml.cs">
 	    <DependentUpon>NotesPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -107,25 +107,28 @@
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\NewNotePage.xaml">
+	  <MauiXaml Update="Views\Notes\Note\NewNotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\NewTagPage.xaml">
+	  <MauiXaml Update="Views\Notes\Tag\NewTagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\NoteDetailsPage.xaml">
+	  <MauiXaml Update="Views\Notes\Note\NoteDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\NoteListElement.xaml">
+	  <MauiXaml Update="Views\Notes\Note\NoteEditPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\NotesPage.xaml">
+	  <MauiXaml Update="Views\Notes\Note\NoteListElement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\TagDetailsPage.xaml">
+	  <MauiXaml Update="Views\Notes\Note\NotesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Notes\TagsPage.xaml">
+	  <MauiXaml Update="Views\Notes\Tag\TagDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Notes\Tag\TagsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

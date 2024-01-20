@@ -2,6 +2,7 @@
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
+using NotkaMobile.Views.Notes.Note;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
@@ -33,7 +34,10 @@ namespace NotkaMobile.ViewModels.NoteVM
 			TagsForView = item.TagsForView;
 			PhotoSource = LoadPhoto(item.Picture);
 		}
-
+		protected async override void OnEdit()
+		{
+			await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}?{nameof(NoteEditViewModel.ItemId)}={ItemId}");
+		}
 		private ImageSource LoadPhoto(Picture? picture)
 		{
 			if (picture == null) return null;

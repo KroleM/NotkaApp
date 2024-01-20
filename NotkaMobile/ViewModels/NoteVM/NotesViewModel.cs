@@ -2,7 +2,7 @@
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
-using NotkaMobile.Views.Notes;
+using NotkaMobile.Views.Notes.Note;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {

@@ -26,6 +26,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 
 `MAUI`
 * MAUI automatycznie konwertuje obrazy .svg na .png, dlatego w kodzie należy się odwoływać do pliku z rozszerzenim `.png`, mimo że w folderze `Images` będzie nadal tylko plik .svg.
+* Problem ze zbyt dużym poborem pamięci: pomóc może zastąpienie w widokach AllPage `CollectionView` przez `ListView` (patrz dokumentacj ListView). 
 
 
 

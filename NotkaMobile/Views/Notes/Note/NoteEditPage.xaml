@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NotkaMobile.Views.Notes.NewNotePage"
+             x:Class="NotkaMobile.Views.Notes.Note.NoteEditPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              xmlns:helpers="clr-namespace:NotkaMobile.Helpers"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
-             x:DataType="viewmodel:NewNoteViewModel"
+             x:DataType="viewmodel:NoteEditViewModel"
              Title="{Binding Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -24,17 +24,6 @@
         <ToolbarItem Text="Dodaj zdjęcie" 
                      Command="{Binding SelectPhotoCommand}"/>
     </ContentPage.ToolbarItems>
-
-    <!--<Shell.TitleView>
-        <HorizontalStackLayout HorizontalOptions="End">
-            <Button Text="Dodaj zdjęcie" 
-                    Command="{Binding SelectPhotoCommand}" 
-                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNull}}"/>
-            <Button Text="Usuń zdjęcie" 
-                    Command="{Binding RemovePhotoCommand}" 
-                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}"/>
-        </HorizontalStackLayout>
-    </Shell.TitleView>-->
 
     <Grid Padding="5">
         <Grid.ColumnDefinitions>
@@ -56,7 +45,7 @@
         <Entry Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
                Margin="0,2"
                ClearButtonVisibility="WhileEditing"
-               Text="{Binding NoteTitle}"/>
+               Text="{Binding Name}"/>
         <Label Grid.Column="0" Grid.Row="1"
                Text="Tagi:"
                VerticalOptions="Center" 
@@ -149,12 +138,12 @@
                         AutoSize="TextChanges"
                         Placeholder="Treść notatki"
                         MinimumHeightRequest="200"
-                        Text="{Binding Text}"/>
+                        Text="{Binding Description}"/>
             </Grid>
         </ScrollView>
         <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
                 Margin="0,4"
-                Text="Dodaj notatkę"
+                Text="Zapisz zmiany"
                 Command="{Binding SaveCommand}"/>
 
     </Grid>

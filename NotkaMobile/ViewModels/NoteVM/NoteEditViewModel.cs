@@ -2,18 +2,18 @@
 using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
+using NotkaMobile.Services.Abstract;
 using NotkaMobile.ViewModels.Abstract;
 using System.Collections.ObjectModel;
-using Task = System.Threading.Tasks.Task;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
-	public partial class NewNoteViewModel : ANewViewModel<NoteForView>
+	public partial class NoteEditViewModel : AEditViewModel<NoteForView>
 	{
 		#region Constructor
 
-		public NewNoteViewModel(NoteDataStore dataStore)
-			: base("Nowa notatka", dataStore)
+		public NoteEditViewModel(IDataStore<NoteForView> dataStore)
+			: base(dataStore)
 		{
 			LoadTags();
 		}
@@ -24,23 +24,24 @@ namespace NotkaMobile.ViewModels.NoteVM
 		private TagDataStore _tagDataStore;
 		private byte[] _bytesArray;
 		public List<TagForView> Tags { get; set; } = new();
-		public Picture? Photo { get; set; } 
-
+		[ObservableProperty]
+		string _name;
+		[ObservableProperty]
+		string _description;
+		[ObservableProperty]
+		DateTimeOffset _createdDate;
+		[ObservableProperty]
+		DateTimeOffset _modifiedDate;
+		//[ObservableProperty]
+		//ICollection<TagForView> _tagsForView = new List<TagForView>();
+		[ObservableProperty]
+		ImageSource? _photoSource;
 		[ObservableProperty]
 		ObservableCollection<TagForView> _selectedTags = new();
 
 		[ObservableProperty]
 		ObservableCollection<TagForView> _promptedTags = new();
-
-		[ObservableProperty]
-		string _noteTitle = string.Empty;
-
-		[ObservableProperty]
-		string _text = string.Empty;
-
-		[ObservableProperty]
-		ImageSource? _photoSource;
-
+		public Picture? Photo { get; set; }
 		private string _currentTag = string.Empty;
 		public string CurrentTag
 		{
@@ -63,14 +64,10 @@ namespace NotkaMobile.ViewModels.NoteVM
 					{
 						PromptedTags.Add(tag);
 					}
-					//Updates `IsVisible` of ListView
-					OnPropertyChanged(nameof(PromptedTags));
 				}
 				else
 				{
 					PromptedTags.Clear();
-					//Updates `IsVisible` of ListView
-					OnPropertyChanged(nameof(PromptedTags));
 				}
 
 				OnPropertyChanged(nameof(CurrentTag));
@@ -80,31 +77,51 @@ namespace NotkaMobile.ViewModels.NoteVM
 		#endregion
 		#region Methods
 
+		public override void LoadProperties(NoteForView item)
+		{
+			Item = item;
+			Name = Item.Name;
+			Description = Item.Description;
+			CreatedDate = Item.CreatedDate;
+			ModifiedDate = Item.ModifiedDate;
+			PhotoSource = LoadPhoto(Item.Picture);
+
+			SelectedTags.Clear();
+			foreach (var tag in item.TagsForView) 
+			{
+				SelectedTags.Add(tag);
+			}
+		}
+
 		public override NoteForView SetItem()
 		{
-			return new NoteForView
-			{
-				Id = 0,
-				IsActive = true,
-				Name = this.NoteTitle,
-				Description = this.Text,
-				CreatedDate = DateTime.Now,
-				ModifiedDate = DateTime.Now,
-				UserId = Preferences.Default.Get("userId", 0),
-				TagsForView = SelectedTags,
-				Picture = PhotoSource == null ? null : Photo
-			};
+			Item.IsActive = true;
+			Item.Name = this.Name;
+			Item.Description = this.Description;
+			Item.ModifiedDate = DateTime.Now;
+			Item.TagsForView = SelectedTags;
+			Item.Picture = PhotoSource == null ? null : Photo;
+
+			return Item;
 		}
+
 		public override bool ValidateSave()
 		{
-			return !string.IsNullOrEmpty(NoteTitle);
+			return !string.IsNullOrEmpty(Name);
 		}
-		private async Task LoadTags()
+		private ImageSource LoadPhoto(Picture? picture)
+		{
+			if (picture == null) return null;
+
+			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
+		}
+		private async System.Threading.Tasks.Task LoadTags()
 		{
 			_tagDataStore = new TagDataStore();
 			await _tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.items;
 		}
+
 
 		#endregion
 		#region Commands
@@ -151,17 +168,17 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 
 		[RelayCommand]
-		async Task SelectPhoto()
+		async System.Threading.Tasks.Task SelectPhoto()
 		{
 			FileResult photoFile = await MediaPicker.Default.PickPhotoAsync();
-			
+
 			if (photoFile == null)
 				return;
 
 			using var localFileStream = await photoFile.OpenReadAsync();
 			//this shorter version works but only when localFileStream doesn't have "using" statement, which will cause memory leak
 			//PhotoSource = ImageSource.FromStream(() => localFileStream);
-			
+
 			//MemoryStream, on the other hand, doesn't require disposing
 			MemoryStream memory = new MemoryStream();
 			localFileStream.CopyTo(memory);

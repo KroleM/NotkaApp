@@ -1,6 +1,6 @@
 using NotkaMobile.ViewModels.NoteVM;
 
-namespace NotkaMobile.Views.Notes;
+namespace NotkaMobile.Views.Notes.Note;
 
 public partial class NotesPage : ContentPage
 {

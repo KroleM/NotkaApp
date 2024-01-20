@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
-using NotkaMobile.Views.Notes;
+using NotkaMobile.Views.Notes.Tag;
 using TagForView = NotkaMobile.Service.Reference.TagForView;
 
 namespace NotkaMobile.ViewModels.TagVM
