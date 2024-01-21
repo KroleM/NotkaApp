@@ -1,21 +1,23 @@
 ﻿using NotkaMobile.Services.Abstract;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
+	[QueryProperty(nameof(ItemId), nameof(ItemId))]
 	public abstract class AEditViewModel<T> : BaseViewModel
 	{
-		protected AEditViewModel(IDataStore<T> dataStore)
+		protected AEditViewModel(string title, IDataStore<T> dataStore)
 		{
+			Title = title;
 			DataStore = dataStore;
 			CancelCommand = new Command(OnCancel);
-			DeleteCommand = new Command(OnDelete);
 			SaveCommand = new Command(OnSave, ValidateSave);
+			this.PropertyChanged +=
+				(_, __) => SaveCommand.ChangeCanExecute();
 		}
 		protected IDataStore<T> DataStore { get; }
 		public Command SaveCommand { get; }
-		public Command DeleteCommand { get; }
+		public Command DeleteCommand { get; }	//FIXME usunąć?
 		public Command CancelCommand { get; }
 		public T Item { get; set; }
 		private int _itemId;
@@ -32,8 +34,8 @@ namespace NotkaMobile.ViewModels.Abstract
 		{
 			try
 			{
-				var item = await DataStore.GetItemAsync(itemId);
-				LoadProperties(item);
+				Item = await DataStore.GetItemAsync(itemId);
+				LoadProperties(Item);
 			}
 			catch (Exception)
 			{
@@ -43,23 +45,15 @@ namespace NotkaMobile.ViewModels.Abstract
 		public abstract void LoadProperties(T item);
 		public abstract T SetItem();
 		public abstract bool ValidateSave();
-		protected async void OnCancel()   //virtual?
+		protected async void OnCancel()
 		{
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
-		}
-		protected async void OnDelete()   
-		{
-			await DataStore.DeleteItemAsync(_itemId);
-			// This will pop the current page off the navigation stack
-			await Shell.Current.GoToAsync("..");	//??
 		}
 		protected async void OnSave()
 		{
 			await DataStore.UpdateItemAsync(SetItem());
-			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
-			// Add navigation to details page?
 		}
 	}
 }

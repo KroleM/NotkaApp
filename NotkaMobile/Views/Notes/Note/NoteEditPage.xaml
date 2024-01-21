@@ -15,6 +15,8 @@
         <toolkit:IsNullConverter x:Key="isNull"/>
         <toolkit:IsNotNullConverter x:Key="isNotNull"/>
         <toolkit:InvertedBoolConverter x:Key="invertedBool"/>
+        <toolkit:IsStringNotNullOrWhiteSpaceConverter x:Key="isNotNullEmptyWhiteSpace"/>
+        <toolkit:IsListNotNullOrEmptyConverter x:Key="isListNotNullOrEmpty"/>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
@@ -29,7 +31,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -38,36 +39,40 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0"
-               Text="Tytuł:"
-               VerticalOptions="Center" 
-               HorizontalTextAlignment="Start" />
-        <Entry Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
-               Margin="0,2"
-               ClearButtonVisibility="WhileEditing"
-               Text="{Binding Name}"/>
-        <Label Grid.Column="0" Grid.Row="1"
-               Text="Tagi:"
-               VerticalOptions="Center" 
-               HorizontalTextAlignment="Start" />
-        <Grid Grid.Column="1" Grid.Row="1" 
-              ColumnDefinitions="*, Auto"
-              HorizontalOptions="Fill">
+        <Label Grid.Column="0"
+           Text="Tytuł:"
+           VerticalOptions="Center" 
+           HorizontalTextAlignment="Start" />
+        <Entry Grid.Column="1"
+           Margin="0,2"
+           ClearButtonVisibility="WhileEditing"
+           Text="{Binding Name}"/>
+        <Label Grid.Row="1" Grid.Column="0"
+           Text="Tagi:"
+           VerticalOptions="Center" 
+           HorizontalTextAlignment="Start" />
+        <Grid Grid.Row="1" Grid.Column="1"
+          ColumnDefinitions="*, Auto"
+          HorizontalOptions="Fill">
             <Entry HorizontalOptions="FillAndExpand" 
-                   Placeholder="Tag" 
-                   Margin="0,2" 
-                   ClearButtonVisibility="WhileEditing" 
-                   Text="{Binding CurrentTag}"/>
-            <Button Grid.Column="1" HorizontalOptions="End" Text="+" FontSize="Medium" Margin="2" Command="{Binding AddSelectedTagCommand}" />
+               Placeholder="Tag" 
+               Margin="0,2" 
+               ClearButtonVisibility="WhileEditing" 
+               Text="{Binding CurrentTag}"/>
+            <Button Grid.Column="1" HorizontalOptions="End" Text="+" FontSize="Medium" Margin="2" 
+                Command="{Binding AddSelectedTagCommand}"
+                IsEnabled="{Binding CurrentTag, Converter={StaticResource isNotNullEmptyWhiteSpace}}" />
         </Grid>
 
-        <ListView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" 
-                  VerticalOptions="StartAndExpand" ZIndex="2"
-                  ItemsSource="{Binding PromptedTags}">
+        <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"
+              VerticalOptions="StartAndExpand" ZIndex="2" 
+              IsVisible="{Binding PromptedTags, Converter={StaticResource isListNotNullOrEmpty}}"
+              Background="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Charcoal}}"  Opacity="0.9"
+              ItemsSource="{Binding PromptedTags}">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped"
-                                            Command="{Binding SelectTagCommand}" 
-                                            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+                                        Command="{Binding SelectTagCommand}" 
+                                        EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
             </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:TagForView}">
@@ -85,67 +90,68 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
-                        HorizontalOptions="StartAndExpand"
-                        ItemsLayout="HorizontalList"
-                        ItemsSource="{Binding SelectedTags}">
+        <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                    HorizontalOptions="StartAndExpand"
+                    ItemsLayout="HorizontalList"
+                    ItemsSource="{Binding SelectedTags}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:TagForView}">
                     <Border Style="{StaticResource SimpleBorder}" Margin="0,5,5,5" MinimumHeightRequest="40">
                         <HorizontalStackLayout >
                             <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="14" Padding="0,0,5,0"/>
                             <Button Text="X" Padding="1" MinimumHeightRequest="30" MinimumWidthRequest="30"
-                                    Style="{StaticResource SmallButton}"
-                                    VerticalOptions="Center"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewNoteViewModel}}, Path=RemoveSelectedTagCommand}"
-                                    CommandParameter="{Binding .}"/>
+                                Style="{StaticResource SmallButton}"
+                                VerticalOptions="Center"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NoteEditViewModel}}, Path=RemoveSelectedTagCommand}"
+                                CommandParameter="{Binding .}"/>
                         </HorizontalStackLayout>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <ScrollView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
+        <ScrollView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
             <Grid RowDefinitions="Auto, *">
                 <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}">
                     <toolkit:Expander.Header>
                         <Border Style="{StaticResource SimpleBorder}" Padding="5"
-                                Background="{StaticResource Bluegrey}">
+                            Background="{StaticResource Bluegrey}">
                             <Grid ColumnDefinitions="Auto, *, Auto">
                                 <Label VerticalOptions="Center"
-                                       Text="Zdjęcie"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Start"
-                                       FontSize="Small" />
+                                   Text="Zdjęcie"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Start"
+                                   FontSize="Small" />
                                 <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBool}}"
-                                       VerticalOptions="Center" 
-                                       Grid.Column="2" 
-                                       Text="Rozwiń"
-                                       HorizontalOptions="End"/>
+                                   VerticalOptions="Center" 
+                                   Grid.Column="2" 
+                                   Text="Rozwiń"
+                                   HorizontalOptions="End"/>
                                 <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded}" 
-                                       VerticalOptions="Center" 
-                                       Grid.Column="2" 
-                                       Text="Zwiń"
-                                       HorizontalOptions="End"/>
+                                   VerticalOptions="Center" 
+                                   Grid.Column="2" 
+                                   Text="Zwiń"
+                                   HorizontalOptions="End"/>
                             </Grid>
                         </Border>
                     </toolkit:Expander.Header>
                     <!--<toolkit:ByteArrayToImageSourceConverter/>-->
                     <Image Aspect="AspectFit"
-                           Source="{Binding PhotoSource}"/>
+                       Source="{Binding PhotoSource}"/>
                 </toolkit:Expander>
                 <Editor Grid.Row="1" Margin="0,2"
-                        AutoSize="TextChanges"
-                        Placeholder="Treść notatki"
-                        MinimumHeightRequest="200"
-                        Text="{Binding Description}"/>
+                    AutoSize="TextChanges"
+                    Placeholder="Treść notatki"
+                    MinimumHeightRequest="200"
+                    Text="{Binding Description}"/>
             </Grid>
         </ScrollView>
-        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
-                Margin="0,4"
-                Text="Zapisz zmiany"
-                Command="{Binding SaveCommand}"/>
+        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
+            Margin="0,4"
+            Text="Zapisz notatkę"
+            Command="{Binding SaveCommand}"/>
 
     </Grid>
+
 
 </ContentPage>

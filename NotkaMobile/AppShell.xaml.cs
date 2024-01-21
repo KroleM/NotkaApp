@@ -9,6 +9,7 @@ namespace NotkaMobile
 		{
 			InitializeComponent();
 
+			//Global Routes:
 			//Notes
 			Routing.RegisterRoute(nameof(NewNotePage), typeof(NewNotePage));
 			Routing.RegisterRoute(nameof(NoteDetailsPage), typeof(NoteDetailsPage));

@@ -14,6 +14,8 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Edytuj" 
                      Command="{Binding EditCommand}"/>
+        <ToolbarItem IconImageSource="material_delete.png"
+                     Command="{Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ScrollView>

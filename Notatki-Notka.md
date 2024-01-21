@@ -9,6 +9,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * `HashSet<T>` ma bardziej wydajne wyszukiwanie dla dużej liczby tabel, ale nie zachowuje stabilnej kolejności. Jeśli nawigacja jest zapisana w kodzie jako `IEnumerable`, `ICollection` albo `ISet`, to zostanie zainicjalizowana jako `HashSet`
 * Pairing of relationships only works when there is a single relationship between two types. Multiple relationships between two types must be configured explicitly.
 * Generowanie skryptów BD albo konkretnych obiektów w [MS SQL Server Management Studio][link1].
+* Operacje PUT - [modyfikowanie rekordów w BD][link4].
 
 `Swagger`:
 * Właściwości będące typami referencyjnymi nie są standardowo udostępniane jako `nullable`, ale właściwości będące typami wartościowymi (np. int?, DateTime?) mogą być "nulowalne". Istotą problemu jest brak nullowalności typów referencyjnych. Aby to zmienić należy w konfiguracji projektu Web API użyć opcji `UseAllOfToExtendReferenceSchemas`:
@@ -24,10 +25,48 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1589
 
 
-`MAUI`
-* MAUI automatycznie konwertuje obrazy .svg na .png, dlatego w kodzie należy się odwoływać do pliku z rozszerzenim `.png`, mimo że w folderze `Images` będzie nadal tylko plik .svg.
-* Problem ze zbyt dużym poborem pamięci: pomóc może zastąpienie w widokach AllPage `CollectionView` przez `ListView` (patrz dokumentacj ListView). 
+## .NET MAUI
+
+* `MAUI` automatycznie konwertuje obrazy .svg na .png, dlatego w kodzie należy się odwoływać do pliku z rozszerzenim `.png`, mimo że w folderze `Images` będzie tylko plik .svg.
+* Problem ze zbyt dużym poborem pamięci: pomóc może zastąpienie w widokach AllPage `CollectionView` przez `ListView` (patrz dokumentacja ListView).
+* Drugi możliwy powód: DataStory są (na razie) singletonami i one mogą blokować garbage collection widoków i ich view-modeli.
+* Trzeci możliwy powód: użycie `Command` zamiast `RelayCommand` [LINK][link5]
+* [Nawigacja w `Shell`][link2]:
+    - `View-first` vs. [`ViewModel-first`][link3] Navigation
+    - `await Shell.Current.GoToAsync("../../route");` podwójna nawigacja wstecz i do konkretnej ścieżki
+    - W nawigacji przez Shell można **przekazywać** dowolne argumenty (np. obiekty), również we wstecznej nawigacji.\
+        - Prosta nawigacja z argumentem typu string:
+            ```c#
+            await Shell.Current.GoToAsync($"elephantdetails?name={elephantName}");
+            ```
+        - Nawigacja z przekazaniem wielu argumentów odbywa się dzięki przeciążeniu metody `GoToAsync`, która jako argument przyjmuje `IDictionary<string, object>`:
+            ```c#
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { "Bear", animal }
+            };
+            await Shell.Current.GoToAsync($"beardetails", navigationParameter);
+            ```
+            `animal` jest typu Animal.\
+            Uwaga: dane przekazane jako `IDictionary<string, object>` są przechowywane w pamięci przez całe życie strony (do momentu usunięcia z nawigacyjnego stosu). Jeśli nie jest to pożądane, to wspomniane IDictionary należy wyczyścić metodą `Clear` po otrzymaniu przez daną stronę.\
+        - `GoToAsync` może również przyjąć argument typu `ShellNavigationQueryParameters` i wtedy przekazywany obiekt jest czyszczony po wykonaniu nawigacji.
+    - **Otrzymywanie** danych nawigacyjnych może następować na 2 sposoby:
+        - Klasę, która reprezentuje stronę, do której następuje przejście, lub klasę przypisywaną do BindingContext tej strony, należy poprzedzić `QueryPropertyAttribute` dla każdego (dowolnego typu) parametru zapytania, np.:
+            ```c#
+            [QueryProperty(nameof(Bear), "Bear")]
+            ```
+            gdzie pierwszy argument to nazwa właściwości, która otrzyma dane; drugi argument to id parametru.\
+            Otrzymane stringowe argumenty są automatycznie dekodowane na sposób URL.
+        - Klasa, która reprezentuje stronę, do której następuje przejście, lub klasę przypisywaną do BindingContext tej strony, implementuje interfejs `IQueryAttributable`. Zaletą tego podejścia jest to, że dane nawigacyjne mogą być przetwarzane przy użyciu jednej metody, co może być przydatne w przypadku wielu elementów danych nawigacyjnych, które wymagają przetwarzania jako całość.
+    - Przekazywanie wielu stringowych argumentów:
+        ```c#
+        await Shell.Current.GoToAsync($"elephantdetails?name={elephantName}&location={elephantLocation}");
+        ```
 
 
 
 [link1]: https://learn.microsoft.com/en-us/sql/ssms/scripting/generate-and-publish-scripts-wizard?view=sql-server-ver16
+[link2]: https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/shell/navigation?view=net-maui-8.0
+[link3]: https://learn.microsoft.com/en-us/dotnet/architecture/maui/navigation
+[link4]: https://learn.microsoft.com/en-us/ef/ef6/saving/change-tracking/entity-state
+[link5]: https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm-community-toolkit-features

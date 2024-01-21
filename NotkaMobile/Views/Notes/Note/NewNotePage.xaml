@@ -23,7 +23,7 @@
         <ToolbarItem Text="Usuń zdjęcie" 
                      Command="{Binding RemovePhotoCommand}"
                      IsEnabled="{Binding PhotoSource, Converter={StaticResource isNotNull}}"/>
-        <ToolbarItem Text="Dodaj zdjęcie" 
+        <ToolbarItem Text="Dodaj zdjęcie"
                      Command="{Binding SelectPhotoCommand}"/>
     </ContentPage.ToolbarItems>
 
@@ -78,7 +78,7 @@
         <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"
                   VerticalOptions="StartAndExpand" ZIndex="2" 
                   IsVisible="{Binding PromptedTags, Converter={StaticResource isListNotNullOrEmpty}}"
-                  Background="{AppThemeBinding Light={StaticResource Bluegrey}, Dark={StaticResource Bluegrey}}"  Opacity="0.9"
+                  Background="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Charcoal}}"  Opacity="0.9"
                   ItemsSource="{Binding PromptedTags}">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped"

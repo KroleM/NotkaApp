@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
-using NotkaMobile.Services.Abstract;
 using NotkaMobile.ViewModels.Abstract;
 using System.Collections.ObjectModel;
 
@@ -12,8 +11,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 	{
 		#region Constructor
 
-		public NoteEditViewModel(IDataStore<NoteForView> dataStore)
-			: base(dataStore)
+		public NoteEditViewModel(NoteDataStore dataStore)
+			: base("Edycja notatki", dataStore)
 		{
 			LoadTags();
 		}
@@ -64,10 +63,14 @@ namespace NotkaMobile.ViewModels.NoteVM
 					{
 						PromptedTags.Add(tag);
 					}
+					//Updates `IsVisible` of ListView
+					OnPropertyChanged(nameof(PromptedTags));
 				}
 				else
 				{
 					PromptedTags.Clear();
+					//Updates `IsVisible` of ListView
+					OnPropertyChanged(nameof(PromptedTags));
 				}
 
 				OnPropertyChanged(nameof(CurrentTag));
@@ -77,9 +80,9 @@ namespace NotkaMobile.ViewModels.NoteVM
 		#endregion
 		#region Methods
 
-		public override void LoadProperties(NoteForView item)
+		public override void LoadProperties(NoteForView item)	//FIXME argument is in fact redundant
 		{
-			Item = item;
+			//Item = item;
 			Name = Item.Name;
 			Description = Item.Description;
 			CreatedDate = Item.CreatedDate;
@@ -87,7 +90,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			PhotoSource = LoadPhoto(Item.Picture);
 
 			SelectedTags.Clear();
-			foreach (var tag in item.TagsForView) 
+			foreach (var tag in Item.TagsForView) 
 			{
 				SelectedTags.Add(tag);
 			}
