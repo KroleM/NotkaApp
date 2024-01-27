@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.Tag.TagDetailsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.TagVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+             xmlns:note="clr-namespace:NotkaMobile.Views.Notes.Note"
+             xmlns:noteVM="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              x:DataType="viewmodel:TagDetailsViewModel">
 
     <ContentPage.ToolbarItems>
@@ -14,23 +16,79 @@
                      Command="{Binding DeleteCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        <Grid RowDefinitions="Auto, Auto, *" Padding="5">
-            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="0,5"/>
-            <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
-                <Label Text="Data utworzenia:" />
-                <Label Grid.Column="1"  Margin="15,0,0,0" 
+    <Grid RowDefinitions="Auto, *" Padding="5">
+        <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="0,5"/>
+        <ScrollView Grid.Row="1">
+            <Grid RowDefinitions="Auto, Auto, Auto">
+                <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
+                    <Label Text="Data utworzenia:" />
+                    <Label Grid.Column="1"  Margin="15,0,0,0" 
                        Text="{Binding CreatedDate}" />
-                <Label Grid.Row="1"
+                    <Label Grid.Row="1"
                        Text="Data modyfikacji:" />
-                <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
+                    <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
                        Text="{Binding ModifiedDate}" />
-            </Grid>
+                </Grid>
 
-            <Border Grid.Row="2" Style="{StaticResource SimpleBorder}" VerticalOptions="FillAndExpand" Margin="0,5">
-                <Label Text="{Binding Description}" />
-            </Border>
-        </Grid>
-    </ScrollView>
+                <Border Grid.Row="1" Style="{StaticResource SimpleBorder}" 
+                        VerticalOptions="FillAndExpand" 
+                        MinimumHeightRequest="160"
+                        Margin="0,5">
+                    <Label Text="{Binding Description}" />
+                </Border>
+
+                <toolkit:Expander Grid.Row="2"
+                                  x:Name="expander" 
+                                  Margin="0,2" 
+                                  IsVisible="{Binding NotesForView, Converter={StaticResource isListNotNullOrEmptyConverter}}">
+                    <toolkit:Expander.Header>
+                        <Border Style="{StaticResource SimpleBorder}" Padding="5"
+                                Background="{StaticResource Bluegrey}">
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Label VerticalOptions="Center"
+                                       Text="Wystąpienia"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Start"
+                                       FontSize="Small" />
+                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBoolConverter}}"
+                                       VerticalOptions="Center" 
+                                       Grid.Column="2" 
+                                       Text="Rozwiń"
+                                       HorizontalOptions="End"/>
+                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded}" 
+                                       VerticalOptions="Center" 
+                                       Grid.Column="2" 
+                                       Text="Zwiń"
+                                       HorizontalOptions="End"/>
+                            </Grid>
+                        </Border>
+                    </toolkit:Expander.Header>
+
+                    <Grid Padding="0,5">
+                        <CollectionView 
+                            ItemsSource="{Binding NotesForView}"
+                            SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:NoteForView">
+                                    <Grid Padding="0,0,0,5">
+                                        <Border Style="{StaticResource ListElementBorder}"
+                                                HeightRequest="80">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TagDetailsViewModel}}, Path=NoteTappedCommand}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+
+                                            <note:NoteListElement/>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </toolkit:Expander>
+            </Grid>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>
