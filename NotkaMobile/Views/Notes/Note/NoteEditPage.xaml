@@ -8,16 +8,6 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              x:DataType="viewmodel:NoteEditViewModel"
              Title="{Binding Title}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
-        </ResourceDictionary>
-        <toolkit:IsNullConverter x:Key="isNull"/>
-        <toolkit:IsNotNullConverter x:Key="isNotNull"/>
-        <toolkit:InvertedBoolConverter x:Key="invertedBool"/>
-        <toolkit:IsStringNotNullOrWhiteSpaceConverter x:Key="isNotNullEmptyWhiteSpace"/>
-        <toolkit:IsListNotNullOrEmptyConverter x:Key="isListNotNullOrEmpty"/>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Usuń zdjęcie" 
@@ -72,7 +62,7 @@
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped"
                                         Command="{Binding SelectTagCommand}" 
-                                        EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+                                        EventArgsConverter="{StaticResource itemTappedEventArgsConverter}" />
             </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:TagForView}">

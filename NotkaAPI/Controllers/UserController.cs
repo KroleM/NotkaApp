@@ -28,6 +28,7 @@ namespace NotkaAPI.Controllers
             return await _context.User.ToListAsync();
         }
 
+        /*
 		// GET: api/User/5
 		[HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
@@ -41,9 +42,10 @@ namespace NotkaAPI.Controllers
 
             return user;
         }
+        */
 
 		[HttpGet("{email}/{hash}")]
-		public async Task<ActionResult<User>> GetUser(string email, string hash)
+		public async Task<ActionResult<User>> GetUserWithAuth(string email, string hash)
 		{
             var user = await _context.User.SingleOrDefaultAsync(u => u.Email == email);
 

@@ -10,6 +10,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * Pairing of relationships only works when there is a single relationship between two types. Multiple relationships between two types must be configured explicitly.
 * Generowanie skryptów BD albo konkretnych obiektów w [MS SQL Server Management Studio][link1].
 * Operacje PUT - [modyfikowanie rekordów w BD][link4].
+* `SaveChanges(Async)` wysyła wartości właściwości danej encji do bazy danych.
 
 `Swagger`:
 * Właściwości będące typami referencyjnymi nie są standardowo udostępniane jako `nullable`, ale właściwości będące typami wartościowymi (np. int?, DateTime?) mogą być "nulowalne". Istotą problemu jest brak nullowalności typów referencyjnych. Aby to zmienić należy w konfiguracji projektu Web API użyć opcji `UseAllOfToExtendReferenceSchemas`:
@@ -23,6 +24,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     Źródło:\
     https://stackoverflow.com/questions/40920441/how-to-specify-a-property-can-be-null-or-a-reference-with-swagger \
     https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1589
+* W kontrolerach można tworzyć własne metody CRUD z dodatkowymi parametrami. Metodę należy poprzedzić odpowiednim atrybutem określającym typ operacji CRUD i strukturę URL. Nazwa metody po stronie API może być dowolna, ale `Swagger` nie przekaże tej metody dalej i nada swoją generyczną, np. w przypadku dwóch getów zwracających `User` - `UserGET2Async`.
 
 
 ## .NET MAUI
@@ -63,6 +65,11 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
         await Shell.Current.GoToAsync($"elephantdetails?name={elephantName}&location={elephantLocation}");
         ```
 
+## [MediatR][link6]
+
+
+## Czego się dziś nauczyłem?
+1. 
 
 
 [link1]: https://learn.microsoft.com/en-us/sql/ssms/scripting/generate-and-publish-scripts-wizard?view=sql-server-ver16
@@ -70,3 +77,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link3]: https://learn.microsoft.com/en-us/dotnet/architecture/maui/navigation
 [link4]: https://learn.microsoft.com/en-us/ef/ef6/saving/change-tracking/entity-state
 [link5]: https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm-community-toolkit-features
+[link6]: https://cezarywalenciuk.pl/blog/programing/mediatr-cqrs-i-wzorzec-projektowy-mediator-w-aspnet-core
