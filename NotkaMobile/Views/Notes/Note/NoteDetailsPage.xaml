@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.Note.NoteDetailsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              x:DataType="viewmodel:NoteDetailsViewModel">
 
     <ContentPage.ToolbarItems>
@@ -53,7 +53,7 @@
             </HorizontalStackLayout>
 
             <Grid Grid.Row="3" RowDefinitions="Auto, *">
-                <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}">
+                <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNullConverter}}">
                     <toolkit:Expander.Header>
                         <Border Style="{StaticResource SimpleBorder}" Padding="5"
                                 Background="{StaticResource Bluegrey}">
@@ -63,7 +63,7 @@
                                        FontAttributes="Bold"
                                        HorizontalOptions="Start"
                                        FontSize="Small" />
-                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBool}}"
+                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBoolConverter}}"
                                        VerticalOptions="Center" 
                                        Grid.Column="2" 
                                        Text="Rozwiń"

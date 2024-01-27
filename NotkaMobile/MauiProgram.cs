@@ -56,6 +56,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<TagsViewModel>();
 			mauiAppBuilder.Services.AddTransient<NewTagViewModel>();
 			mauiAppBuilder.Services.AddTransient<TagDetailsViewModel>();
+			mauiAppBuilder.Services.AddTransient<TagEditViewModel>();
 
 			return mauiAppBuilder;
 		}
@@ -69,6 +70,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<TagsPage>();
 			mauiAppBuilder.Services.AddTransient<NewTagPage>();
 			mauiAppBuilder.Services.AddTransient<TagDetailsPage>();
+			mauiAppBuilder.Services.AddTransient<TagEditPage>();
 
 			return mauiAppBuilder;
 		}

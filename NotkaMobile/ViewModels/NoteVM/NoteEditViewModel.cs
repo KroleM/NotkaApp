@@ -31,8 +31,6 @@ namespace NotkaMobile.ViewModels.NoteVM
 		DateTimeOffset _createdDate;
 		[ObservableProperty]
 		DateTimeOffset _modifiedDate;
-		//[ObservableProperty]
-		//ICollection<TagForView> _tagsForView = new List<TagForView>();
 		[ObservableProperty]
 		ImageSource? _photoSource;
 		[ObservableProperty]
@@ -80,9 +78,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 		#endregion
 		#region Methods
 
-		public override void LoadProperties(NoteForView item)	//FIXME argument is in fact redundant
+		public override void LoadProperties()
 		{
-			//Item = item;
 			Name = Item.Name;
 			Description = Item.Description;
 			CreatedDate = Item.CreatedDate;

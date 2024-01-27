@@ -4,11 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" >
 
-    <toolkit:IsNullConverter x:Key="isNull"/>
-    <toolkit:IsNotNullConverter x:Key="isNotNull"/>
-    <toolkit:InvertedBoolConverter x:Key="invertedBool"/>
-    <toolkit:IsStringNotNullOrWhiteSpaceConverter x:Key="isNotNullEmptyWhiteSpace"/>
-    <toolkit:IsListNotNullOrEmptyConverter x:Key="isListNotNullOrEmpty"/>
+    <toolkit:IsNullConverter x:Key="isNullConverter"/>
+    <toolkit:IsNotNullConverter x:Key="isNotNullConverter"/>
+    <toolkit:InvertedBoolConverter x:Key="invertedBoolConverter"/>
+    <toolkit:IsStringNotNullOrWhiteSpaceConverter x:Key="isStringNotNullOrWhiteSpaceConverter"/>
+    <toolkit:IsListNotNullOrEmptyConverter x:Key="isListNotNullOrEmptyConverter"/>
 
     <toolkit:ItemTappedEventArgsConverter x:Key="itemTappedEventArgsConverter" />
 

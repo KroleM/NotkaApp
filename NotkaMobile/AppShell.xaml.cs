@@ -17,6 +17,7 @@ namespace NotkaMobile
 			//Tags
 			Routing.RegisterRoute(nameof(NewTagPage), typeof(NewTagPage));
 			Routing.RegisterRoute(nameof(TagDetailsPage), typeof(TagDetailsPage));
+			Routing.RegisterRoute(nameof(TagEditPage), typeof(TagEditPage));
 		}
 	}
 }

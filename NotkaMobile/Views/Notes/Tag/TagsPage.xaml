@@ -24,9 +24,6 @@
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="*, 60">
                             <VerticalStackLayout Grid.Column="0">
-                                <!--<Label Text="{Binding Name}" 
-                                       FontSize="20"
-                                       FontAttributes="Bold"/>-->
                                 <Label>
                                     <Label.FormattedText>
                                         <FormattedString>

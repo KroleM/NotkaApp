@@ -17,7 +17,6 @@ namespace NotkaMobile.ViewModels.Abstract
 		}
 		protected IDataStore<T> DataStore { get; }
 		public Command SaveCommand { get; }
-		public Command DeleteCommand { get; }	//FIXME usunąć?
 		public Command CancelCommand { get; }
 		public T Item { get; set; }
 		private int _itemId;
@@ -35,14 +34,14 @@ namespace NotkaMobile.ViewModels.Abstract
 			try
 			{
 				Item = await DataStore.GetItemAsync(itemId);
-				LoadProperties(Item);
+				LoadProperties();
 			}
 			catch (Exception)
 			{
 				Debug.WriteLine("Failed to Load Item");
 			}
 		}
-		public abstract void LoadProperties(T item);
+		public abstract void LoadProperties();
 		public abstract T SetItem();
 		public abstract bool ValidateSave();
 		protected async void OnCancel()

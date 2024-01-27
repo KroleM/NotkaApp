@@ -32,7 +32,7 @@ namespace NotkaMobile.ViewModels.TagVM
 
 		public override bool ValidateSave()
 		{
-			return !string.IsNullOrEmpty(TagName);
+			return !string.IsNullOrEmpty(TagName) && TagName.Length < 60;
 		}
 	}
 }

@@ -2,17 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.Note.NewNotePage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.NoteVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              xmlns:helpers="clr-namespace:NotkaMobile.Helpers"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              x:DataType="viewmodel:NewNoteViewModel"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Usuń zdjęcie" 
                      Command="{Binding RemovePhotoCommand}"
-                     IsEnabled="{Binding PhotoSource, Converter={StaticResource isNotNull}}"/>
+                     IsEnabled="{Binding PhotoSource, Converter={StaticResource isNotNullConverter}}"/>
         <ToolbarItem Text="Dodaj zdjęcie"
                      Command="{Binding SelectPhotoCommand}"/>
     </ContentPage.ToolbarItems>
@@ -21,10 +21,10 @@
         <HorizontalStackLayout HorizontalOptions="End">
             <Button Text="Dodaj zdjęcie" 
                     Command="{Binding SelectPhotoCommand}" 
-                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNull}}"/>
+                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNullConverter}}"/>
             <Button Text="Usuń zdjęcie" 
                     Command="{Binding RemovePhotoCommand}" 
-                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}"/>
+                    IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNullConverter}}"/>
         </HorizontalStackLayout>
     </Shell.TitleView>-->
 
@@ -62,18 +62,18 @@
                    Text="{Binding CurrentTag}"/>
             <Button Grid.Column="1" HorizontalOptions="End" Text="+" FontSize="Medium" Margin="2" 
                     Command="{Binding AddSelectedTagCommand}"
-                    IsEnabled="{Binding CurrentTag, Converter={StaticResource isNotNullEmptyWhiteSpace}}" />
+                    IsEnabled="{Binding CurrentTag, Converter={StaticResource isStringNotNullOrWhiteSpaceConverter}}" />
         </Grid>
 
         <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"
                   VerticalOptions="StartAndExpand" ZIndex="2" 
-                  IsVisible="{Binding PromptedTags, Converter={StaticResource isListNotNullOrEmpty}}"
+                  IsVisible="{Binding PromptedTags, Converter={StaticResource isListNotNullOrEmptyConverter}}"
                   Background="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Charcoal}}"  Opacity="0.9"
                   ItemsSource="{Binding PromptedTags}">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped"
                                             Command="{Binding SelectTagCommand}" 
-                                            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+                                            EventArgsConverter="{StaticResource itemTappedEventArgsConverter}" />
             </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:TagForView}">
@@ -113,7 +113,7 @@
 
         <ScrollView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
             <Grid RowDefinitions="Auto, *">
-                <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNull}}">
+                <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNullConverter}}">
                     <toolkit:Expander.Header>
                         <Border Style="{StaticResource SimpleBorder}" Padding="5"
                                 Background="{StaticResource Bluegrey}">
@@ -123,7 +123,7 @@
                                        FontAttributes="Bold"
                                        HorizontalOptions="Start"
                                        FontSize="Small" />
-                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBool}}"
+                                <Label IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource invertedBoolConverter}}"
                                        VerticalOptions="Center" 
                                        Grid.Column="2" 
                                        Text="Rozwiń"

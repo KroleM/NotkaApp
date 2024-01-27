@@ -7,17 +7,24 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              x:DataType="viewmodel:TagDetailsViewModel">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edytuj" 
+                     Command="{Binding EditCommand}"/>
+        <ToolbarItem IconImageSource="material_delete.png"
+                     Command="{Binding DeleteCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <Grid RowDefinitions="Auto, Auto, *" Padding="5">
             <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="0,5"/>
             <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
                 <Label Text="Data utworzenia:" />
                 <Label Grid.Column="1"  Margin="15,0,0,0" 
-               Text="{Binding CreatedDate}" />
+                       Text="{Binding CreatedDate}" />
                 <Label Grid.Row="1"
-               Text="Data modyfikacji:" />
+                       Text="Data modyfikacji:" />
                 <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
-               Text="{Binding ModifiedDate}" />
+                       Text="{Binding ModifiedDate}" />
             </Grid>
 
             <Border Grid.Row="2" Style="{StaticResource SimpleBorder}" VerticalOptions="FillAndExpand" Margin="0,5">
