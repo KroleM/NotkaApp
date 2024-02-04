@@ -8168,15 +8168,15 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<User> UserGETAsync(string email, string hash)
+        public virtual System.Threading.Tasks.Task<User> GetUserWithAuthAsync(string email, string hash)
         {
-            return UserGETAsync(email, hash, System.Threading.CancellationToken.None);
+            return GetUserWithAuthAsync(email, hash, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<User> UserGETAsync(string email, string hash, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<User> GetUserWithAuthAsync(string email, string hash, System.Threading.CancellationToken cancellationToken)
         {
             if (email == null)
                 throw new System.ArgumentNullException("email");

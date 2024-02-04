@@ -44,7 +44,7 @@ namespace NotkaAPI.Controllers
         }
         */
 
-		[HttpGet("{email}/{hash}")]
+		[HttpGet("{email}/{hash}", Name = "GetUserWithAuth")]
 		public async Task<ActionResult<User>> GetUserWithAuth(string email, string hash)
 		{
             var user = await _context.User.SingleOrDefaultAsync(u => u.Email == email);

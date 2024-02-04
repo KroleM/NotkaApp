@@ -8,7 +8,7 @@ namespace NotkaMobile.Services
 		private User _user = new();
 		public async Task<User> LoginUser(string email, string passwordHash)
 		{
-			_user = await _service.UserGETAsync(email, passwordHash);
+			_user = await _service.GetUserWithAuthAsync(email, passwordHash);
 			
 			return _user;
 		}

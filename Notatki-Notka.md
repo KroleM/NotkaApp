@@ -24,7 +24,24 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     Źródło:\
     https://stackoverflow.com/questions/40920441/how-to-specify-a-property-can-be-null-or-a-reference-with-swagger \
     https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1589
-* W kontrolerach można tworzyć własne metody CRUD z dodatkowymi parametrami. Metodę należy poprzedzić odpowiednim atrybutem określającym typ operacji CRUD i strukturę URL. Nazwa metody po stronie API może być dowolna, ale `Swagger` nie przekaże tej metody dalej i nada swoją generyczną, np. w przypadku dwóch getów zwracających `User` - `UserGET2Async`.
+* W kontrolerach można tworzyć własne metody CRUD z dodatkowymi parametrami. Metodę należy poprzedzić odpowiednim atrybutem określającym typ operacji CRUD i strukturę URL. Nazwa metody po stronie API może być dowolna, ale żeby `Swagger` przypisał niestandardową nazwę do metody trzeba to określić w atrybucie, np `[HttpGet("{email}/{hash}", Name = "GetUserWithAuth")]`
+
+`ASP.NET Web API`:
+* Istnieje [kilka sposobów na przekazywanie parametrów][link7] do metod CRUD w Web API. Swagger tworzy kontrolery wykorzystujące `Route Parameters`. Przykłady:
+    - Query parameters: `https://localhost:7089/api/Tag?userId=1&id=2`
+    - Route parameters: `https://localhost:7089/api/Tag/1/2`
+    - kombinacja obydwu powyższych, np.: `https://localhost:7089/api/Tag/1?id=2`
+    - Request Body - przydatny atrybut [FromBody]
+    - Header Parameter - przydatny atrybut [FromHeader] - dobry sposób na wysyłanie wrażliwych danych, np. związanych z uwierzytelnianiem.
+* Metody typu `IActionResult`:
+    - OK => returns the 200 status code
+    - NotFound => returns the 404 status code
+    - BadRequest => returns the 400 status code
+    - NoContent => returns the 204 status code
+    - Created, CreatedAtRoute, CreatedAtAction => returns the 201 status code
+    - Unauthorized => returns the 401 status code
+    - Forbid => returns the 403 status code
+    - StatusCode => returns the status code we provide as input
 
 
 ## .NET MAUI
@@ -78,3 +95,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link4]: https://learn.microsoft.com/en-us/ef/ef6/saving/change-tracking/entity-state
 [link5]: https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm-community-toolkit-features
 [link6]: https://cezarywalenciuk.pl/blog/programing/mediatr-cqrs-i-wzorzec-projektowy-mediator-w-aspnet-core
+[link7]: https://code-maze.com/aspnetcore-pass-parameters-to-http-get-action/

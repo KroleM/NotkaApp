@@ -44,9 +44,10 @@ namespace NotkaAPI.Controllers
 			//return await _context.Tag.Where(t => t.UserId == userId).OrderByDescending(t => t.Name).ToListAsync();
 		}
 
-        // GET: api/Tag/1/5
-        [HttpGet("{userId}/{id}")]
-        public async Task<ActionResult<TagForView>> GetTag(int userId, int id)
+		// GET: api/Tag/1/5
+		//[HttpGet]   //np. api/Tag?userId=1&id=2
+		[HttpGet("{userId}/{id}")]
+		public async Task<ActionResult<TagForView>> GetTag(int userId, int id)
         {
 			if (!await _context.Tag.AnyAsync(n => n.Id == id))
 			{

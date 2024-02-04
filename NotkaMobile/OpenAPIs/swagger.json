@@ -4561,6 +4561,7 @@
         "tags": [
           "User"
         ],
+        "operationId": "GetUserWithAuth",
         "parameters": [
           {
             "name": "email",
