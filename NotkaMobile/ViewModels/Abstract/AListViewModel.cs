@@ -5,9 +5,9 @@ using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
-	public abstract partial class AListViewModel<T> : BaseViewModel
+	public abstract partial class AListViewModel<T, U> : BaseViewModel
 	{
-		protected AListViewModel(string title, IDataStore<T> dataStore)
+		protected AListViewModel(string title, IDataStore<T, U> dataStore)
 		{
 			Title = title;
 			DataStore = dataStore;
@@ -19,7 +19,7 @@ namespace NotkaMobile.ViewModels.Abstract
 
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
 		private T? _selectedItem;
-		protected IDataStore<T> DataStore { get; }
+		protected IDataStore<T, U> DataStore { get; }
 		public ObservableCollection<T> Items { get; }
 		public Command LoadItemsCommand { get; }
 		public Command AddItemCommand { get; }

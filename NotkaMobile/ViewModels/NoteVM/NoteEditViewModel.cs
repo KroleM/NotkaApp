@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
-	public partial class NoteEditViewModel : AEditViewModel<NoteForView>
+	public partial class NoteEditViewModel : AEditViewModel<NoteForView, NoteParameters>
 	{
 		#region Constructor
 

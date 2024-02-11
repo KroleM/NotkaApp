@@ -2,9 +2,9 @@
 
 namespace NotkaMobile.ViewModels.Abstract
 {
-	public abstract class ANewViewModel<T> : BaseViewModel
+	public abstract class ANewViewModel<T, U> : BaseViewModel
 	{
-		protected ANewViewModel(string title, IDataStore<T> dataStore)
+		protected ANewViewModel(string title, IDataStore<T, U> dataStore)
 		{
 			Title = title;
 			DataStore = dataStore;
@@ -13,7 +13,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			this.PropertyChanged +=
 				(_, __) => SaveCommand.ChangeCanExecute();
 		}
-		protected IDataStore<T> DataStore { get; }
+		protected IDataStore<T, U> DataStore { get; }
 		public Command SaveCommand { get; }
 		public Command CancelCommand { get; }
 		public abstract T SetItem();

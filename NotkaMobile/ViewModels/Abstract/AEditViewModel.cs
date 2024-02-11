@@ -4,9 +4,9 @@ using System.Diagnostics;
 namespace NotkaMobile.ViewModels.Abstract
 {
 	[QueryProperty(nameof(ItemId), nameof(ItemId))]
-	public abstract class AEditViewModel<T> : BaseViewModel
+	public abstract class AEditViewModel<T, U> : BaseViewModel
 	{
-		protected AEditViewModel(string title, IDataStore<T> dataStore)
+		protected AEditViewModel(string title, IDataStore<T, U> dataStore)
 		{
 			Title = title;
 			DataStore = dataStore;
@@ -15,7 +15,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			this.PropertyChanged +=
 				(_, __) => SaveCommand.ChangeCanExecute();
 		}
-		protected IDataStore<T> DataStore { get; }
+		protected IDataStore<T, U> DataStore { get; }
 		public Command SaveCommand { get; }
 		public Command CancelCommand { get; }
 		public T Item { get; set; }

@@ -4,7 +4,7 @@ using NotkaMobile.Services.Abstract;
 
 namespace NotkaMobile.Services
 {
-	public class NoteDataStore : AListDataStore<NoteForView>
+	public class NoteDataStore : AListDataStore<NoteForView, NoteParameters>
 	{
 		public NoteDataStore()
 			: base()
@@ -31,7 +31,7 @@ namespace NotkaMobile.Services
 			return await _service.NoteGETAsync(Preferences.Default.Get("userId", 0), id);
 		}
 
-		public override async Task RefreshListFromService<NoteParameters>(NoteParameters parameters)
+		public override async Task RefreshListFromService(NoteParameters parameters)
 		{
 			items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0), parameters).Result.ToList();
 		}

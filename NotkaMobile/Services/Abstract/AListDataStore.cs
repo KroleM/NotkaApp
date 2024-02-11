@@ -2,9 +2,12 @@
 
 namespace NotkaMobile.Services.Abstract
 {
-	public abstract class AListDataStore<T> : ADataStore, IDataStore<T> where T : class
+	public abstract class AListDataStore<T, U> : ADataStore, IDataStore<T, U> 
+		where T : class
+		where U : class
 	{
 		public List<T> items = new List<T>();
+		public U Params {  get; set; }
 
 		public AListDataStore()
 			: base()
@@ -20,7 +23,7 @@ namespace NotkaMobile.Services.Abstract
 		}
 		public abstract Task<T> Find(T item);
 		public abstract Task<T> Find(int id);
-		public abstract Task RefreshListFromService<U>(U parameters);
+		public abstract Task RefreshListFromService(U parameters);
 		public abstract Task<bool> DeleteItemFromService(T item);
 		public abstract Task<bool> UpdateItemInService(T item);
 		public abstract Task<T> AddItemToService(T item);

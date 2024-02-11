@@ -4,16 +4,16 @@ using System.Diagnostics;
 namespace NotkaMobile.ViewModels.Abstract
 {
 	[QueryProperty(nameof(ItemId), nameof(ItemId))]
-	public abstract class AItemDetailsViewModel<T> : BaseViewModel
+	public abstract class AItemDetailsViewModel<T, U> : BaseViewModel
 	{
-		protected AItemDetailsViewModel(IDataStore<T> dataStore)
+		protected AItemDetailsViewModel(IDataStore<T, U> dataStore)
 		{
 			DataStore = dataStore;
 			CancelCommand = new Command(OnCancel);
 			DeleteCommand = new Command(OnDelete);
 			EditCommand = new Command(OnEdit);
 		}
-		protected IDataStore<T> DataStore { get; }
+		protected IDataStore<T, U> DataStore { get; }
 		public Command DeleteCommand { get; }
 		public Command CancelCommand { get; }
 		public Command EditCommand { get; }
