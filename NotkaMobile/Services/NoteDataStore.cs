@@ -31,9 +31,9 @@ namespace NotkaMobile.Services
 			return await _service.NoteGETAsync(Preferences.Default.Get("userId", 0), id);
 		}
 
-		public override async System.Threading.Tasks.Task RefreshListFromService()
+		public override async Task RefreshListFromService<NoteParameters>(NoteParameters parameters)
 		{
-			items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0)).Result.ToList();
+			items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0), parameters).Result.ToList();
 		}
 
 		public override async Task<bool> UpdateItemInService(NoteForView item)

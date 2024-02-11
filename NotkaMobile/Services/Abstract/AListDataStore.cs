@@ -1,4 +1,6 @@
-﻿namespace NotkaMobile.Services.Abstract
+﻿using NotkaMobile.Service.Reference;
+
+namespace NotkaMobile.Services.Abstract
 {
 	public abstract class AListDataStore<T> : ADataStore, IDataStore<T> where T : class
 	{
@@ -18,7 +20,7 @@
 		}
 		public abstract Task<T> Find(T item);
 		public abstract Task<T> Find(int id);
-		public abstract Task RefreshListFromService();
+		public abstract Task RefreshListFromService<U>(U parameters);
 		public abstract Task<bool> DeleteItemFromService(T item);
 		public abstract Task<bool> UpdateItemInService(T item);
 		public abstract Task<T> AddItemToService(T item);
@@ -27,7 +29,7 @@
 		public async Task<bool> UpdateItemAsync(T item)
 		{
 			await UpdateItemInService(item);
-			await RefreshListFromService();
+			await RefreshListFromService();//RefreshListFromService();
 			return await Task.FromResult(true);
 		}
 

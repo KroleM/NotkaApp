@@ -23,14 +23,14 @@ namespace NotkaAPI.Controllers
 
         // GET: api/Task
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Notes.Task>>> GetTask()
+        public async Task<ActionResult<IEnumerable<Models.Notes.TaskClass>>> GetTask()
         {
             return await _context.Task.ToListAsync();
         }
 
         // GET: api/Task/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Models.Notes.Task>> GetTask(int id)
+        public async Task<ActionResult<Models.Notes.TaskClass>> GetTask(int id)
         {
             var task = await _context.Task.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace NotkaAPI.Controllers
         // PUT: api/Task/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(int id, Models.Notes.Task task)
+        public async Task<IActionResult> PutTask(int id, Models.Notes.TaskClass task)
         {
             if (id != task.Id)
             {
@@ -76,7 +76,7 @@ namespace NotkaAPI.Controllers
         // POST: api/Task
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Models.Notes.Task>> PostTask(Models.Notes.Task task)
+        public async Task<ActionResult<Models.Notes.TaskClass>> PostTask(Models.Notes.TaskClass task)
         {
             _context.Task.Add(task);
             await _context.SaveChangesAsync();

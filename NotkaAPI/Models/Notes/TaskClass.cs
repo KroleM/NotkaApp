@@ -1,6 +1,6 @@
 ﻿namespace NotkaAPI.Models.Notes
 {
-	public class Task : ANote
+	public class TaskClass : ANote
 	{
 		public List<TaskTag> TaskTags { get; set; } = new();
 		public DateTime? Deadline { get; set; }

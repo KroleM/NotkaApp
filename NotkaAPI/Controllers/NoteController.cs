@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.General;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
+using NotkaAPI.Parameters;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
@@ -21,38 +24,38 @@ namespace NotkaAPI.Controllers
 	public class NoteController : ControllerBase
 	{
 		private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-		public NoteController(NotkaDatabaseContext context)
+		public NoteController(NotkaDatabaseContext context, IRepositoryWrapper repository)
 		{
 			_context = context;
+			_repository = repository;
 		}
-
-		//FIXME dodatkowy GET, który przyjmowałby 3 argumenty, a 3. byłaby liczba do ".Take(xx)"??
 
 		// GET: api/Note
 		[HttpGet("{userId}")]
-		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId)
+		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, NoteParameters noteParameters) //FIXME PagedList?
 		{
-			if (_context.Note.Where(n => n.UserId == userId) == null)
+			if (!noteParameters.ValidTimeRange)
 			{
-				return NotFound();
+				return BadRequest("Max date cannot be less than min date");
 			}
-			var notes = await _context.Note
-				.Where(n => n.UserId == userId)
-				.Include(note => note.NoteTags)
-				.ThenInclude(notetag => notetag.Tag)
-				//.Include(note => note.Picture)
-				.ToListAsync();
+			
+			var notes = await _repository.Note.GetNotes(userId, noteParameters);
 
-			// Include->Picture powyżej prowadzi do duplikowania danych zdjęcia dla każdego wiersza tabeli (bo wiele NoteTagów dla jednej notatki).
-			// Propozycja optymalizacji - Split Queries: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
+			var metadata = new
+			{
+				notes.TotalCount,
+				notes.PageSize,
+				notes.CurrentPage,
+				notes.TotalPages,
+				notes.HasNext,
+				notes.HasPrevious
+			};
 
-			return notes
-				.Select(note => ModelConverters.ConvertToNoteForView(note))
-				.OrderByDescending(n => n.ModifiedDate)
-				.ToList();
+			Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
 
-			//return await _context.Note.Where(n => n.UserId == userId).OrderByDescending(n => n.ModifiedDate).ToListAsync();
+			return notes;
 		}
 
 		// GET: api/Note/1/5

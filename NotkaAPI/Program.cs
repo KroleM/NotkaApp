@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using NotkaAPI.Contracts;
 using NotkaAPI.Data;
+using NotkaAPI.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddSwaggerGen(options =>
 {
 	options.UseAllOfToExtendReferenceSchemas();
 });
+//RepositoryWrapper
+builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
 var app = builder.Build();
 

@@ -23,7 +23,7 @@ namespace NotkaAPI.Data
 		public DbSet<Tag> Tag { get; set; }
 		public DbSet<Note> Note { get; set; }
 		public DbSet<List> List { get; set; }
-		public DbSet<Models.Notes.Task> Task { get; set; }
+		public DbSet<Models.Notes.TaskClass> Task { get; set; }
 		public DbSet<ListElement> ListElement { get; set; }
 		public DbSet<ListTag> ListTag { get; set; }
 		public DbSet<NoteTag> NoteTag { get; set; }

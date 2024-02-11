@@ -47,7 +47,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 ## .NET MAUI
 
 * `MAUI` automatycznie konwertuje obrazy .svg na .png, dlatego w kodzie należy się odwoływać do pliku z rozszerzenim `.png`, mimo że w folderze `Images` będzie tylko plik .svg.
-* Problem ze zbyt dużym poborem pamięci: pomóc może zastąpienie w widokach AllPage `CollectionView` przez `ListView` (patrz dokumentacja ListView).
+* Problem ze zbyt dużym poborem pamięci [(wyciek)][link8]: pomóc może zastąpienie w widokach AllPage `CollectionView` przez `ListView` (patrz dokumentacja ListView).
 * Drugi możliwy powód: DataStory są (na razie) singletonami i one mogą blokować garbage collection widoków i ich view-modeli.
 * Trzeci możliwy powód: użycie `Command` zamiast `RelayCommand` [LINK][link5]
 * [Nawigacja w `Shell`][link2]:
@@ -96,3 +96,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link5]: https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm-community-toolkit-features
 [link6]: https://cezarywalenciuk.pl/blog/programing/mediatr-cqrs-i-wzorzec-projektowy-mediator-w-aspnet-core
 [link7]: https://code-maze.com/aspnetcore-pass-parameters-to-http-get-action/
+[link8]: https://learn.microsoft.com/en-us/dotnet/core/diagnostics/debug-memory-leak

@@ -1066,6 +1066,37 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteParameters"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteParameters"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/NoteParameters"
+                  }
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -3846,7 +3877,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 }
               },
@@ -3854,7 +3885,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 }
               },
@@ -3862,7 +3893,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 }
               }
@@ -3880,7 +3911,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 ]
               }
@@ -3889,7 +3920,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 ]
               }
@@ -3898,7 +3929,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 ]
               }
@@ -3911,17 +3942,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskClass"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskClass"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskClass"
                 }
               }
             }
@@ -3951,17 +3982,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskClass"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskClass"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskClass"
                 }
               }
             }
@@ -3989,7 +4020,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 ]
               }
@@ -3998,7 +4029,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 ]
               }
@@ -4007,7 +4038,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskClass"
                   }
                 ]
               }
@@ -5457,6 +5488,32 @@
         },
         "additionalProperties": false
       },
+      "NoteParameters": {
+        "type": "object",
+        "properties": {
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minDateOfCreation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxDateOfCreation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validTimeRange": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "NoteTag": {
         "type": "object",
         "properties": {
@@ -5726,7 +5783,7 @@
           "task": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/Task"
+                "$ref": "#/components/schemas/TaskClass"
               }
             ],
             "nullable": true
@@ -6150,7 +6207,7 @@
         },
         "additionalProperties": false
       },
-      "Task": {
+      "TaskClass": {
         "required": [
           "name"
         ],
@@ -6229,7 +6286,7 @@
           "task": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/Task"
+                "$ref": "#/components/schemas/TaskClass"
               }
             ],
             "nullable": true
