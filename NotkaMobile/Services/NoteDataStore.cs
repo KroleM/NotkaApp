@@ -9,6 +9,7 @@ namespace NotkaMobile.Services
 		public NoteDataStore()
 			: base()
 		{
+			Params = new NoteParameters();
 		}
 
 		public override async Task<NoteForView> AddItemToService(NoteForView item)
@@ -31,9 +32,9 @@ namespace NotkaMobile.Services
 			return await _service.NoteGETAsync(Preferences.Default.Get("userId", 0), id);
 		}
 
-		public override async Task RefreshListFromService(NoteParameters parameters)
+		public override async Task RefreshListFromService()
 		{
-			items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0), parameters).Result.ToList();
+			items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0), Params).Result.ToList();
 		}
 
 		public override async Task<bool> UpdateItemInService(NoteForView item)

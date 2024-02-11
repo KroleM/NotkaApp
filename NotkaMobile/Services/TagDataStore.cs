@@ -4,11 +4,12 @@ using NotkaMobile.Services.Abstract;
 
 namespace NotkaMobile.Services
 {
-	public class TagDataStore : AListDataStore<TagForView>
+	public class TagDataStore : AListDataStore<TagForView, TagParameters>
 	{
 		public TagDataStore()
 			: base()
 		{
+			Params = new TagParameters();
 		}
 
 		public override async Task<TagForView> AddItemToService(TagForView item)
@@ -31,9 +32,9 @@ namespace NotkaMobile.Services
 			return await _service.TagGETAsync(Preferences.Default.Get("userId", 0), id);
 		}
 
-		public override async System.Threading.Tasks.Task RefreshListFromService()
+		public override async Task RefreshListFromService()
 		{
-			items = _service.TagAllAsync(Preferences.Default.Get("userId", 0)).Result.ToList();
+			items = _service.TagAllAsync(Preferences.Default.Get("userId", 0), Params).Result.ToList();
 		}
 
 		public override async Task<bool> UpdateItemInService(TagForView item)

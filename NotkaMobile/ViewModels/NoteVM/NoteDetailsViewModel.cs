@@ -6,7 +6,7 @@ using NotkaMobile.Views.Notes.Note;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
-	public partial class NoteDetailsViewModel : AItemDetailsViewModel<NoteForView>
+	public partial class NoteDetailsViewModel : AItemDetailsViewModel<NoteForView, NoteParameters>
 	{
 		public NoteDetailsViewModel(NoteDataStore dataStore) 
 			: base(dataStore)

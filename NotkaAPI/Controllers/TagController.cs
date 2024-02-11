@@ -9,8 +9,8 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
+using NotkaAPI.Parameters;
 using NotkaAPI.ViewModels;
-using static Azure.Core.HttpHeader;
 
 namespace NotkaAPI.Controllers
 {
@@ -27,8 +27,13 @@ namespace NotkaAPI.Controllers
 
         // GET: api/Tag
         [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<TagForView>>> GetTag(int userId)
+        public async Task<ActionResult<IEnumerable<TagForView>>> GetTag(int userId, [FromQuery] TagParameters tagParameters)
         {
+            if (tagParameters == null) 
+            {
+                
+            }
+
 			if (_context.Tag.Where(n => n.UserId == userId) == null)
 			{
 				return NotFound();

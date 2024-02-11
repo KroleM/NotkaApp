@@ -1944,22 +1944,43 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<NoteForView>> NoteAllAsync(int userId, NoteParameters body)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<NoteForView>> NoteAllAsync(int userId, System.DateTimeOffset? minDateOfCreation, System.DateTimeOffset? maxDateOfCreation, bool? validTimeRange, int? pageNumber, int? pageSize)
         {
-            return NoteAllAsync(userId, body, System.Threading.CancellationToken.None);
+            return NoteAllAsync(userId, minDateOfCreation, maxDateOfCreation, validTimeRange, pageNumber, pageSize, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<NoteForView>> NoteAllAsync(int userId, NoteParameters body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<NoteForView>> NoteAllAsync(int userId, System.DateTimeOffset? minDateOfCreation, System.DateTimeOffset? maxDateOfCreation, bool? validTimeRange, int? pageNumber, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Note/{userId}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Note/{userId}?");
             urlBuilder_.Replace("{userId}", System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture)));
+            if (minDateOfCreation != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("MinDateOfCreation") + "=").Append(System.Uri.EscapeDataString(minDateOfCreation.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (maxDateOfCreation != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("MaxDateOfCreation") + "=").Append(System.Uri.EscapeDataString(maxDateOfCreation.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (validTimeRange != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ValidTimeRange") + "=").Append(System.Uri.EscapeDataString(ConvertToString(validTimeRange, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageSize != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("PageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1967,10 +1988,6 @@ namespace NotkaMobile.Service.Reference
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
@@ -6496,22 +6513,31 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TagForView>> TagAllAsync(int userId)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TagForView>> TagAllAsync(int userId, int? pageNumber, int? pageSize)
         {
-            return TagAllAsync(userId, System.Threading.CancellationToken.None);
+            return TagAllAsync(userId, pageNumber, pageSize, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TagForView>> TagAllAsync(int userId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TagForView>> TagAllAsync(int userId, int? pageNumber, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tag/{userId}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tag/{userId}?");
             urlBuilder_.Replace("{userId}", System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture)));
+            if (pageNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageSize != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("PageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -9502,26 +9528,6 @@ namespace NotkaMobile.Service.Reference
 
         [Newtonsoft.Json.JsonProperty("picture", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Picture Picture { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class NoteParameters
-    {
-        [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int PageNumber { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("pageSize", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int PageSize { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("minDateOfCreation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset MinDateOfCreation { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("maxDateOfCreation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset MaxDateOfCreation { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("validTimeRange", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool ValidTimeRange { get; set; }
 
     }
 

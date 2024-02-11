@@ -23,7 +23,7 @@ namespace NotkaMobile.Services.Abstract
 		}
 		public abstract Task<T> Find(T item);
 		public abstract Task<T> Find(int id);
-		public abstract Task RefreshListFromService(U parameters);
+		public abstract Task RefreshListFromService();	//FIXME usunąć parametr? i przekazywać Params
 		public abstract Task<bool> DeleteItemFromService(T item);
 		public abstract Task<bool> UpdateItemInService(T item);
 		public abstract Task<T> AddItemToService(T item);

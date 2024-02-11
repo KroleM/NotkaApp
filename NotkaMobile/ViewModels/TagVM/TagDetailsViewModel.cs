@@ -9,7 +9,7 @@ using NotkaMobile.Views.Notes.Tag;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
-	public partial class TagDetailsViewModel : AItemDetailsViewModel<TagForView>
+	public partial class TagDetailsViewModel : AItemDetailsViewModel<TagForView, TagParameters>
 	{
 		public TagDetailsViewModel(TagDataStore dataStore) 
 			: base(dataStore)

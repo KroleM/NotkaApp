@@ -21,9 +21,9 @@ namespace NotkaAPI.Repository
 			{
 				//return NotFound();	//wyrzucić odpowiednie exception;
 			}
-			var notes1 = FindByCondition(n => n.UserId == userId &&
-										n.CreatedDate >= noteParameters.MinDateOfCreation &&
-										n.CreatedDate <= noteParameters.MaxDateOfCreation)
+			var notes = FindByCondition(n => n.UserId == userId)
+										//&& n.CreatedDate >= noteParameters.MinDateOfCreation
+										//&& n.CreatedDate <= noteParameters.MaxDateOfCreation)
 						.Include(note => note.NoteTags)
 						.ThenInclude(notetag => notetag.Tag);
 						//.Include(note => note.Picture)
@@ -33,18 +33,8 @@ namespace NotkaAPI.Repository
 
 			//TBD: Searching
 
-			var notes = await Context.Note
-				.Where(n => n.UserId == userId)
-				.Include(note => note.NoteTags)
-				.ThenInclude(notetag => notetag.Tag)
-				//.Include(note => note.Picture)
-				.ToListAsync();
-
-			// Include->Picture powyżej prowadzi do duplikowania danych zdjęcia dla każdego wiersza tabeli (bo wiele NoteTagów dla jednej notatki).
-			// Propozycja optymalizacji - Split Queries: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
-
-			return PagedList<NoteForView>.ToPagedList(notes1.Select(note => ModelConverters.ConvertToNoteForView(note))
-															.OrderByDescending(n => n.ModifiedDate),
+			return PagedList<NoteForView>.ToPagedList(notes.Select(note => ModelConverters.ConvertToNoteForView(note)),
+															//.OrderByDescending(n => n.ModifiedDate),
 				noteParameters.PageNumber,
 				noteParameters.PageSize);
 		}

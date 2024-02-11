@@ -34,7 +34,7 @@ namespace NotkaAPI.Controllers
 
 		// GET: api/Note
 		[HttpGet("{userId}")]
-		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, NoteParameters noteParameters) //FIXME PagedList?
+		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters) //FIXME PagedList?
 		{
 			if (!noteParameters.ValidTimeRange)
 			{

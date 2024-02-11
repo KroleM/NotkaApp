@@ -5,7 +5,7 @@ using NotkaMobile.ViewModels.Abstract;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
-	public partial class NewTagViewModel : ANewViewModel<TagForView>
+	public partial class NewTagViewModel : ANewViewModel<TagForView, TagParameters>
 	{
 		public NewTagViewModel(TagDataStore dataStore) 
 			: base("Nowy tag", dataStore)

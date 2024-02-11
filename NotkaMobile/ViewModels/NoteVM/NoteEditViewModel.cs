@@ -115,7 +115,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 
 			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
 		}
-		private async System.Threading.Tasks.Task LoadTags()
+		private async Task LoadTags()
 		{
 			_tagDataStore = new TagDataStore();
 			await _tagDataStore.RefreshListFromService();

@@ -1,17 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
-using NotkaMobile.Services.Abstract;
 using NotkaMobile.ViewModels.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
-	public partial class TagEditViewModel : AEditViewModel<TagForView>
+	public partial class TagEditViewModel : AEditViewModel<TagForView, TagParameters>
 	{
 		#region Constructor
 		public TagEditViewModel(TagDataStore dataStore)

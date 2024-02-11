@@ -4,11 +4,10 @@ using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using System.Collections.ObjectModel;
-using Task = System.Threading.Tasks.Task;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
-	public partial class NewNoteViewModel : ANewViewModel<NoteForView>
+	public partial class NewNoteViewModel : ANewViewModel<NoteForView, NoteParameters>
 	{
 		#region Constructor
 
@@ -102,6 +101,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		private async Task LoadTags()
 		{
 			_tagDataStore = new TagDataStore();
+			_tagDataStore.Params = new TagParameters();
 			await _tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.items;
 		}
