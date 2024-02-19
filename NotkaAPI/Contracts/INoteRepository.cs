@@ -1,5 +1,5 @@
-﻿using NotkaAPI.Helpers;
-using NotkaAPI.Parameters;
+﻿using ApiSharedClasses.QueryParameters;
+using NotkaAPI.Helpers;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Contracts

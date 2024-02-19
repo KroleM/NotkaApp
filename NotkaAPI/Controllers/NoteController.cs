@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,6 @@ using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.General;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
-using NotkaAPI.Parameters;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
@@ -34,7 +34,7 @@ namespace NotkaAPI.Controllers
 
 		// GET: api/Note
 		[HttpGet("{userId}")]
-		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters) //FIXME PagedList?
+		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters) //FIXME PagedList? [FromQuery]??
 		{
 			if (!noteParameters.ValidTimeRange)
 			{

@@ -98,6 +98,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\ApiSharedClasses\ApiSharedClasses.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Views\Notes\Note\NotesPage.xaml.cs">
 	    <DependentUpon>NotesPage.xaml</DependentUpon>
 	  </Compile>

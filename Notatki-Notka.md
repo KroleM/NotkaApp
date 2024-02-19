@@ -11,6 +11,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * Generowanie skryptów BD albo konkretnych obiektów w [MS SQL Server Management Studio][link1].
 * Operacje PUT - [modyfikowanie rekordów w BD][link4].
 * `SaveChanges(Async)` wysyła wartości właściwości danej encji do bazy danych.
+* [Serwer vs. Client][link9] - rozwiązywanie kwerend IQueryable vs. IEnumerable.
 
 `Swagger`:
 * Właściwości będące typami referencyjnymi nie są standardowo udostępniane jako `nullable`, ale właściwości będące typami wartościowymi (np. int?, DateTime?) mogą być "nulowalne". Istotą problemu jest brak nullowalności typów referencyjnych. Aby to zmienić należy w konfiguracji projektu Web API użyć opcji `UseAllOfToExtendReferenceSchemas`:
@@ -86,7 +87,9 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 
 
 ## Czego się dziś nauczyłem?
-1. 
+ * 2024.02.19\
+    Do solucji `NotkaAPI` dodałem osobny projekt typu `Class Library`, aby współdzielić go z `NotkaMobile`, w której to (jako że jest w osobnej solucji) musiałem najpierw dodać do solucji `ApiSharedClasses` jako 'external project', a następnie referencję do tego projektu.
+ * 
 
 
 [link1]: https://learn.microsoft.com/en-us/sql/ssms/scripting/generate-and-publish-scripts-wizard?view=sql-server-ver16
@@ -97,3 +100,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link6]: https://cezarywalenciuk.pl/blog/programing/mediatr-cqrs-i-wzorzec-projektowy-mediator-w-aspnet-core
 [link7]: https://code-maze.com/aspnetcore-pass-parameters-to-http-get-action/
 [link8]: https://learn.microsoft.com/en-us/dotnet/core/diagnostics/debug-memory-leak
+[link9]: https://learn.microsoft.com/en-us/ef/core/querying/client-eval

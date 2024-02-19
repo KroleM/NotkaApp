@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,6 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
-using NotkaAPI.Parameters;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
@@ -82,7 +82,7 @@ namespace NotkaAPI.Controllers
             {
                 return BadRequest();
             }
-
+            //Przemienić TagForView na Tag ??
             _context.Entry(tag).State = EntityState.Modified;
 
             try

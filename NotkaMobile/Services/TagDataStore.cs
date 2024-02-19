@@ -1,4 +1,5 @@
-﻿using NotkaMobile.Helpers;
+﻿using ApiSharedClasses.QueryParameters;
+using NotkaMobile.Helpers;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services.Abstract;
 
@@ -34,7 +35,7 @@ namespace NotkaMobile.Services
 
 		public override async Task RefreshListFromService()
 		{
-			items = _service.TagAllAsync(Preferences.Default.Get("userId", 0), Params).Result.ToList();
+			items = _service.TagAllAsync(Preferences.Default.Get("userId", 0), Params.PageNumber, Params.PageSize).Result.ToList();
 		}
 
 		public override async Task<bool> UpdateItemInService(TagForView item)

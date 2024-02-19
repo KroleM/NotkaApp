@@ -1,10 +1,10 @@
-﻿namespace NotkaAPI.Parameters
+﻿namespace ApiSharedClasses.QueryParameters.Abstract
 {
 	public abstract class AGetParameters
 	{
 		const int maxPageSize = 60;
 		public int PageNumber { get; set; } = 1;
-		private int _pageSize = 10; //20
+		private int _pageSize = 5; //20
 		public int PageSize
 		{
 			get => _pageSize;

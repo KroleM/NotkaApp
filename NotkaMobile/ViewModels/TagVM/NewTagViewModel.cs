@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ApiSharedClasses.QueryParameters;
+using CommunityToolkit.Mvvm.ComponentModel;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ApiSharedClasses.QueryParameters;
+using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
-using NotkaAPI.Parameters;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Repository
@@ -33,8 +33,8 @@ namespace NotkaAPI.Repository
 
 			//TBD: Searching
 
-			return PagedList<NoteForView>.ToPagedList(notes.Select(note => ModelConverters.ConvertToNoteForView(note)),
-															//.OrderByDescending(n => n.ModifiedDate),
+			return PagedList<NoteForView>.ToPagedList(notes.OrderByDescending(n => n.ModifiedDate)
+					.Select(note => ModelConverters.ConvertToNoteForView(note)),
 				noteParameters.PageNumber,
 				noteParameters.PageSize);
 		}
