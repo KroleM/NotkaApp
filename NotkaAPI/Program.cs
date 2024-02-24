@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(options =>
 	options.UseAllOfToExtendReferenceSchemas();
 });
 //RepositoryWrapper
-builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();	//transient?
 
 var app = builder.Build();
 

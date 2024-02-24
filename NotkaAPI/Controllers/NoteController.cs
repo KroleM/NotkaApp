@@ -34,14 +34,27 @@ namespace NotkaAPI.Controllers
 
 		// GET: api/Note
 		[HttpGet("{userId}")]
-		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters) //FIXME PagedList? [FromQuery]??
+		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters)
 		{
 			if (!noteParameters.ValidTimeRange)
 			{
 				return BadRequest("Max date cannot be less than min date");
 			}
-			
-			var notes = await _repository.Note.GetNotes(userId, noteParameters);
+
+			PagedList<NoteForView> notes;
+			try
+			{
+				notes = await _repository.Note.GetNotes(userId, noteParameters);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				//FIXME general exception might also produce NotFound()
+				return BadRequest(); 
+			}
 
 			var metadata = new
 			{
@@ -62,22 +75,22 @@ namespace NotkaAPI.Controllers
 		[HttpGet("{userId}/{id}")]
 		public async Task<ActionResult<NoteForView>> GetNote(int userId, int id)
 		{
-			//var note = await _context.Note.FindAsync(id);
-			if (!await _context.Note.AnyAsync(n => n.Id == id))
+			try
+			{
+				return await _repository.Note.GetNoteById(userId, id);
+			}
+			catch (NotFoundException)
 			{
 				return NotFound();
 			}
-			var note = await _context.Note
-				.Include(note => note.NoteTags)
-				.ThenInclude(notetag => notetag.Tag)
-				.Include(note => note.Picture)
-				.SingleOrDefaultAsync(note => note.Id == id);
-			if (note.UserId != userId)
+			catch (UnauthorizedException)
 			{
-				return Forbid();
+				return Unauthorized();
 			}
-
-			return ModelConverters.ConvertToNoteForView(note);
+			catch
+			{
+				return BadRequest();
+			}
 		}
 
 		// PUT: api/Note/5
@@ -90,61 +103,17 @@ namespace NotkaAPI.Controllers
 				return BadRequest();
 			}
 
-			var noteToAdd = new Note().CopyProperties(note);
-			_context.Entry(noteToAdd).State = EntityState.Modified;
-
 			try
 			{
-				using (var dbContextTransaction = _context.Database.BeginTransaction())
-				{
-					//NoteTags
-					_context.NoteTag.RemoveRange(await _context.NoteTag.Where(nt => nt.NoteId == noteToAdd.Id).ToArrayAsync());
-					if (!note.TagsForView.IsNullOrEmpty())
-					{
-						foreach (var tagForView in note.TagsForView)
-						{
-							var tag = new Tag().CopyProperties(tagForView);
-							if (tag.Id == 0)
-							{
-								_context.Tag.Add(tag);
-								await _context.SaveChangesAsync();
-							}
-							_context.NoteTag.Add(new NoteTag
-							{
-								Id = 0,
-								IsActive = true,
-								NoteId = noteToAdd.Id,
-								TagId = tag.Id,
-							});
-						}
-					}
-					//Picture
-					var picture = await _context.Picture.SingleOrDefaultAsync(p => p.NoteId == noteToAdd.Id);
-					if (noteToAdd.Picture?.Id != picture?.Id)	//execute only if Picture has changed
-					{
-						if (picture != null)
-							_context.Picture.Remove(picture);
-						await _context.SaveChangesAsync(); //to pozwala zapisać zdjęcie
-						if (noteToAdd.Picture != null)
-						{
-							await _context.Picture.AddAsync(noteToAdd.Picture);
-						}
-					}
-
-					await _context.SaveChangesAsync();
-					dbContextTransaction.Commit();
-				}
+				await _repository.Note.UpdateNote(id, note);
 			}
-			catch (DbUpdateConcurrencyException)
+			catch (NotFoundException)
 			{
-				if (!NoteExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
 			}
 
 			return NoContent();
@@ -157,63 +126,35 @@ namespace NotkaAPI.Controllers
 		{
 			if (note == null) return Forbid();
 
-			var noteToAdd = new Note().CopyProperties(note);
-
-			using (var dbContextTransaction = _context.Database.BeginTransaction())
+			NoteForView uploadedNote;
+			try
 			{
-				//This goes first, because later noteToAdd.Id can be used
-				_context.Note.Add(noteToAdd);
-				await _context.SaveChangesAsync();
-
-				if (!note.TagsForView.IsNullOrEmpty())
-				{
-					foreach (var tagForView in note.TagsForView)
-					{
-						var tag = new Tag().CopyProperties(tagForView);
-						if (tagForView.Id == 0)
-						{
-							_context.Tag.Add(tag);
-							await _context.SaveChangesAsync();
-						}
-
-						_context.NoteTag.Add(new NoteTag
-						{
-							Id = 0,
-							IsActive = true,
-							NoteId = noteToAdd.Id,
-							TagId = tag.Id,
-						});
-						await _context.SaveChangesAsync();
-					}
-				}
-				dbContextTransaction.Commit();
+				uploadedNote = await _repository.Note.CreateNote(note);
+			}
+			catch 
+			{
+				return BadRequest();
 			}
 
-			var uploadedNote = await _context.Note
-				.Include(note => note.NoteTags)
-				.ThenInclude(notetag => notetag.Tag)
-				.Include(note => note.Picture)
-				.SingleOrDefaultAsync(note => note.Id == noteToAdd.Id);
-			//await _context.Entry(uploadedNote).ReloadAsync();
-			return Ok(ModelConverters.ConvertToNoteForView(uploadedNote));
+			return Ok(uploadedNote);
 		}
 
 		// DELETE: api/Note/5
 		[HttpDelete("{userId}/{id}")]
 		public async Task<IActionResult> DeleteNote(int userId, int id)
 		{
-			var note = await _context.Note.FindAsync(id);   //Include.Picture? - when note is deleted, the picture is deleted too
-			if (note == null)
+			try
+			{
+				await _repository.Note.DeleteNote(userId, id);
+			}
+			catch (NotFoundException)
 			{
 				return NotFound();
 			}
-			if (note.UserId != userId)
+			catch (ForbidException)
 			{
 				return Forbid();
 			}
-
-			_context.Note.Remove(note);
-			await _context.SaveChangesAsync();
 
 			return NoContent();
 		}

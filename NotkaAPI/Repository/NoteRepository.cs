@@ -1,5 +1,6 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
@@ -19,7 +20,7 @@ namespace NotkaAPI.Repository
 		{
 			if (Context.Note.Where(n => n.UserId == userId) == null)
 			{
-				//return NotFound();	//wyrzucić odpowiednie exception;
+				throw new NotFoundException();
 			}
 			var notes = FindByCondition(n => n.UserId == userId)
 										//&& n.CreatedDate >= noteParameters.MinDateOfCreation
@@ -33,27 +34,141 @@ namespace NotkaAPI.Repository
 
 			//TBD: Searching
 
-			return PagedList<NoteForView>.ToPagedList(notes.OrderByDescending(n => n.ModifiedDate)
+			return await PagedList<NoteForView>.CreateAsync(notes.OrderByDescending(n => n.ModifiedDate)
 					.Select(note => ModelConverters.ConvertToNoteForView(note)),
 				noteParameters.PageNumber,
 				noteParameters.PageSize);
 		}
-		public NoteForView GetNoteById(int userId, int id)
+		public async Task<NoteForView> GetNoteById(int userId, int id)
 		{
-			throw new NotImplementedException();
+			if (!await Context.Note.AnyAsync(n => n.Id == id))
+			{
+				throw new NotFoundException();
+			}
+			var note = await Context.Note
+				.Include(note => note.NoteTags)
+				.ThenInclude(notetag => notetag.Tag)
+				.Include(note => note.Picture)
+				.SingleOrDefaultAsync(note => note.Id == id);
+			if (note.UserId != userId)
+			{
+				throw new UnauthorizedException();
+			}
+
+			return ModelConverters.ConvertToNoteForView(note);
 		}
-		public void CreateNote(NoteForView note)
+		public async Task<NoteForView> CreateNote(NoteForView note)
 		{
-			//przyjmuje i zwraca NoteForView?
-			//Create(note...);
+			var noteToAdd = new Note().CopyProperties(note);
+
+			using (var dbContextTransaction = Context.Database.BeginTransaction())
+			{
+				//This goes first, so that later noteToAdd.Id can be extracted
+				//Context.Note.Add(noteToAdd);
+				Create(noteToAdd);
+				await Context.SaveChangesAsync();
+
+				if (!note.TagsForView.IsNullOrEmpty())
+				{
+					foreach (var tagForView in note.TagsForView)
+					{
+						await AddToContextNoteTagAsync(tagForView, noteToAdd.Id);
+						await Context.SaveChangesAsync();
+					}
+				}
+				dbContextTransaction.Commit();
+			}
+
+			var uploadedNote = await Context.Note
+				.Include(note => note.NoteTags)
+				.ThenInclude(notetag => notetag.Tag)
+				.Include(note => note.Picture)
+				.SingleOrDefaultAsync(note => note.Id == noteToAdd.Id);
+			//await _context.Entry(uploadedNote).ReloadAsync();
+			return ModelConverters.ConvertToNoteForView(uploadedNote);
 		}
-		public void UpdateNote(int id, NoteForView note)
+		public async Task UpdateNote(int id, NoteForView note)
 		{
-			throw new NotImplementedException();
+			var noteToAdd = new Note().CopyProperties(note);
+			Context.Entry(noteToAdd).State = EntityState.Modified;
+
+			try
+			{
+				using (var dbContextTransaction = Context.Database.BeginTransaction())
+				{
+					//NoteTags
+					Context.NoteTag.RemoveRange(await Context.NoteTag.Where(nt => nt.NoteId == noteToAdd.Id).ToArrayAsync());
+					if (!note.TagsForView.IsNullOrEmpty())
+					{
+						foreach (var tagForView in note.TagsForView)
+						{
+							await AddToContextNoteTagAsync(tagForView, noteToAdd.Id);
+						}
+					}
+					//Picture
+					var picture = await Context.Picture.SingleOrDefaultAsync(p => p.NoteId == noteToAdd.Id);
+					if (noteToAdd.Picture?.Id != picture?.Id)   //execute only if Picture has changed
+					{
+						if (picture != null)
+							Context.Picture.Remove(picture);
+						await Context.SaveChangesAsync(); //to pozwala zapisać zdjęcie
+						if (noteToAdd.Picture != null)
+						{
+							await Context.Picture.AddAsync(noteToAdd.Picture);
+						}
+					}
+
+					await Context.SaveChangesAsync();
+					dbContextTransaction.Commit();
+				}
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!NoteExists(id))
+				{
+					throw new NotFoundException();
+				}
+				else
+				{
+					throw;
+				}
+			}
 		}
-		public void DeleteNote(int userId, int id)
+		public async Task DeleteNote(int userId, int id)
 		{
-			throw new NotImplementedException();
+			var note = await Context.Note.FindAsync(id);   //Include.Picture? - when note is deleted, the picture is deleted too
+			if (note == null)
+			{
+				throw new NotFoundException();
+			}
+			if (note.UserId != userId)
+			{
+				throw new ForbidException();
+			}
+
+			Delete(note);
+			await Context.SaveChangesAsync();
+		}
+		private bool NoteExists(int id)
+		{
+			//return _context.Note.Any(e => e.Id == id);
+			return (Context.Note?.Any(e => e.Id == id)).GetValueOrDefault();
+		}
+		private async Task AddToContextNoteTagAsync(TagForView tagForView, int noteId)
+		{
+			var tag = new Tag().CopyProperties(tagForView);
+			if (tag.Id == 0)
+			{
+				Context.Tag.Add(tag);
+				await Context.SaveChangesAsync();
+			}
+			Context.NoteTag.Add(new NoteTag
+			{
+				Id = 0,
+				IsActive = true,
+				NoteId = noteId,
+				TagId = tag.Id,
+			});
 		}
 	}
 }

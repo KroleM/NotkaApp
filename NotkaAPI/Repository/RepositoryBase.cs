@@ -7,7 +7,7 @@ namespace NotkaAPI.Repository
 {
 	public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 	{
-		protected NotkaDatabaseContext Context { get; set; }
+		protected NotkaDatabaseContext Context { get; set; }	//FIXME: czy set potrzebny?
 
 		public RepositoryBase(NotkaDatabaseContext repositoryContext)
 		{
@@ -29,7 +29,7 @@ namespace NotkaAPI.Repository
 
 		public void Create(T entity)
 		{
-			Context.Set<T>().Add(entity);
+			Context.Set<T>().Add(entity);	//AddAsync?
 		}
 
 		public void Update(T entity)

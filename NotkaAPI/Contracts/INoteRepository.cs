@@ -7,9 +7,9 @@ namespace NotkaAPI.Contracts
 	public interface INoteRepository	// : IRepositoryBase<NoteForView>
 	{
 		Task<PagedList<NoteForView>> GetNotes(int userId, NoteParameters noteParameters);
-		NoteForView GetNoteById(int userId, int id);
-		void CreateNote(NoteForView note);
-		void UpdateNote(int id, NoteForView note);
-		void DeleteNote(int userId, int id);
+		Task<NoteForView> GetNoteById(int userId, int id);
+		Task<NoteForView> CreateNote(NoteForView note);
+		Task UpdateNote(int id, NoteForView note);
+		Task DeleteNote(int userId, int id);
 	}
 }
