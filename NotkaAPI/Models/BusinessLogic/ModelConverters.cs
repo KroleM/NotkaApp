@@ -7,14 +7,14 @@ namespace NotkaAPI.Models.BusinessLogic
 {
 	public static class ModelConverters
 	{
-		public static NoteForView ConvertToNoteForView(Note note)
+		public static NoteForView ConvertToNoteForView(Note? note)
 		{
 			return new NoteForView
 			{
 				TagsForView = note?.NoteTags.Select(notetag => new TagForView().CopyProperties(notetag.Tag)).ToList() ?? new(),
 			}.CopyProperties(note);
 		}
-		public static TagForView ConvertToTagForView(Tag tag)
+		public static TagForView ConvertToTagForView(Tag? tag)
 		{
 			return new TagForView
 			{

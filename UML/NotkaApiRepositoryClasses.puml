@@ -1,0 +1,68 @@
+@startuml
+
+
+'Interfaces
+
+interface IRepositoryBase<T>{
+    IQueryable<T> FindAll() 
+    IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+    void Create(T entity)
+    void Update(T entity)
+    void Delete(T entity)
+}
+
+'Entity may be eg. Note or Tag
+interface IRepositoryWrapper{
+    <<property>> {readonly} IEntityRepository Entity
+    ...
+    Task SaveAsync()
+}
+
+interface IEntityRepository{
+    Task<PagedList<EntityForView>> GetEntities(int userId, EntityParameters parameters)
+    Task<EntityForView> GetEntityById(int userId, int id)
+    Task<EntityForView> CreateEntity(EntityForView entity)
+    Task UpdateEntity(int id, EntityForView entity)
+    Task DeleteEntity(itn userId, int id)
+}
+
+'Repository
+
+abstract class RepositoryBase<T : class>{
+    # <<property>> NotkaDatabaseContext Context
+}
+
+class RepositoryWrapper{
+    - NotkaDatabaseContext _context
+    - IEntityRepository _entity
+    ...
+    + <<property>> {readonly} IEntityRepository Entity
+}
+
+class EntityRepository{
+}
+
+abstract class AGetParameters{
+    - {const} int maxPageSize
+    - int _pageSize
+    + <<property>> int PageNumber
+    + <<property>> int PageSize
+}
+
+class EntityParameters{
+}
+
+class PagedList<T>{
+    + <<property>> int CurrentPage
+    + <<property>> int TotalPages
+    + <<property>> int PageSize
+    + <<property>> int TotalCount
+    + <<property>> bool HasPrevious
+    + <<property>> bool HasNext
+    + {static} async Task<PagedList<T>> CreateAsync (IQueryable<T> source, int pageNumber, int pageSize)
+}
+
+class List<T>{
+}
+
+@enduml

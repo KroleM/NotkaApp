@@ -3,7 +3,7 @@
 	public interface IRepositoryWrapper
 	{
 		INoteRepository Note { get; }
-		//ITagRepository Tag { get; }
+		ITagRepository Tag { get; }
 		Task SaveAsync();
 	}
 }

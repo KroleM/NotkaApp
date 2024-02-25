@@ -6,8 +6,8 @@ namespace NotkaAPI.Repository
 	public class RepositoryWrapper : IRepositoryWrapper
 	{
 		private NotkaDatabaseContext _context;
-		private INoteRepository _note;
-		private ITagRepository _tag;
+		private INoteRepository? _note;
+		private ITagRepository? _tag;
 
 		public INoteRepository Note
 		{
@@ -22,18 +22,18 @@ namespace NotkaAPI.Repository
 			}
 		}
 
-		//public ITagRepository Tag
-		//{
-		//	get
-		//	{
-		//		if (_tag == null)
-		//		{
-		//			_tag = new TagRepository(_context);
-		//		}
+		public ITagRepository Tag
+		{
+			get
+			{
+				if (_tag == null)
+				{
+					_tag = new TagRepository(_context);
+				}
 
-		//		return _tag;
-		//	}
-		//}
+				return _tag;
+			}
+		}
 
 		public RepositoryWrapper(NotkaDatabaseContext context)
 		{

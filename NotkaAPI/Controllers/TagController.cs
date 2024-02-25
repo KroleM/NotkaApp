@@ -6,6 +6,8 @@ using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
@@ -19,34 +21,46 @@ namespace NotkaAPI.Controllers
     public class TagController : ControllerBase
     {
         private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public TagController(NotkaDatabaseContext context)
+		public TagController(NotkaDatabaseContext context, IRepositoryWrapper repository)
         {
             _context = context;
-        }
+			_repository = repository;
+		}
 
         // GET: api/Tag
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<TagForView>>> GetTag(int userId, [FromQuery] TagParameters tagParameters)
         {
-            if (tagParameters == null) 
-            {
-                
-            }
-
-			if (_context.Tag.Where(n => n.UserId == userId) == null)
+			PagedList<TagForView> tags;
+			try
+			{
+				tags = await _repository.Tag.GetTags(userId, tagParameters);
+			}
+			catch (NotFoundException)
 			{
 				return NotFound();
 			}
-			var tags = await _context.Tag
-				.Where(n => n.UserId == userId)
-				.ToListAsync();
+			catch
+			{
+				//FIXME general exception might also produce NotFound()
+				return BadRequest();
+			}
 
-			return tags
-	            .Select(tag => ModelConverters.ConvertToTagForView(tag))
-	            .OrderBy(t => t.Name)
-	            .ToList();
-			//return await _context.Tag.Where(t => t.UserId == userId).OrderByDescending(t => t.Name).ToListAsync();
+			var metadata = new
+			{
+				tags.TotalCount,
+				tags.PageSize,
+				tags.CurrentPage,
+				tags.TotalPages,
+				tags.HasNext,
+				tags.HasPrevious
+			};
+
+			Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+			return tags;
 		}
 
 		// GET: api/Tag/1/5

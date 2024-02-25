@@ -33,11 +33,10 @@ namespace NotkaAPI.Repository
 			// Propozycja optymalizacji - Split Queries: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
 
 			//TBD: Searching
-
 			return await PagedList<NoteForView>.CreateAsync(notes.OrderByDescending(n => n.ModifiedDate)
-					.Select(note => ModelConverters.ConvertToNoteForView(note)),
-				noteParameters.PageNumber,
-				noteParameters.PageSize);
+						.Select(note => ModelConverters.ConvertToNoteForView(note)),
+					noteParameters.PageNumber,
+					noteParameters.PageSize);
 		}
 		public async Task<NoteForView> GetNoteById(int userId, int id)
 		{

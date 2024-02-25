@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="562px" preserveAspectRatio="none" style="width:1829px;height:562px;background:#FFFFFF;" version="1.1" viewBox="0 0 1829 562" width="1829px" zoomAndPan="magnify"><defs/><g><!--MD5=[88e31287715f4b373997665e80052329]
+class IRepositoryBase--><g id="elem_IRepositoryBase"><rect codeLine="5" fill="#F1F1F1" height="136.0469" id="IRepositoryBase" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="473" x="88" y="10"/><ellipse cx="262.75" cy="26" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M263.7031,22.6406 L263.7031,29.2969 L265.4219,29.2969 Q266.0313,29.2969 266.2969,29.5313 Q266.5625,29.7656 266.5625,30.1563 Q266.5625,30.5313 266.2969,30.7656 Q266.0313,31 265.4219,31 L260.2813,31 Q259.6719,31 259.4063,30.7656 Q259.1406,30.5313 259.1406,30.1406 Q259.1406,29.7656 259.4063,29.5313 Q259.6719,29.2969 260.2813,29.2969 L262,29.2969 L262,22.6406 L260.2813,22.6406 Q259.6719,22.6406 259.4063,22.4063 Q259.1406,22.1719 259.1406,21.7813 Q259.1406,21.4063 259.4063,21.1719 Q259.6719,20.9375 260.2813,20.9375 L265.4219,20.9375 Q266.0313,20.9375 266.2969,21.1719 Q266.5625,21.4063 266.5625,21.7813 Q266.5625,22.1719 266.2969,22.4063 Q266.0313,22.6406 265.4219,22.6406 L263.7031,22.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="104" x="283.25" y="31.7285">IRepositoryBase</text><rect fill="#FFFFFF" height="17.0938" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="9" x="555" y="7"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="7" x="556" y="20.457">T</text><line style="stroke:#181818;stroke-width:0.5;" x1="89" x2="560" y1="42" y2="42"/><line style="stroke:#181818;stroke-width:0.5;" x1="89" x2="560" y1="50" y2="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="94" y="68.5332">IQueryable&lt;T&gt; FindAll()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="461" x="94" y="86.1426">IQueryable&lt;T&gt; FindByCondition(Expression&lt;Func&lt;T, bool&gt;&gt; expression)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130" x="94" y="103.752">void Create(T entity)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="132" x="94" y="121.3613">void Update(T entity)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="128" x="94" y="138.9707">void Delete(T entity)</text></g><!--MD5=[24250dcf29556967a5b2a745628c91c5]
+class IRepositoryWrapper--><g id="elem_IRepositoryWrapper"><rect codeLine="14" fill="#F1F1F1" height="100.8281" id="IRepositoryWrapper" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="299" x="596" y="27.5"/><ellipse cx="677.25" cy="43.5" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M678.2031,40.1406 L678.2031,46.7969 L679.9219,46.7969 Q680.5313,46.7969 680.7969,47.0313 Q681.0625,47.2656 681.0625,47.6563 Q681.0625,48.0313 680.7969,48.2656 Q680.5313,48.5 679.9219,48.5 L674.7813,48.5 Q674.1719,48.5 673.9063,48.2656 Q673.6406,48.0313 673.6406,47.6406 Q673.6406,47.2656 673.9063,47.0313 Q674.1719,46.7969 674.7813,46.7969 L676.5,46.7969 L676.5,40.1406 L674.7813,40.1406 Q674.1719,40.1406 673.9063,39.9063 Q673.6406,39.6719 673.6406,39.2813 Q673.6406,38.9063 673.9063,38.6719 Q674.1719,38.4375 674.7813,38.4375 L679.9219,38.4375 Q680.5313,38.4375 680.7969,38.6719 Q681.0625,38.9063 681.0625,39.2813 Q681.0625,39.6719 680.7969,39.9063 Q680.5313,40.1406 679.9219,40.1406 L678.2031,40.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="128" x="697.75" y="49.2285">IRepositoryWrapper</text><line style="stroke:#181818;stroke-width:0.5;" x1="597" x2="894" y1="59.5" y2="59.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="287" x="602" y="78.0332">«property» {readonly} IEntityRepository Entity</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="12" x="602" y="95.6426">...</text><line style="stroke:#181818;stroke-width:0.5;" x1="597" x2="894" y1="102.7188" y2="102.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="115" x="602" y="121.252">Task SaveAsync()</text></g><!--MD5=[7ae152f06d8034b3923e1ed7c142b6ba]
+class IEntityRepository--><g id="elem_IEntityRepository"><rect codeLine="20" fill="#F1F1F1" height="136.0469" id="IEntityRepository" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="557" x="930" y="10"/><ellipse cx="1150.75" cy="26" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1151.7031,22.6406 L1151.7031,29.2969 L1153.4219,29.2969 Q1154.0313,29.2969 1154.2969,29.5313 Q1154.5625,29.7656 1154.5625,30.1563 Q1154.5625,30.5313 1154.2969,30.7656 Q1154.0313,31 1153.4219,31 L1148.2813,31 Q1147.6719,31 1147.4063,30.7656 Q1147.1406,30.5313 1147.1406,30.1406 Q1147.1406,29.7656 1147.4063,29.5313 Q1147.6719,29.2969 1148.2813,29.2969 L1150,29.2969 L1150,22.6406 L1148.2813,22.6406 Q1147.6719,22.6406 1147.4063,22.4063 Q1147.1406,22.1719 1147.1406,21.7813 Q1147.1406,21.4063 1147.4063,21.1719 Q1147.6719,20.9375 1148.2813,20.9375 L1153.4219,20.9375 Q1154.0313,20.9375 1154.2969,21.1719 Q1154.5625,21.4063 1154.5625,21.7813 Q1154.5625,22.1719 1154.2969,22.4063 Q1154.0313,22.6406 1153.4219,22.6406 L1151.7031,22.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="107" x="1171.25" y="31.7285">IEntityRepository</text><line style="stroke:#181818;stroke-width:0.5;" x1="931" x2="1486" y1="42" y2="42"/><line style="stroke:#181818;stroke-width:0.5;" x1="931" x2="1486" y1="50" y2="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="545" x="936" y="68.5332">Task&lt;PagedList&lt;EntityForView&gt;&gt; GetEntities(int userId, EntityParameters parameters)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="328" x="936" y="86.1426">Task&lt;EntityForView&gt; GetEntityById(int userId, int id)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="349" x="936" y="103.752">Task&lt;EntityForView&gt; CreateEntity(EntityForView entity)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="287" x="936" y="121.3613">Task UpdateEntity(int id, EntityForView entity)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="217" x="936" y="138.9707">Task DeleteEntity(itn userId, int id)</text></g><!--MD5=[0e670951ede5dd005a24f21510d87c07]
+class RepositoryBase--><g id="elem_RepositoryBase"><rect codeLine="30" fill="#F1F1F1" height="65.6094" id="RepositoryBase" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="296" x="1522.5" y="45"/><ellipse cx="1592.25" cy="61" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1594.4375,62.7656 L1590.2969,62.7656 L1589.875,63.7969 L1590.2969,63.7969 Q1590.9063,63.7969 1591.1719,64.0313 Q1591.4375,64.2656 1591.4375,64.6563 Q1591.4375,65.0313 1591.1719,65.2656 Q1590.9063,65.5 1590.2969,65.5 L1588,65.5 Q1587.3906,65.5 1587.1406,65.2656 Q1586.875,65.0313 1586.875,64.6406 Q1586.875,64.2656 1587.1563,64.0313 Q1587.4219,63.7813 1588.0469,63.7969 L1590.7188,57.1406 L1589.6094,57.1406 Q1589,57.1406 1588.7344,56.9063 Q1588.4688,56.6719 1588.4688,56.2813 Q1588.4688,55.9063 1588.7344,55.6719 Q1589,55.4375 1589.6094,55.4375 L1593.2813,55.4375 L1596.6719,63.7969 Q1597.2656,63.7969 1597.4531,63.9375 Q1597.8438,64.2031 1597.8438,64.6563 Q1597.8438,65.0313 1597.5781,65.2656 Q1597.3281,65.5 1596.7188,65.5 L1594.4219,65.5 Q1593.8125,65.5 1593.5469,65.2656 Q1593.2813,65.0313 1593.2813,64.6406 Q1593.2813,64.2656 1593.5469,64.0313 Q1593.8125,63.7969 1594.4219,63.7969 L1594.8438,63.7969 L1594.4375,62.7656 Z M1593.7188,61.0625 L1592.3594,57.6875 L1590.9844,61.0625 L1593.7188,61.0625 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="100" x="1612.75" y="66.7285">RepositoryBase</text><rect fill="#FFFFFF" height="17.0938" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="46" x="1775.5" y="42"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="44" x="1776.5" y="55.457">T : class</text><line style="stroke:#181818;stroke-width:0.5;" x1="1523.5" x2="1817.5" y1="77" y2="77"/><polygon fill="none" points="1533.5,86.3047,1537.5,90.3047,1533.5,94.3047,1529.5,90.3047" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="270" x="1542.5" y="95.5332">«property» NotkaDatabaseContext Context</text><line style="stroke:#181818;stroke-width:0.5;" x1="1523.5" x2="1817.5" y1="102.6094" y2="102.6094"/></g><!--MD5=[849d32d0a9271671a253e43a6d9eec8c]
+class RepositoryWrapper--><g id="elem_RepositoryWrapper"><rect codeLine="34" fill="#F1F1F1" height="118.4375" id="RepositoryWrapper" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="313" x="168" y="206"/><ellipse cx="258.75" cy="222" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M261.5156,217.875 Q261.6719,217.6563 261.8594,217.5469 Q262.0469,217.4375 262.2656,217.4375 Q262.6406,217.4375 262.875,217.7031 Q263.1094,217.9531 263.1094,218.5625 L263.1094,220.0156 Q263.1094,220.625 262.875,220.8906 Q262.6406,221.1563 262.2656,221.1563 Q261.9219,221.1563 261.7188,220.9531 Q261.5156,220.7656 261.4063,220.25 Q261.3594,219.8906 261.1719,219.7031 Q260.8438,219.3281 260.2344,219.1094 Q259.625,218.8906 259,218.8906 Q258.2344,218.8906 257.5938,219.2188 Q256.9688,219.5469 256.4688,220.2969 Q255.9844,221.0469 255.9844,222.0781 L255.9844,223.1719 Q255.9844,224.4063 256.875,225.2344 Q257.7656,226.0469 259.3594,226.0469 Q260.2969,226.0469 260.9531,225.7969 Q261.3438,225.6406 261.7656,225.2031 Q262.0313,224.9375 262.1719,224.8594 Q262.3281,224.7813 262.5313,224.7813 Q262.8594,224.7813 263.1094,225.0469 Q263.375,225.2969 263.375,225.6406 Q263.375,225.9844 263.0313,226.3906 Q262.5313,226.9688 261.7344,227.2969 Q260.6563,227.75 259.3594,227.75 Q257.8438,227.75 256.6406,227.125 Q255.6563,226.625 254.9688,225.5625 Q254.2813,224.4844 254.2813,223.2031 L254.2813,222.0469 Q254.2813,220.7188 254.8906,219.5781 Q255.5156,218.4219 256.6094,217.8125 Q257.7031,217.1875 258.9375,217.1875 Q259.6719,217.1875 260.3125,217.3594 Q260.9688,217.5156 261.5156,217.875 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="279.25" y="227.7285">RepositoryWrapper</text><line style="stroke:#181818;stroke-width:0.5;" x1="169" x2="480" y1="238" y2="238"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="176" y="249.3047"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="202" x="188" y="256.5332">NotkaDatabaseContext _context</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="176" y="266.9141"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="152" x="188" y="274.1426">IEntityRepository _entity</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="12" x="188" y="291.752">...</text><ellipse cx="179" cy="305.1328" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="287" x="188" y="309.3613">«property» {readonly} IEntityRepository Entity</text><line style="stroke:#181818;stroke-width:0.5;" x1="169" x2="480" y1="316.4375" y2="316.4375"/></g><!--MD5=[7b442112a51f2249a13a8c5ea24726ad]
+class EntityRepository--><g id="elem_EntityRepository"><rect codeLine="41" fill="#F1F1F1" height="48" id="EntityRepository" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="135" x="516" y="241"/><ellipse cx="531" cy="257" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M533.7656,252.875 Q533.9219,252.6563 534.1094,252.5469 Q534.2969,252.4375 534.5156,252.4375 Q534.8906,252.4375 535.125,252.7031 Q535.3594,252.9531 535.3594,253.5625 L535.3594,255.0156 Q535.3594,255.625 535.125,255.8906 Q534.8906,256.1563 534.5156,256.1563 Q534.1719,256.1563 533.9688,255.9531 Q533.7656,255.7656 533.6563,255.25 Q533.6094,254.8906 533.4219,254.7031 Q533.0938,254.3281 532.4844,254.1094 Q531.875,253.8906 531.25,253.8906 Q530.4844,253.8906 529.8438,254.2188 Q529.2188,254.5469 528.7188,255.2969 Q528.2344,256.0469 528.2344,257.0781 L528.2344,258.1719 Q528.2344,259.4063 529.125,260.2344 Q530.0156,261.0469 531.6094,261.0469 Q532.5469,261.0469 533.2031,260.7969 Q533.5938,260.6406 534.0156,260.2031 Q534.2813,259.9375 534.4219,259.8594 Q534.5781,259.7813 534.7813,259.7813 Q535.1094,259.7813 535.3594,260.0469 Q535.625,260.2969 535.625,260.6406 Q535.625,260.9844 535.2813,261.3906 Q534.7813,261.9688 533.9844,262.2969 Q532.9063,262.75 531.6094,262.75 Q530.0938,262.75 528.8906,262.125 Q527.9063,261.625 527.2188,260.5625 Q526.5313,259.4844 526.5313,258.2031 L526.5313,257.0469 Q526.5313,255.7188 527.1406,254.5781 Q527.7656,253.4219 528.8594,252.8125 Q529.9531,252.1875 531.1875,252.1875 Q531.9219,252.1875 532.5625,252.3594 Q533.2188,252.5156 533.7656,252.875 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103" x="545" y="262.7285">EntityRepository</text><line style="stroke:#181818;stroke-width:0.5;" x1="517" x2="650" y1="273" y2="273"/><line style="stroke:#181818;stroke-width:0.5;" x1="517" x2="650" y1="281" y2="281"/></g><!--MD5=[20300aaea365e850750ab826e6ff7994]
+class AGetParameters--><g id="elem_AGetParameters"><rect codeLine="44" fill="#F1F1F1" height="118.4375" id="AGetParameters" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200" x="686.5" y="206"/><ellipse cx="729.85" cy="222" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M732.0375,223.7656 L727.8969,223.7656 L727.475,224.7969 L727.8969,224.7969 Q728.5063,224.7969 728.7719,225.0313 Q729.0375,225.2656 729.0375,225.6563 Q729.0375,226.0313 728.7719,226.2656 Q728.5063,226.5 727.8969,226.5 L725.6,226.5 Q724.9906,226.5 724.7406,226.2656 Q724.475,226.0313 724.475,225.6406 Q724.475,225.2656 724.7563,225.0313 Q725.0219,224.7813 725.6469,224.7969 L728.3188,218.1406 L727.2094,218.1406 Q726.6,218.1406 726.3344,217.9063 Q726.0688,217.6719 726.0688,217.2813 Q726.0688,216.9063 726.3344,216.6719 Q726.6,216.4375 727.2094,216.4375 L730.8813,216.4375 L734.2719,224.7969 Q734.8656,224.7969 735.0531,224.9375 Q735.4438,225.2031 735.4438,225.6563 Q735.4438,226.0313 735.1781,226.2656 Q734.9281,226.5 734.3188,226.5 L732.0219,226.5 Q731.4125,226.5 731.1469,226.2656 Q730.8813,226.0313 730.8813,225.6406 Q730.8813,225.2656 731.1469,225.0313 Q731.4125,224.7969 732.0219,224.7969 L732.4438,224.7969 L732.0375,223.7656 Z M731.3188,222.0625 L729.9594,218.6875 L728.5844,222.0625 L731.3188,222.0625 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="105" x="750.15" y="227.7285">AGetParameters</text><line style="stroke:#181818;stroke-width:0.5;" x1="687.5" x2="885.5" y1="238" y2="238"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="694.5" y="249.3047"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="706.5" y="256.5332">{const} int maxPageSize</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="694.5" y="266.9141"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="706.5" y="274.1426">int _pageSize</text><ellipse cx="697.5" cy="287.5234" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="174" x="706.5" y="291.752">«property» int PageNumber</text><ellipse cx="697.5" cy="305.1328" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="706.5" y="309.3613">«property» int PageSize</text><line style="stroke:#181818;stroke-width:0.5;" x1="687.5" x2="885.5" y1="316.4375" y2="316.4375"/></g><!--MD5=[2ddaf041c5ab77aafb0849420b6d6da8]
+class EntityParameters--><g id="elem_EntityParameters"><rect codeLine="51" fill="#F1F1F1" height="48" id="EntityParameters" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="921.5" y="241"/><ellipse cx="936.5" cy="257" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M939.2656,252.875 Q939.4219,252.6563 939.6094,252.5469 Q939.7969,252.4375 940.0156,252.4375 Q940.3906,252.4375 940.625,252.7031 Q940.8594,252.9531 940.8594,253.5625 L940.8594,255.0156 Q940.8594,255.625 940.625,255.8906 Q940.3906,256.1563 940.0156,256.1563 Q939.6719,256.1563 939.4688,255.9531 Q939.2656,255.7656 939.1563,255.25 Q939.1094,254.8906 938.9219,254.7031 Q938.5938,254.3281 937.9844,254.1094 Q937.375,253.8906 936.75,253.8906 Q935.9844,253.8906 935.3438,254.2188 Q934.7188,254.5469 934.2188,255.2969 Q933.7344,256.0469 933.7344,257.0781 L933.7344,258.1719 Q933.7344,259.4063 934.625,260.2344 Q935.5156,261.0469 937.1094,261.0469 Q938.0469,261.0469 938.7031,260.7969 Q939.0938,260.6406 939.5156,260.2031 Q939.7813,259.9375 939.9219,259.8594 Q940.0781,259.7813 940.2813,259.7813 Q940.6094,259.7813 940.8594,260.0469 Q941.125,260.2969 941.125,260.6406 Q941.125,260.9844 940.7813,261.3906 Q940.2813,261.9688 939.4844,262.2969 Q938.4063,262.75 937.1094,262.75 Q935.5938,262.75 934.3906,262.125 Q933.4063,261.625 932.7188,260.5625 Q932.0313,259.4844 932.0313,258.2031 L932.0313,257.0469 Q932.0313,255.7188 932.6406,254.5781 Q933.2656,253.4219 934.3594,252.8125 Q935.4531,252.1875 936.6875,252.1875 Q937.4219,252.1875 938.0625,252.3594 Q938.7188,252.5156 939.2656,252.875 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108" x="950.5" y="262.7285">EntityParameters</text><line style="stroke:#181818;stroke-width:0.5;" x1="922.5" x2="1060.5" y1="273" y2="273"/><line style="stroke:#181818;stroke-width:0.5;" x1="922.5" x2="1060.5" y1="281" y2="281"/></g><!--MD5=[3b6b62fa67784ace47de8c7a99f52a9c]
+class PagedList--><g id="elem_PagedList"><rect codeLine="54" fill="#F1F1F1" height="171.2656" id="PagedList" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="635" x="7" y="384"/><ellipse cx="283.25" cy="400" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M286.0156,395.875 Q286.1719,395.6563 286.3594,395.5469 Q286.5469,395.4375 286.7656,395.4375 Q287.1406,395.4375 287.375,395.7031 Q287.6094,395.9531 287.6094,396.5625 L287.6094,398.0156 Q287.6094,398.625 287.375,398.8906 Q287.1406,399.1563 286.7656,399.1563 Q286.4219,399.1563 286.2188,398.9531 Q286.0156,398.7656 285.9063,398.25 Q285.8594,397.8906 285.6719,397.7031 Q285.3438,397.3281 284.7344,397.1094 Q284.125,396.8906 283.5,396.8906 Q282.7344,396.8906 282.0938,397.2188 Q281.4688,397.5469 280.9688,398.2969 Q280.4844,399.0469 280.4844,400.0781 L280.4844,401.1719 Q280.4844,402.4063 281.375,403.2344 Q282.2656,404.0469 283.8594,404.0469 Q284.7969,404.0469 285.4531,403.7969 Q285.8438,403.6406 286.2656,403.2031 Q286.5313,402.9375 286.6719,402.8594 Q286.8281,402.7813 287.0313,402.7813 Q287.3594,402.7813 287.6094,403.0469 Q287.875,403.2969 287.875,403.6406 Q287.875,403.9844 287.5313,404.3906 Q287.0313,404.9688 286.2344,405.2969 Q285.1563,405.75 283.8594,405.75 Q282.3438,405.75 281.1406,405.125 Q280.1563,404.625 279.4688,403.5625 Q278.7813,402.4844 278.7813,401.2031 L278.7813,400.0469 Q278.7813,398.7188 279.3906,397.5781 Q280.0156,396.4219 281.1094,395.8125 Q282.2031,395.1875 283.4375,395.1875 Q284.1719,395.1875 284.8125,395.3594 Q285.4688,395.5156 286.0156,395.875 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63" x="303.75" y="405.7285">PagedList</text><rect fill="#FFFFFF" height="17.0938" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="9" x="636" y="381"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="7" x="637" y="394.457">T</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="641" y1="416" y2="416"/><ellipse cx="18" cy="430.3047" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="173" x="27" y="434.5332">«property» int CurrentPage</text><ellipse cx="18" cy="447.9141" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164" x="27" y="452.1426">«property» int TotalPages</text><ellipse cx="18" cy="465.5234" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="27" y="469.752">«property» int PageSize</text><ellipse cx="18" cy="483.1328" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="162" x="27" y="487.3613">«property» int TotalCount</text><ellipse cx="18" cy="500.7422" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="183" x="27" y="504.9707">«property» bool HasPrevious</text><ellipse cx="18" cy="518.3516" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="155" x="27" y="522.5801">«property» bool HasNext</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="641" y1="529.6563" y2="529.6563"/><ellipse cx="18" cy="543.9609" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="609" x="27" y="548.1895">async Task&lt;PagedList&lt;T&gt;&gt; CreateAsync (IQueryable&lt;T&gt; source, int pageNumber, int pageSize)</text></g><!--MD5=[3d4177ac58b4411586d067f34e84928f]
+class List--><g id="elem_List"><rect codeLine="64" fill="#F1F1F1" height="48" id="List" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65" x="677" y="445.5"/><ellipse cx="692" cy="461.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M694.7656,457.375 Q694.9219,457.1563 695.1094,457.0469 Q695.2969,456.9375 695.5156,456.9375 Q695.8906,456.9375 696.125,457.2031 Q696.3594,457.4531 696.3594,458.0625 L696.3594,459.5156 Q696.3594,460.125 696.125,460.3906 Q695.8906,460.6563 695.5156,460.6563 Q695.1719,460.6563 694.9688,460.4531 Q694.7656,460.2656 694.6563,459.75 Q694.6094,459.3906 694.4219,459.2031 Q694.0938,458.8281 693.4844,458.6094 Q692.875,458.3906 692.25,458.3906 Q691.4844,458.3906 690.8438,458.7188 Q690.2188,459.0469 689.7188,459.7969 Q689.2344,460.5469 689.2344,461.5781 L689.2344,462.6719 Q689.2344,463.9063 690.125,464.7344 Q691.0156,465.5469 692.6094,465.5469 Q693.5469,465.5469 694.2031,465.2969 Q694.5938,465.1406 695.0156,464.7031 Q695.2813,464.4375 695.4219,464.3594 Q695.5781,464.2813 695.7813,464.2813 Q696.1094,464.2813 696.3594,464.5469 Q696.625,464.7969 696.625,465.1406 Q696.625,465.4844 696.2813,465.8906 Q695.7813,466.4688 694.9844,466.7969 Q693.9063,467.25 692.6094,467.25 Q691.0938,467.25 689.8906,466.625 Q688.9063,466.125 688.2188,465.0625 Q687.5313,463.9844 687.5313,462.7031 L687.5313,461.5469 Q687.5313,460.2188 688.1406,459.0781 Q688.7656,457.9219 689.8594,457.3125 Q690.9531,456.6875 692.1875,456.6875 Q692.9219,456.6875 693.5625,456.8594 Q694.2188,457.0156 694.7656,457.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="22" x="706" y="467.2285">List</text><rect fill="#FFFFFF" height="17.0938" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="9" x="736" y="442.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="7" x="737" y="455.957">T</text><line style="stroke:#181818;stroke-width:0.5;" x1="678" x2="741" y1="477.5" y2="477.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="678" x2="741" y1="485.5" y2="485.5"/></g><!--MD5=[b765321e467da0471eb7b7a2d1f0dc15]
+@startuml
+
+
+'Interfaces
+
+interface IRepositoryBase<T>{
+    IQueryable<T> FindAll() 
+    IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+    void Create(T entity)
+    void Update(T entity)
+    void Delete(T entity)
+}
+
+'Entity may be eg. Note or Tag
+interface IRepositoryWrapper{
+    <<property>> {readonly} IEntityRepository Entity
+    ...
+    Task SaveAsync()
+}
+
+interface IEntityRepository{
+    Task<PagedList<EntityForView>> GetEntities(int userId, EntityParameters parameters)
+    Task<EntityForView> GetEntityById(int userId, int id)
+    Task<EntityForView> CreateEntity(EntityForView entity)
+    Task UpdateEntity(int id, EntityForView entity)
+    Task DeleteEntity(itn userId, int id)
+}
+
+'Repository
+
+abstract class RepositoryBase<T : class>{
+    # <<property>> NotkaDatabaseContext Context
+}
+
+class RepositoryWrapper{
+    - NotkaDatabaseContext _context
+    - IEntityRepository _entity
+    ...
+    + <<property>> {readonly} IEntityRepository Entity
+}
+
+class EntityRepository{
+}
+
+abstract class AGetParameters{
+    - {const} int maxPageSize
+    - int _pageSize
+    + <<property>> int PageNumber
+    + <<property>> int PageSize
+}
+
+class EntityParameters{
+}
+
+class PagedList<T>{
+    + <<property>> int CurrentPage
+    + <<property>> int TotalPages
+    + <<property>> int PageSize
+    + <<property>> int TotalCount
+    + <<property>> bool HasPrevious
+    + <<property>> bool HasNext
+    + {static} async Task<PagedList<T>> CreateAsync (IQueryable<T> source, int pageNumber, int pageSize)
+}
+
+class List<T>{
+}
+
+@enduml
+
+@startuml
+
+
+
+interface IRepositoryBase<T>{
+    IQueryable<T> FindAll() 
+    IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+    void Create(T entity)
+    void Update(T entity)
+    void Delete(T entity)
+}
+
+interface IRepositoryWrapper{
+    <<property>> {readonly} IEntityRepository Entity
+    ...
+    Task SaveAsync()
+}
+
+interface IEntityRepository{
+    Task<PagedList<EntityForView>> GetEntities(int userId, EntityParameters parameters)
+    Task<EntityForView> GetEntityById(int userId, int id)
+    Task<EntityForView> CreateEntity(EntityForView entity)
+    Task UpdateEntity(int id, EntityForView entity)
+    Task DeleteEntity(itn userId, int id)
+}
+
+
+abstract class RepositoryBase<T : class>{
+    # <<property>> NotkaDatabaseContext Context
+}
+
+class RepositoryWrapper{
+    - NotkaDatabaseContext _context
+    - IEntityRepository _entity
+    ...
+    + <<property>> {readonly} IEntityRepository Entity
+}
+
+class EntityRepository{
+}
+
+abstract class AGetParameters{
+    - {const} int maxPageSize
+    - int _pageSize
+    + <<property>> int PageNumber
+    + <<property>> int PageSize
+}
+
+class EntityParameters{
+}
+
+class PagedList<T>{
+    + <<property>> int CurrentPage
+    + <<property>> int TotalPages
+    + <<property>> int PageSize
+    + <<property>> int TotalCount
+    + <<property>> bool HasPrevious
+    + <<property>> bool HasNext
+    + {static} async Task<PagedList<T>> CreateAsync (IQueryable<T> source, int pageNumber, int pageSize)
+}
+
+class List<T>{
+}
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1250
+Language: pl
+Country: PL
+--></g></svg>

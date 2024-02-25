@@ -23,12 +23,10 @@ namespace NotkaAPI.Controllers
 	[ApiController]
 	public class NoteController : ControllerBase
 	{
-		private readonly NotkaDatabaseContext _context;
 		private readonly IRepositoryWrapper _repository;
 
-		public NoteController(NotkaDatabaseContext context, IRepositoryWrapper repository)
+		public NoteController(IRepositoryWrapper repository)
 		{
-			_context = context;
 			_repository = repository;
 		}
 
@@ -159,10 +157,10 @@ namespace NotkaAPI.Controllers
 			return NoContent();
 		}
 
-		private bool NoteExists(int id)
-		{
-			//return _context.Note.Any(e => e.Id == id);
-			return (_context.Note?.Any(e => e.Id == id)).GetValueOrDefault();
-		}
+		//private bool NoteExists(int id)
+		//{
+		//	//return _context.Note.Any(e => e.Id == id);
+		//	return (_context.Note?.Any(e => e.Id == id)).GetValueOrDefault();
+		//}
 	}
 }

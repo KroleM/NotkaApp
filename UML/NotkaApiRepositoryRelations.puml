@@ -1,0 +1,13 @@
+@startuml
+
+!include NotkaApiRepositoryClasses.puml
+
+IRepositoryBase <|.. RepositoryBase
+IRepositoryWrapper <|.. RepositoryWrapper
+RepositoryBase <|.. EntityRepository
+IEntityRepository <|.. EntityRepository
+AGetParameters <|.. EntityParameters
+List <|.. PagedList
+
+
+@enduml
