@@ -68,23 +68,22 @@ namespace NotkaAPI.Controllers
 		[HttpGet("{userId}/{id}")]
 		public async Task<ActionResult<TagForView>> GetTag(int userId, int id)
         {
-			if (!await _context.Tag.AnyAsync(n => n.Id == id))
+			try
+			{
+				return await _repository.Tag.GetTagById(userId, id);
+			}
+			catch (NotFoundException)
 			{
 				return NotFound();
 			}
-            var tag = await _context.Tag
-                .Include(tag => tag.NoteTags)
-                .ThenInclude(notetag => notetag.Note)
-				.ThenInclude(note => note.NoteTags)
-				.ThenInclude(notetag => notetag.Tag)
-				.SingleOrDefaultAsync(tag => tag.Id == id);
-			if (tag.UserId != userId)
+			catch (UnauthorizedException)
 			{
-				return Forbid();
+				return Unauthorized();
 			}
-
-            return ModelConverters.ConvertToTagForView(tag);
-
+			catch
+			{
+				return BadRequest();
+			}
 		}
 
         // PUT: api/Tag/5
@@ -96,65 +95,62 @@ namespace NotkaAPI.Controllers
             {
                 return BadRequest();
             }
-            //Przemienić TagForView na Tag ??
-            _context.Entry(tag).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TagExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                await _repository.Tag.UpdateTag(id, tag);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            return NoContent();
-        }
+			return NoContent();
+		}
 
         // POST: api/Tag
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<TagForView>> PostTag(TagForView tag)
         {
-			var tagToAdd = new Tag().CopyProperties(tag);
-			_context.Tag.Add(tagToAdd);
-            await _context.SaveChangesAsync();
+			if (tag == null) return Forbid();
 
-            //return CreatedAtAction("GetTag", new { id = tag.Id }, tag);
-            return Ok(ModelConverters.ConvertToTagForView(tagToAdd));
-        }
+			TagForView uploadedTag;
+			try
+			{
+				uploadedTag = await _repository.Tag.CreateTag(tag);
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return Ok(uploadedTag);
+		}
 
         // DELETE: api/Tag/5
         [HttpDelete("{userId}/{id}")]
         public async Task<IActionResult> DeleteTag(int userId, int id)
         {
-			if (!await _context.Tag.AnyAsync(n => n.Id == id))
+			try
+			{
+				await _repository.Tag.DeleteTag(userId, id);
+			}
+			catch (NotFoundException)
 			{
 				return NotFound();
 			}
-            //Proper relationship child (dependent) has to be included (loaded) in order to cascade-delete.
-			var tag = await _context.Tag
-                .Include(tag => tag.NoteTags)
-                .SingleOrDefaultAsync(tag => tag.Id == id);
-
-			if (tag.UserId != userId)
+			catch (ForbidException)
 			{
 				return Forbid();
 			}
 
-			//_context.Tag.Remove(tag);
-			_context.Remove(tag);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
+			return NoContent();
+		}
 
         private bool TagExists(int id)
         {
