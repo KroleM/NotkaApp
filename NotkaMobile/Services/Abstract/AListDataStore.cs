@@ -1,4 +1,5 @@
-﻿using NotkaMobile.Service.Reference;
+﻿using ApiSharedClasses.QueryParameters.Abstract;
+using NotkaMobile.Service.Reference;
 
 namespace NotkaMobile.Services.Abstract
 {
@@ -6,8 +7,8 @@ namespace NotkaMobile.Services.Abstract
 		where T : class
 		where U : class
 	{
-		public List<T> items = new List<T>();
-		public U Params {  get; set; }
+		public List<T> Items = new List<T>();
+		public U Params { get; set; }
 
 		public AListDataStore()
 			: base()
@@ -17,7 +18,7 @@ namespace NotkaMobile.Services.Abstract
 		}
 		public async Task<bool> AddItemAsync(T item)
 		{
-			items.Add(await AddItemToService(item));
+			Items.Add(await AddItemToService(item));
 
 			return await Task.FromResult(true);
 		}
@@ -39,7 +40,7 @@ namespace NotkaMobile.Services.Abstract
 		public async Task<bool> DeleteItemAsync(int id)
 		{
 			var oldItem = await Find(id);
-			items.Remove(oldItem);
+			Items.Remove(oldItem);
 			await DeleteItemFromService(oldItem);
 			await RefreshListFromService();
 			return await Task.FromResult(true);
@@ -53,7 +54,7 @@ namespace NotkaMobile.Services.Abstract
 		public async Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
 		{
 			await RefreshListFromService();
-			return await Task.FromResult(items);
+			return await Task.FromResult(Items);
 		}
 	}
 }

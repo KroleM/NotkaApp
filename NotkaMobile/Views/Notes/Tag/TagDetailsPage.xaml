@@ -23,11 +23,11 @@
                 <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
                     <Label Text="Data utworzenia:" />
                     <Label Grid.Column="1"  Margin="15,0,0,0" 
-                       Text="{Binding CreatedDate}" />
+                       Text="{Binding CreatedDate, StringFormat='{0:G}'}" />
                     <Label Grid.Row="1"
                        Text="Data modyfikacji:" />
                     <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
-                       Text="{Binding ModifiedDate}" />
+                       Text="{Binding ModifiedDate, StringFormat='{0:G}'}" />
                 </Grid>
 
                 <Border Grid.Row="1" Style="{StaticResource SimpleBorder}" 

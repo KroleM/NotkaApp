@@ -35,7 +35,7 @@ namespace NotkaMobile.Services
 
 		public override async Task RefreshListFromService()
 		{
-			items = _service.TagAllAsync(Preferences.Default.Get("userId", 0), Params.PageNumber, Params.PageSize).Result.ToList();
+			Items = _service.TagAllAsync(Preferences.Default.Get("userId", 0), Params.PageNumber, Params.PageSize).Result.ToList();
 		}
 
 		public override async Task<bool> UpdateItemInService(TagForView item)

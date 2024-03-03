@@ -22,9 +22,9 @@ namespace NotkaAPI.Repository
 			{
 				throw new NotFoundException();
 			}
-			var notes = FindByCondition(n => n.UserId == userId)
-										//&& n.CreatedDate >= noteParameters.MinDateOfCreation
-										//&& n.CreatedDate <= noteParameters.MaxDateOfCreation)
+			var notes = FindByCondition(n => n.UserId == userId
+										&& n.CreatedDate >= noteParameters.MinDateOfCreation
+										&& n.CreatedDate <= noteParameters.MaxDateOfCreation)
 						.Include(note => note.NoteTags)
 						.ThenInclude(notetag => notetag.Tag);
 						//.Include(note => note.Picture)

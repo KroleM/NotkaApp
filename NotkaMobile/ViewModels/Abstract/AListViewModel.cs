@@ -1,11 +1,13 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using ApiSharedClasses.QueryParameters.Abstract;
+using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Services.Abstract;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
-	public abstract partial class AListViewModel<T, U> : BaseViewModel
+	public abstract partial class AListViewModel<T, U> : BaseViewModel 
+		where U : AGetParameters
 	{
 		protected AListViewModel(string title, IDataStore<T, U> dataStore)
 		{
@@ -28,6 +30,7 @@ namespace NotkaMobile.ViewModels.Abstract
 		protected async Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
+			DataStore.Params.PageNumber = 1;
 			try
 			{
 				Items.Clear();

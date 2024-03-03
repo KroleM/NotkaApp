@@ -104,7 +104,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			_tagDataStore = new TagDataStore();
 			_tagDataStore.Params = new TagParameters();
 			await _tagDataStore.RefreshListFromService();
-			Tags = _tagDataStore.items;
+			Tags = _tagDataStore.Items;
 		}
 
 		#endregion

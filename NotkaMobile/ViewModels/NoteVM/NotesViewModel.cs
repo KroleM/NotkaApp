@@ -35,5 +35,17 @@ namespace NotkaMobile.ViewModels.NoteVM
 			//await Shell.Current.GoToAsync("..");
 			await ExecuteLoadItemsCommand();
 		}
+		[RelayCommand]
+		private async Task LoadMoreItems()
+		{
+			DataStore.Params.PageNumber++;
+			Console.WriteLine("Page number: {0}", DataStore.Params.PageNumber);
+			var items = await DataStore.GetItemsAsync(true);
+			foreach (var item in items)
+			{
+				Items.Add(item);
+			}
+			Console.WriteLine("Items count = {0}", Items.Count);
+		}
 	}
 }

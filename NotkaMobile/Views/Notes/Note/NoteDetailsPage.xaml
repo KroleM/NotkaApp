@@ -20,17 +20,16 @@
             <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
                 <Label Text="Data utworzenia:" />
                 <Label Grid.Column="1"  Margin="15,0,0,0" 
-                   Text="{Binding CreatedDate}" />
+                   Text="{Binding CreatedDate, StringFormat='{0:G}'}" />
                 <Label Grid.Row="1"
                    Text="Data modyfikacji:" />
                 <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
-                   Text="{Binding ModifiedDate}" />
+                   Text="{Binding ModifiedDate, StringFormat='{0:G}'}" />
             </Grid>
-            <HorizontalStackLayout Grid.Row="2" Margin="0,5">
+            <HorizontalStackLayout Grid.Row="2" Margin="0,5"> <!--StackLayout może przeszkadzać w scrollowaniu CollectionView - zastąpić Gridem?-->
                 <Label Text="Tagi:" FontSize="Medium" VerticalOptions="Center"/>
-                <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList">
+                <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList" HorizontalOptions="FillAndExpand">
                     <CollectionView.ItemTemplate>
-                        <!--Dodać styl, który jasno pokazywałby odrębność tagów (Border?)-->
                         <DataTemplate x:DataType="{x:Type model:TagForView}">
                             <Border Style="{StaticResource SimpleBorder}" Margin="5,0,0,0">
                                 <Label >

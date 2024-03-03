@@ -6,6 +6,7 @@ namespace ApiSharedClasses.QueryParameters
 	{
 		public DateTime MinDateOfCreation { get; set; } = DateTime.MinValue;
 		public DateTime MaxDateOfCreation { get; set; } = DateTime.Now;
+		//public bool HasPicture { get; set; }
 		public bool ValidTimeRange => MaxDateOfCreation > MinDateOfCreation;
 	}
 }

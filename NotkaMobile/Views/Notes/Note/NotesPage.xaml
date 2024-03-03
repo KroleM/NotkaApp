@@ -79,6 +79,8 @@
                  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <Grid Padding="5">
             <CollectionView 
+                RemainingItemsThreshold="1"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
                 ItemsSource="{Binding Items}"
                 ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
                 SelectionMode="None">

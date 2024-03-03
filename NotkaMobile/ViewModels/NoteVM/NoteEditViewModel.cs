@@ -120,7 +120,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		{
 			_tagDataStore = new TagDataStore();
 			await _tagDataStore.RefreshListFromService();
-			Tags = _tagDataStore.items;
+			Tags = _tagDataStore.Items;
 		}
 
 

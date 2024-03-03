@@ -82,6 +82,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
         ```c#
         await Shell.Current.GoToAsync($"elephantdetails?name={elephantName}&location={elephantLocation}");
         ```
+* [Formatowanie daty][link10] w warstwie widoku.
 
 ## [MediatR][link6]
 
@@ -101,3 +102,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link7]: https://code-maze.com/aspnetcore-pass-parameters-to-http-get-action/
 [link8]: https://learn.microsoft.com/en-us/dotnet/core/diagnostics/debug-memory-leak
 [link9]: https://learn.microsoft.com/en-us/ef/core/querying/client-eval
+[link10]: https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings
