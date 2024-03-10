@@ -4,6 +4,7 @@ using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes.Tag;
+using System.Diagnostics;
 using TagForView = NotkaMobile.Service.Reference.TagForView;
 
 namespace NotkaMobile.ViewModels.TagVM
@@ -39,16 +40,24 @@ namespace NotkaMobile.ViewModels.TagVM
 		[RelayCommand]
 		private async Task LoadMoreItems()
 		{
-			if (DataStore.PageParameters.HasNext)
+			try
 			{
-				DataStore.Params.PageNumber++;
-				Console.WriteLine("Tags page number: {0}", DataStore.Params.PageNumber);
-				var items = await DataStore.GetItemsAsync(true);
-				foreach (var item in items)
+				await Task.Delay(10);
+				if (DataStore.PageParameters.HasNext && Items.Count > 0)
 				{
-					Items.Add(item);
+					DataStore.Params.PageNumber++;
+					Debug.WriteLine("Tags page number: {0}", DataStore.Params.PageNumber);
+					var items = await DataStore.GetItemsAsync(true);
+					foreach (var item in items)
+					{
+						Items.Add(item);
+					}
+					Debug.WriteLine("Tags items count = {0}", Items.Count);
 				}
-				Console.WriteLine("Tags items count = {0}", Items.Count);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
 			}
 		}
 	}

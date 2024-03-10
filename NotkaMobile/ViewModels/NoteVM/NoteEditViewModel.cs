@@ -12,10 +12,10 @@ namespace NotkaMobile.ViewModels.NoteVM
 	{
 		#region Constructor
 
-		public NoteEditViewModel(NoteDataStore dataStore)
+		public NoteEditViewModel(NoteDataStore dataStore, TagDataStore tagDataStore)
 			: base("Edycja notatki", dataStore)
 		{
-			LoadTags();
+			LoadTags(tagDataStore);
 		}
 
 		#endregion
@@ -116,10 +116,11 @@ namespace NotkaMobile.ViewModels.NoteVM
 
 			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
 		}
-		private async Task LoadTags()
+		private async Task LoadTags(TagDataStore tagDataStore)
 		{
-			_tagDataStore = new TagDataStore();
-			_tagDataStore.Params.PageSize = 0;
+			//_tagDataStore = new TagDataStore();	//reson of memory leak?
+			_tagDataStore = tagDataStore;
+			_tagDataStore.Params.PageSize = 0;	//load all user's tags
 			await _tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.Items;
 		}
@@ -169,7 +170,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 
 		[RelayCommand]
-		async System.Threading.Tasks.Task SelectPhoto()
+		async Task SelectPhoto()
 		{
 			FileResult photoFile = await MediaPicker.Default.PickPhotoAsync();
 

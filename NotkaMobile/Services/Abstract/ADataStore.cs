@@ -21,11 +21,11 @@ namespace NotkaMobile.Services.Abstract
 			var client = new HttpClient(handler);
 			client.Timeout = TimeSpan.FromSeconds(5);
 			
-			//local Swagger RestAPI address
-			//_service = new NotkaMobileService("https://localhost:7089/", client);
+			//local Swagger RestAPI address (suitable for Windows Machine)
+			_service = new NotkaMobileService("https://localhost:7089/", client);
 
 			//Swagger RestAPI address for Android (use only one!)
-			_service = new NotkaMobileService("https://10.0.2.2:7089/", client);
+			//_service = new NotkaMobileService("https://10.0.2.2:7089/", client);
 		}
 	}
 }

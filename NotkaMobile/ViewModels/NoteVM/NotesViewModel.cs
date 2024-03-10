@@ -4,12 +4,13 @@ using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes.Note;
+using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
 	public partial class NotesViewModel : AListViewModel<NoteForView, NoteParameters>
 	{
-		public NotesViewModel(NoteDataStore dataStore) 
+		public NotesViewModel(NoteDataStore dataStore)
 			: base("Notatki", dataStore)
 		{
 		}
@@ -19,7 +20,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			await Shell.Current.GoToAsync(nameof(NewNotePage));
 		}
 
-		public override async void OnItemSelected(NoteForView item)	//async void might wrap awaited async Task method
+		public override async void OnItemSelected(NoteForView item) //async void might wrap awaited async Task method
 		{
 			if (item == null)
 			{
@@ -38,16 +39,24 @@ namespace NotkaMobile.ViewModels.NoteVM
 		[RelayCommand]
 		private async Task LoadMoreItems()
 		{
-			if (DataStore.PageParameters.HasNext)
+			try
 			{
-				DataStore.Params.PageNumber++;
-				Console.WriteLine("Notes page number: {0}", DataStore.Params.PageNumber);
-				var items = await DataStore.GetItemsAsync(true);
-				foreach (var item in items)
-				{
-					Items.Add(item);
+				await Task.Delay(10);	//this prevents strange ObservableCollection synchronization error
+				if (DataStore.PageParameters.HasNext && Items.Count > 0)
+				{					
+					DataStore.Params.PageNumber++;
+					Debug.WriteLine("Notes page number: {0}", DataStore.Params.PageNumber);
+					var items = await DataStore.GetItemsAsync(true);
+					foreach (var item in items)
+					{
+						Items.Add(item);
+					}
+					Debug.WriteLine("Notes items count = {0}", Items.Count);
 				}
-				Console.WriteLine("Notes items count = {0}", Items.Count);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
 			}
 		}
 	}

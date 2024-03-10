@@ -26,13 +26,14 @@
                 <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
                    Text="{Binding ModifiedDate, StringFormat='{0:G}'}" />
             </Grid>
-            <HorizontalStackLayout Grid.Row="2" Margin="0,5"> <!--StackLayout może przeszkadzać w scrollowaniu CollectionView - zastąpić Gridem?-->
+            <Grid ColumnDefinitions="Auto, *" Grid.Row="2" Margin="0,5"> <!--StackLayout może przeszkadzać w scrollowaniu CollectionView - zastąpić Gridem?-->
                 <Label Text="Tagi:" FontSize="Medium" VerticalOptions="Center"/>
-                <CollectionView ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList" HorizontalOptions="FillAndExpand">
+                <CollectionView Grid.Column="1" 
+                                ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList" HorizontalOptions="FillAndExpand">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type model:TagForView}">
                             <Border Style="{StaticResource SimpleBorder}" Margin="5,0,0,0">
-                                <Label >
+                                <Label>
                                     <!--<Label.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1"
                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
@@ -49,7 +50,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </HorizontalStackLayout>
+            </Grid>
 
             <Grid Grid.Row="3" RowDefinitions="Auto, *">
                 <toolkit:Expander x:Name="expander" Margin="0,2" IsVisible="{Binding PhotoSource, Converter={StaticResource isNotNullConverter}}">

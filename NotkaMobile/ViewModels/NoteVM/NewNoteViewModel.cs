@@ -12,10 +12,10 @@ namespace NotkaMobile.ViewModels.NoteVM
 	{
 		#region Constructor
 
-		public NewNoteViewModel(NoteDataStore dataStore)
+		public NewNoteViewModel(NoteDataStore dataStore, TagDataStore tagDataStore)
 			: base("Nowa notatka", dataStore)
 		{
-			LoadTags();
+			LoadTags(tagDataStore);
 		}
 
 		#endregion
@@ -99,9 +99,9 @@ namespace NotkaMobile.ViewModels.NoteVM
 		{
 			return !string.IsNullOrEmpty(NoteTitle);
 		}
-		private async Task LoadTags()
+		private async Task LoadTags(TagDataStore tagDataStore)
 		{
-			_tagDataStore = new TagDataStore();
+			_tagDataStore = tagDataStore;
 			_tagDataStore.Params.PageSize = 0;
 			await _tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.Items;

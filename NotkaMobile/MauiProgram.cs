@@ -41,8 +41,8 @@ namespace NotkaMobile
 			//DependencyService.Register<UserDataStore>();
 			mauiAppBuilder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 			mauiAppBuilder.Services.AddSingleton<LoginDataStore>();
-			mauiAppBuilder.Services.AddSingleton<NoteDataStore>();
-			mauiAppBuilder.Services.AddSingleton<TagDataStore>();
+			mauiAppBuilder.Services.AddTransient<NoteDataStore>();
+			mauiAppBuilder.Services.AddTransient<TagDataStore>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)

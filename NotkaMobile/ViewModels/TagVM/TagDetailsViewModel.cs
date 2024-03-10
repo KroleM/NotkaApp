@@ -39,7 +39,7 @@ namespace NotkaMobile.ViewModels.TagVM
 			await Shell.Current.GoToAsync($"{nameof(TagEditPage)}?{nameof(TagEditViewModel.ItemId)}={ItemId}");
 		}
 		[RelayCommand]
-		async System.Threading.Tasks.Task NoteTapped(NoteForView item)
+		async Task NoteTapped(NoteForView item)
 		{
 			if (item == null)
 			{

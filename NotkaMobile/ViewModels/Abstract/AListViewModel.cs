@@ -30,10 +30,11 @@ namespace NotkaMobile.ViewModels.Abstract
 		protected async Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
-			DataStore.Params.PageNumber = 1;
+			//DataStore.Params.PageNumber = 1;
 			try
 			{
 				Items.Clear();
+				DataStore.Params.PageNumber = 1;
 				var items = await DataStore.GetItemsAsync(true);
 				foreach (var item in items)
 				{
