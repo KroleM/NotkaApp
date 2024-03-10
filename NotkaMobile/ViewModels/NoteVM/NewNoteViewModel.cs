@@ -102,7 +102,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		private async Task LoadTags()
 		{
 			_tagDataStore = new TagDataStore();
-			_tagDataStore.Params = new TagParameters();
+			_tagDataStore.Params.PageSize = 0;
 			await _tagDataStore.RefreshListFromService();
 			Tags = _tagDataStore.Items;
 		}

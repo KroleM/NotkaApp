@@ -30,8 +30,8 @@ namespace NotkaAPI.Controllers
 		}
 
         // GET: api/Tag
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<TagForView>>> GetTag(int userId, [FromQuery] TagParameters tagParameters)
+        [HttpGet("{userId}", Name = "TagGETAll")]
+        public async Task<ActionResult<PagedList<TagForView>>> GetTag(int userId, [FromQuery] TagParameters tagParameters)
         {
 			PagedList<TagForView> tags;
 			try
@@ -48,6 +48,7 @@ namespace NotkaAPI.Controllers
 				return BadRequest();
 			}
 
+			//Below metadata is not used
 			var metadata = new
 			{
 				tags.TotalCount,
@@ -65,7 +66,7 @@ namespace NotkaAPI.Controllers
 
 		// GET: api/Tag/1/5
 		//[HttpGet]   //np. api/Tag?userId=1&id=2
-		[HttpGet("{userId}/{id}")]
+		[HttpGet("{userId}/{id}", Name = "TagGET")]
 		public async Task<ActionResult<TagForView>> GetTag(int userId, int id)
         {
 			try
@@ -88,7 +89,7 @@ namespace NotkaAPI.Controllers
 
         // PUT: api/Tag/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "TagPUT")]
         public async Task<IActionResult> PutTag(int id, TagForView tag)
         {
             if (id != tag.Id)
@@ -114,7 +115,7 @@ namespace NotkaAPI.Controllers
 
         // POST: api/Tag
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost(Name = "TagPOST")]
         public async Task<ActionResult<TagForView>> PostTag(TagForView tag)
         {
 			if (tag == null) return Forbid();
@@ -133,7 +134,7 @@ namespace NotkaAPI.Controllers
 		}
 
         // DELETE: api/Tag/5
-        [HttpDelete("{userId}/{id}")]
+        [HttpDelete("{userId}/{id}", Name = "TagDELETE")]
         public async Task<IActionResult> DeleteTag(int userId, int id)
         {
 			try

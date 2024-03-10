@@ -1055,6 +1055,7 @@
         "tags": [
           "Note"
         ],
+        "operationId": "NoteGETAll",
         "parameters": [
           {
             "name": "userId",
@@ -1111,26 +1112,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NoteForView"
-                  }
+                  "$ref": "#/components/schemas/NoteForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NoteForView"
-                  }
+                  "$ref": "#/components/schemas/NoteForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NoteForView"
-                  }
+                  "$ref": "#/components/schemas/NoteForViewPagedList"
                 }
               }
             }
@@ -1143,6 +1135,7 @@
         "tags": [
           "Note"
         ],
+        "operationId": "NoteGET",
         "parameters": [
           {
             "name": "userId",
@@ -1190,6 +1183,7 @@
         "tags": [
           "Note"
         ],
+        "operationId": "NoteDELETE",
         "parameters": [
           {
             "name": "userId",
@@ -1222,6 +1216,7 @@
         "tags": [
           "Note"
         ],
+        "operationId": "NotePUT",
         "parameters": [
           {
             "name": "id",
@@ -1276,6 +1271,7 @@
         "tags": [
           "Note"
         ],
+        "operationId": "NotePOST",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3635,6 +3631,7 @@
         "tags": [
           "Tag"
         ],
+        "operationId": "TagGETAll",
         "parameters": [
           {
             "name": "userId",
@@ -3668,26 +3665,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TagForView"
-                  }
+                  "$ref": "#/components/schemas/TagForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TagForView"
-                  }
+                  "$ref": "#/components/schemas/TagForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TagForView"
-                  }
+                  "$ref": "#/components/schemas/TagForViewPagedList"
                 }
               }
             }
@@ -3700,6 +3688,7 @@
         "tags": [
           "Tag"
         ],
+        "operationId": "TagGET",
         "parameters": [
           {
             "name": "userId",
@@ -3747,6 +3736,7 @@
         "tags": [
           "Tag"
         ],
+        "operationId": "TagDELETE",
         "parameters": [
           {
             "name": "userId",
@@ -3779,6 +3769,7 @@
         "tags": [
           "Tag"
         ],
+        "operationId": "TagPUT",
         "parameters": [
           {
             "name": "id",
@@ -3833,6 +3824,7 @@
         "tags": [
           "Tag"
         ],
+        "operationId": "TagPOST",
         "requestBody": {
           "content": {
             "application/json": {
@@ -5512,6 +5504,46 @@
         },
         "additionalProperties": false
       },
+      "NoteForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoteForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "NoteTag": {
         "type": "object",
         "properties": {
@@ -6201,6 +6233,46 @@
               "$ref": "#/components/schemas/NoteForView"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TagForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "additionalProperties": false

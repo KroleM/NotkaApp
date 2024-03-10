@@ -99,7 +99,9 @@
             <CollectionView 
                 ItemsSource="{Binding Items}"
                 ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
-                SelectionMode="None">
+                SelectionMode="None"
+                RemainingItemsThreshold="1"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}">
             </CollectionView>
         </Grid>
     </RefreshView>

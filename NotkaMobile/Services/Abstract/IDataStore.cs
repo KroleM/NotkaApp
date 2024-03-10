@@ -1,8 +1,11 @@
-﻿namespace NotkaMobile.Services.Abstract
+﻿using ApiSharedClasses.QueryParameters;
+
+namespace NotkaMobile.Services.Abstract
 {
 	public interface IDataStore<T, U>
 	{
 		U Params { get; set; }
+		PageParameters PageParameters { get; set; }
 		Task<bool> AddItemAsync(T item);
 		Task<bool> UpdateItemAsync(T item);
 		Task<bool> DeleteItemAsync(int id);

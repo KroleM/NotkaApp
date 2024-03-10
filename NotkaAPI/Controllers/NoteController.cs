@@ -31,8 +31,8 @@ namespace NotkaAPI.Controllers
 		}
 
 		// GET: api/Note
-		[HttpGet("{userId}")]
-		public async Task<ActionResult<IEnumerable<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters)
+		[HttpGet("{userId}", Name = "NoteGETAll")]
+		public async Task<ActionResult<PagedList<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters)
 		{
 			if (!noteParameters.ValidTimeRange)
 			{
@@ -54,6 +54,7 @@ namespace NotkaAPI.Controllers
 				return BadRequest(); 
 			}
 
+			//Below metadata is not used
 			var metadata = new
 			{
 				notes.TotalCount,
@@ -70,7 +71,7 @@ namespace NotkaAPI.Controllers
 		}
 
 		// GET: api/Note/1/5
-		[HttpGet("{userId}/{id}")]
+		[HttpGet("{userId}/{id}", Name = "NoteGET")]
 		public async Task<ActionResult<NoteForView>> GetNote(int userId, int id)
 		{
 			try
@@ -93,7 +94,7 @@ namespace NotkaAPI.Controllers
 
 		// PUT: api/Note/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPut("{id}")]
+		[HttpPut("{id}", Name = "NotePUT")]
 		public async Task<IActionResult> PutNote(int id, NoteForView note)
 		{
 			if (id != note.Id)
@@ -119,7 +120,7 @@ namespace NotkaAPI.Controllers
 
 		// POST: api/Note
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPost]
+		[HttpPost(Name = "NotePOST")]
 		public async Task<ActionResult<NoteForView>> PostNote(NoteForView note)
 		{
 			if (note == null) return Forbid();
@@ -138,7 +139,7 @@ namespace NotkaAPI.Controllers
 		}
 
 		// DELETE: api/Note/5
-		[HttpDelete("{userId}/{id}")]
+		[HttpDelete("{userId}/{id}", Name = "NoteDELETE")]
 		public async Task<IActionResult> DeleteNote(int userId, int id)
 		{
 			try

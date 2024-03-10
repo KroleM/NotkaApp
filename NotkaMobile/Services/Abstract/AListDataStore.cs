@@ -1,4 +1,5 @@
-﻿using ApiSharedClasses.QueryParameters.Abstract;
+﻿using ApiSharedClasses.QueryParameters;
+using ApiSharedClasses.QueryParameters.Abstract;
 using NotkaMobile.Service.Reference;
 
 namespace NotkaMobile.Services.Abstract
@@ -9,6 +10,7 @@ namespace NotkaMobile.Services.Abstract
 	{
 		public List<T> Items = new List<T>();
 		public U Params { get; set; }
+		public PageParameters PageParameters { get; set; } = new();
 
 		public AListDataStore()
 			: base()

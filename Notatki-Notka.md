@@ -43,6 +43,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     - Unauthorized => returns the 401 status code
     - Forbid => returns the 403 status code
     - StatusCode => returns the status code we provide as input
+* Trochę o generowanym pliku `swaggerClient.cs` - [LINK][link11], [LINK][link12]
 
 
 ## .NET MAUI
@@ -90,7 +91,13 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 ## Czego się dziś nauczyłem?
  * 2024.02.19\
     Do solucji `NotkaAPI` dodałem osobny projekt typu `Class Library`, aby współdzielić go z `NotkaMobile`, w której to (jako że jest w osobnej solucji) musiałem najpierw dodać do solucji `ApiSharedClasses` jako 'external project', a następnie referencję do tego projektu.
- * 
+ * 2024.03.03\
+    Vertical/HorizontalStackLayout gryzie się z `CollectionView` i uniemożliwia scrollowanie. Sposób: użyć Grid.\
+    W WebAPI należy nadawać nazwy metod kontrollerów. W przeciwnym razie mogą zostać nadane dość losowe nazwy. Przykład:
+    ```
+    [HttpGet("/orders/{id}", Name = nameof(GetOrder))]
+    ```
+    ConnectedServices -> Service References -> `swaggerClient.cs` - wygenerowany kod można rozszerzać poprzez utworzenie własnej klasy częściowej (partial) o tej samej nazwie. Daje to pewność, że w razie aktualizacji klienta HTTP wprowadzony kod nie zostanie utracony.
 
 
 [link1]: https://learn.microsoft.com/en-us/sql/ssms/scripting/generate-and-publish-scripts-wizard?view=sql-server-ver16
@@ -103,3 +110,5 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link8]: https://learn.microsoft.com/en-us/dotnet/core/diagnostics/debug-memory-leak
 [link9]: https://learn.microsoft.com/en-us/ef/core/querying/client-eval
 [link10]: https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings
+[link11]: https://stevetalkscode.co.uk/openapireference-commands
+[link12]: https://devblogs.microsoft.com/dotnet/creating-discoverable-http-apis-with-asp-net-core-5-web-api/

@@ -35,7 +35,14 @@ namespace NotkaMobile.Services
 
 		public override async Task RefreshListFromService()
 		{
-			Items = _service.NoteAllAsync(Preferences.Default.Get("userId", 0), Params.MinDateOfCreation, Params.MaxDateOfCreation, Params.ValidTimeRange, Params.PageNumber, Params.PageSize).Result.ToList();
+			var PagedList = _service.NoteGETAllAsync(Preferences.Default.Get("userId", 0), Params.MinDateOfCreation, Params.MaxDateOfCreation, Params.ValidTimeRange, Params.PageNumber, Params.PageSize).Result;
+			Items = PagedList.Items.ToList();
+			PageParameters.CurrentPage = PagedList.CurrentPage;
+			PageParameters.TotalPages = PagedList.TotalPages;
+			PageParameters.PageSize = PagedList.PageSize;
+			PageParameters.TotalCount = PagedList.TotalCount;
+			PageParameters.HasPrevious = PagedList.HasPrevious;
+			PageParameters.HasNext = PagedList.HasNext;
 		}
 
 		public override async Task<bool> UpdateItemInService(NoteForView item)

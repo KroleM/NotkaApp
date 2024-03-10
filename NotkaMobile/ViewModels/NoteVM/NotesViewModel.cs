@@ -38,14 +38,17 @@ namespace NotkaMobile.ViewModels.NoteVM
 		[RelayCommand]
 		private async Task LoadMoreItems()
 		{
-			DataStore.Params.PageNumber++;
-			Console.WriteLine("Page number: {0}", DataStore.Params.PageNumber);
-			var items = await DataStore.GetItemsAsync(true);
-			foreach (var item in items)
+			if (DataStore.PageParameters.HasNext)
 			{
-				Items.Add(item);
+				DataStore.Params.PageNumber++;
+				Console.WriteLine("Notes page number: {0}", DataStore.Params.PageNumber);
+				var items = await DataStore.GetItemsAsync(true);
+				foreach (var item in items)
+				{
+					Items.Add(item);
+				}
+				Console.WriteLine("Notes items count = {0}", Items.Count);
 			}
-			Console.WriteLine("Items count = {0}", Items.Count);
 		}
 	}
 }

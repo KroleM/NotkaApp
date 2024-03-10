@@ -29,12 +29,27 @@ namespace NotkaMobile.ViewModels.TagVM
 			await Shell.Current.GoToAsync($"{nameof(TagDetailsPage)}?{nameof(TagDetailsViewModel.ItemId)}={item.Id}");
 		}
 		[RelayCommand]
-		private async System.Threading.Tasks.Task Delete(TagForView tag)
+		private async Task Delete(TagForView tag)
 		{
 			await DataStore.DeleteItemAsync(tag.Id);
 			// This will pop the current page off the navigation stack
 			//await Shell.Current.GoToAsync("..");
 			await ExecuteLoadItemsCommand();
+		}
+		[RelayCommand]
+		private async Task LoadMoreItems()
+		{
+			if (DataStore.PageParameters.HasNext)
+			{
+				DataStore.Params.PageNumber++;
+				Console.WriteLine("Tags page number: {0}", DataStore.Params.PageNumber);
+				var items = await DataStore.GetItemsAsync(true);
+				foreach (var item in items)
+				{
+					Items.Add(item);
+				}
+				Console.WriteLine("Tags items count = {0}", Items.Count);
+			}
 		}
 	}
 }
