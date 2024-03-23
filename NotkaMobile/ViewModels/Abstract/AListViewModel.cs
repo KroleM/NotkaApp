@@ -14,23 +14,22 @@ namespace NotkaMobile.ViewModels.Abstract
 			Title = title;
 			DataStore = dataStore;
 			Items = new ObservableCollection<T>();
-			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-			ItemTapped = new Command<T>(OnItemSelected);
-			AddItemCommand = new Command(OnAddItem);
+			LoadItemsCommand = new AsyncRelayCommand(ExecuteLoadItemsCommand);
+			ItemTapped = new AsyncRelayCommand<T>(OnItemSelected);
+			AddItemCommand = new AsyncRelayCommand(OnAddItem);
 		}
 
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
 		private T? _selectedItem;
 		protected IDataStore<T, U> DataStore { get; }
 		public ObservableCollection<T> Items { get; }
-		public Command LoadItemsCommand { get; }
-		public Command AddItemCommand { get; }
-		public Command<T> ItemTapped { get; }
+		public IAsyncRelayCommand LoadItemsCommand { get; }
+		public IAsyncRelayCommand AddItemCommand { get; }
+		public IAsyncRelayCommand ItemTapped { get; }
 
 		protected async Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
-			//DataStore.Params.PageNumber = 1;
 			try
 			{
 				Items.Clear();
@@ -71,13 +70,13 @@ namespace NotkaMobile.ViewModels.Abstract
 				OnItemSelected(value);
 			}
 		}
-		public abstract void GoToAddPage();
-		public async void OnAddItem(object obj)
+		public abstract Task GoToAddPage();
+		public async Task OnAddItem()
 		{
-			GoToAddPage();
+			await GoToAddPage();
 		}
 
-		public async virtual void OnItemSelected(T item)
+		public async virtual Task OnItemSelected(T? item)
 		{
 			if (item == null)
 				return;

@@ -74,10 +74,14 @@
         <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
 
-    <RefreshView x:DataType="viewmodel:NotesViewModel"
-                 Command="{Binding LoadItemsCommand}"
-                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <Grid Padding="5">
+    <Grid RowDefinitions="Auto, Auto, *" 
+          RowSpacing="5"
+          Padding="5">
+        <SearchBar Placeholder="Wyszukaj"/>
+        <Button Grid.Row="1" Text="Sortowanie/Filtrowanie"/>
+        <RefreshView Grid.Row="2" 
+                     Command="{Binding LoadItemsCommand}"
+                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <CollectionView 
                 ItemsSource="{Binding Items}"
                 ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
@@ -85,6 +89,6 @@
                 RemainingItemsThreshold="1"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}">
             </CollectionView>
-        </Grid>
-    </RefreshView>
+        </RefreshView>
+    </Grid>
 </ContentPage>

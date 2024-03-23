@@ -22,6 +22,7 @@ namespace NotkaAPI.Repository
 			{
 				throw new NotFoundException();
 			}
+			Console.WriteLine(noteParameters.MaxDateOfCreation);
 			var notes = FindByCondition(n => n.UserId == userId
 										&& n.CreatedDate >= noteParameters.MinDateOfCreation
 										&& n.CreatedDate <= noteParameters.MaxDateOfCreation)

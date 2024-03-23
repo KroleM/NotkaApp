@@ -15,12 +15,12 @@ namespace NotkaMobile.ViewModels.NoteVM
 		{
 		}
 
-		public override async void GoToAddPage()
+		public override async Task GoToAddPage()
 		{
 			await Shell.Current.GoToAsync(nameof(NewNotePage));
 		}
 
-		public override async void OnItemSelected(NoteForView item) //async void might wrap awaited async Task method
+		public override async Task OnItemSelected(NoteForView? item)
 		{
 			if (item == null)
 			{

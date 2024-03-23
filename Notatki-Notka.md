@@ -84,6 +84,8 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
         await Shell.Current.GoToAsync($"elephantdetails?name={elephantName}&location={elephantLocation}");
         ```
 * [Formatowanie daty][link10] w warstwie widoku.
+* Ciekawą funkcją widoku jest `ActivityIndicator` - może pokazywać ładowanie danych. Przykład jest w projekcie `MonkeyFinder` (dotnet-maui-workshop-main).
+
 
 ## [MediatR][link6]
 

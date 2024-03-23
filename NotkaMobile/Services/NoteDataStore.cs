@@ -49,5 +49,11 @@ namespace NotkaMobile.Services
 		{
 			return await _service.NotePUTAsync(item.Id, item).HandleRequest();
 		}
+
+		protected override void EraseParameters()
+		{
+			Params = new NoteParameters();
+			//Params.MaxDateOfCreation = DateTime.Now.AddSeconds(1);
+		}
 	}
 }

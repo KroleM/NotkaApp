@@ -1,4 +1,5 @@
-﻿using NotkaMobile.Services.Abstract;
+﻿using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Services.Abstract;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
@@ -8,24 +9,23 @@ namespace NotkaMobile.ViewModels.Abstract
 		{
 			Title = title;
 			DataStore = dataStore;
-			SaveCommand = new Command(OnSave, ValidateSave);
-			CancelCommand = new Command(OnCancel);
-			this.PropertyChanged +=
-				(_, __) => SaveCommand.ChangeCanExecute();
+			SaveCommand = new AsyncRelayCommand(OnSave, ValidateSave);
+			CancelCommand = new AsyncRelayCommand(OnCancel);
+			this.PropertyChanged += (_, __) => SaveCommand.NotifyCanExecuteChanged(); //SaveCommand.ChangeCanExecute();
 		}
 		protected IDataStore<T, U> DataStore { get; }
-		public Command SaveCommand { get; }
-		public Command CancelCommand { get; }
+		public IAsyncRelayCommand SaveCommand { get; }
+		public IAsyncRelayCommand CancelCommand { get; }
 		public abstract T SetItem();
 		public abstract bool ValidateSave();
-		protected async void OnSave()
+		protected async Task OnSave()
 		{
 			await DataStore.AddItemAsync(SetItem());
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 			// Add navigation to details page?
 		}
-		private async void OnCancel()
+		private async Task OnCancel()
 		{
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");

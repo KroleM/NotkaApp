@@ -49,5 +49,10 @@ namespace NotkaMobile.Services
 		{
 			return await _service.TagPUTAsync(item.Id, item).HandleRequest();
 		}
+
+		protected override void EraseParameters()
+		{
+			//throw new NotImplementedException();
+		}
 	}
 }

@@ -30,7 +30,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 		{
 			Name = item.Name;
 			Description = item.Description;
-			CreatedDate = item.CreatedDate;
+			CreatedDate = item.CreatedDate;		//.ToLocalTime();?
 			ModifiedDate = item.ModifiedDate;
 			TagsForView = item.TagsForView;
 			PhotoSource = LoadPhoto(item.Picture);

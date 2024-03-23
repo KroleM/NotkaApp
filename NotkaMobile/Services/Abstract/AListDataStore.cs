@@ -21,16 +21,16 @@ namespace NotkaMobile.Services.Abstract
 		public async Task<bool> AddItemAsync(T item)
 		{
 			Items.Add(await AddItemToService(item));
-
+			EraseParameters();
 			return await Task.FromResult(true);
 		}
+		public abstract Task<T> AddItemToService(T item);
+		public abstract Task<bool> DeleteItemFromService(T item);
 		public abstract Task<T> Find(T item);
 		public abstract Task<T> Find(int id);
-		public abstract Task RefreshListFromService();	//FIXME usunąć parametr? i przekazywać Params
-		public abstract Task<bool> DeleteItemFromService(T item);
+		public abstract Task RefreshListFromService();		
 		public abstract Task<bool> UpdateItemInService(T item);
-		public abstract Task<T> AddItemToService(T item);
-
+		protected abstract void EraseParameters();
 
 		public async Task<bool> UpdateItemAsync(T item)
 		{

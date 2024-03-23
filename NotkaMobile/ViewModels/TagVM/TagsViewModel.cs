@@ -16,12 +16,12 @@ namespace NotkaMobile.ViewModels.TagVM
 		{
 		}
 
-		public override async void GoToAddPage()
+		public override async Task GoToAddPage()
 		{
 			await Shell.Current.GoToAsync(nameof(NewTagPage));
 		}
 
-		public override async void OnItemSelected(TagForView item)
+		public override async Task OnItemSelected(TagForView? item)
 		{
 			if (item == null)
 			{
