@@ -25,8 +25,8 @@ namespace NotkaMobile.ViewModels.TagVM
 				IsActive = true,
 				Name = this.TagName,
 				Description = this.Description,
-				CreatedDate = DateTime.Now,
-				ModifiedDate = DateTime.Now,
+				CreatedDate = DateTimeOffset.Now,
+				ModifiedDate = DateTimeOffset.Now,
 				UserId = Preferences.Default.Get("userId", 0),
 			};
 		}

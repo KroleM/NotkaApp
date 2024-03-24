@@ -31,7 +31,7 @@ namespace NotkaMobile.ViewModels.TagVM
 			Item.IsActive = true;
 			Item.Name = this.TagName;
 			Item.Description = this.Description;
-			Item.ModifiedDate = DateTime.Now;
+			Item.ModifiedDate = DateTimeOffset.Now;
 
 			return Item;
 		}

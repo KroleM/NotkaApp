@@ -18,9 +18,9 @@ namespace NotkaMobile.ViewModels.NoteVM
 		[ObservableProperty]
 		string _description;
 		[ObservableProperty]
-		DateTimeOffset _createdDate;
+		DateTime _createdDate;
 		[ObservableProperty]
-		DateTimeOffset _modifiedDate;
+		DateTime _modifiedDate;
 		[ObservableProperty]
 		ICollection<TagForView> _tagsForView = new List<TagForView>();
 		[ObservableProperty]
@@ -30,8 +30,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 		{
 			Name = item.Name;
 			Description = item.Description;
-			CreatedDate = item.CreatedDate;		//.ToLocalTime();?
-			ModifiedDate = item.ModifiedDate;
+			CreatedDate = item.CreatedDate.LocalDateTime;
+			ModifiedDate = item.ModifiedDate.LocalDateTime;
 			TagsForView = item.TagsForView;
 			PhotoSource = LoadPhoto(item.Picture);
 		}

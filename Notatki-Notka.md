@@ -85,6 +85,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
         ```
 * [Formatowanie daty][link10] w warstwie widoku.
 * Ciekawą funkcją widoku jest `ActivityIndicator` - może pokazywać ładowanie danych. Przykład jest w projekcie `MonkeyFinder` (dotnet-maui-workshop-main).
+* Wszystkie daty zapisywane w BD powinny być według uniwersalnego czasu, zaś ich ładowanie w aplikacji powinno konwertować je na czas lokalny (problem związany z lokalizacją). W BD użyty jest typ `DateTimeOffset`, a przy odczycie w aplikacji należy użyć konwersji `CreatedDate.LocalDateTime`.
 
 
 ## [MediatR][link6]

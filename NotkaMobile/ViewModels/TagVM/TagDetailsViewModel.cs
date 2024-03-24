@@ -21,17 +21,17 @@ namespace NotkaMobile.ViewModels.TagVM
 		[ObservableProperty]
 		string _description;
 		[ObservableProperty]
-		DateTimeOffset _createdDate;
+		DateTime _createdDate;
 		[ObservableProperty]
-		DateTimeOffset _modifiedDate;
+		DateTime _modifiedDate;
 		[ObservableProperty]
 		ICollection<NoteForView> _notesForView = new List<NoteForView>();
 		public override void LoadProperties(TagForView item)
 		{
 			Name = item.Name;
 			Description = item.Description;
-			CreatedDate = item.CreatedDate;
-			ModifiedDate = item.ModifiedDate;
+			CreatedDate = item.CreatedDate.LocalDateTime;
+			ModifiedDate = item.ModifiedDate.LocalDateTime;
 			NotesForView = item.NotesForView;	//dopisywanie w foreach?
 		}
 		protected async override void OnEdit()

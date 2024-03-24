@@ -29,10 +29,6 @@ namespace NotkaMobile.ViewModels.NoteVM
 		[ObservableProperty]
 		string _description;
 		[ObservableProperty]
-		DateTimeOffset _createdDate;
-		[ObservableProperty]
-		DateTimeOffset _modifiedDate;
-		[ObservableProperty]
 		ImageSource? _photoSource;
 		[ObservableProperty]
 		ObservableCollection<TagForView> _selectedTags = new();
@@ -83,8 +79,6 @@ namespace NotkaMobile.ViewModels.NoteVM
 		{
 			Name = Item.Name;
 			Description = Item.Description;
-			CreatedDate = Item.CreatedDate;
-			ModifiedDate = Item.ModifiedDate;
 			PhotoSource = LoadPhoto(Item.Picture);
 
 			SelectedTags.Clear();
@@ -99,7 +93,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			Item.IsActive = true;
 			Item.Name = this.Name;
 			Item.Description = this.Description;
-			Item.ModifiedDate = DateTime.Now;
+			Item.ModifiedDate = DateTimeOffset.Now;
 			Item.TagsForView = SelectedTags;
 			Item.Picture = PhotoSource == null ? null : Photo;
 
@@ -148,8 +142,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 				{
 					Id = 0,
 					IsActive = true,
-					CreatedDate = DateTime.Now,
-					ModifiedDate = DateTime.Now,
+					CreatedDate = DateTimeOffset.Now,
+					ModifiedDate = DateTimeOffset.Now,
 					Name = CurrentTag,
 					Description = string.Empty,
 					UserId = Preferences.Default.Get("userId", 0),
@@ -191,8 +185,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 			{
 				Id = 0,
 				IsActive = true,
-				CreatedDate = DateTime.Now,
-				ModifiedDate = DateTime.Now,
+				CreatedDate = DateTimeOffset.Now,
+				ModifiedDate = DateTimeOffset.Now,
 				IsProfile = false,
 				UserId = Preferences.Default.Get("userId", 0),
 				NoteId = 0,

@@ -82,14 +82,15 @@ namespace NotkaMobile.ViewModels.NoteVM
 
 		public override NoteForView SetItem()
 		{
+			Console.WriteLine(DateTime.UtcNow);
 			return new NoteForView
 			{
 				Id = 0,
 				IsActive = true,
 				Name = this.NoteTitle,
 				Description = this.Text,
-				CreatedDate = DateTime.Now,
-				ModifiedDate = DateTime.Now,
+				CreatedDate = DateTimeOffset.Now,   //DateTime.UtcNow,	//Now.ToUniversalTime(),
+				ModifiedDate = DateTimeOffset.Now,
 				UserId = Preferences.Default.Get("userId", 0),
 				TagsForView = SelectedTags,
 				Picture = PhotoSource == null ? null : Photo
@@ -130,8 +131,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 				{
 					Id = 0,
 					IsActive = true,
-					CreatedDate = DateTime.Now,
-					ModifiedDate = DateTime.Now,
+					CreatedDate = DateTimeOffset.Now,
+					ModifiedDate = DateTimeOffset.Now,
 					Name = CurrentTag,
 					Description = string.Empty,
 					UserId = Preferences.Default.Get("userId", 0),
@@ -173,8 +174,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 			{
 				Id = 0,
 				IsActive = true,
-				CreatedDate = DateTime.Now,
-				ModifiedDate = DateTime.Now,
+				CreatedDate = DateTimeOffset.Now,
+				ModifiedDate = DateTimeOffset.Now,
 				IsProfile = false,
 				UserId = Preferences.Default.Get("userId", 0),
 				NoteId = 0,
