@@ -34,7 +34,7 @@ namespace NotkaMobile.ViewModels.TagVM
 			ModifiedDate = item.ModifiedDate.LocalDateTime;
 			NotesForView = item.NotesForView;	//dopisywanie w foreach?
 		}
-		protected async override void OnEdit()
+		protected async override Task OnEdit()
 		{
 			await Shell.Current.GoToAsync($"{nameof(TagEditPage)}?{nameof(TagEditViewModel.ItemId)}={ItemId}");
 		}

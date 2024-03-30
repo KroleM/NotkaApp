@@ -35,7 +35,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			TagsForView = item.TagsForView;
 			PhotoSource = LoadPhoto(item.Picture);
 		}
-		protected async override void OnEdit()
+		protected async override Task OnEdit()
 		{
 			await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}?{nameof(NoteEditViewModel.ItemId)}={ItemId}");
 		}

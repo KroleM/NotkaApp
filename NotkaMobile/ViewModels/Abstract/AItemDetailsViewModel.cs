@@ -1,4 +1,5 @@
-﻿using NotkaMobile.Services.Abstract;
+﻿using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Services.Abstract;
 using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
@@ -9,27 +10,27 @@ namespace NotkaMobile.ViewModels.Abstract
 		protected AItemDetailsViewModel(IDataStore<T, U> dataStore)
 		{
 			DataStore = dataStore;
-			CancelCommand = new Command(OnCancel);
-			DeleteCommand = new Command(OnDelete);
-			EditCommand = new Command(OnEdit);
+			CancelCommand = new AsyncRelayCommand(OnCancel);
+			DeleteCommand = new AsyncRelayCommand(OnDelete);
+			EditCommand = new AsyncRelayCommand(OnEdit);
 		}
 		protected IDataStore<T, U> DataStore { get; }
-		public Command DeleteCommand { get; }
-		public Command CancelCommand { get; }
-		public Command EditCommand { get; }
+		public IAsyncRelayCommand DeleteCommand { get; }
+		public IAsyncRelayCommand CancelCommand { get; }
+		public IAsyncRelayCommand EditCommand { get; }
 		public abstract void LoadProperties(T item);
-		private async void OnDelete()	//FIXME przerobić na Task i dodać atrybut [RelayCommand]?
+		private async Task OnDelete()
 		{
 			await DataStore.DeleteItemAsync(itemId);
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 		}
-		private async void OnCancel()   //FIXME przerobić na Task i dodać atrybut [RelayCommand]?
+		private async Task OnCancel()
 		{
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 		}
-		protected async virtual void OnEdit()	//FIXME virtual zablokuje wykonanie komendy?
+		protected async virtual Task OnEdit()	//FIXME virtual will block command execution?
 		{
 			//await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}?{nameof(NoteEditViewModel.ItemId)}={ItemId}");
 		}

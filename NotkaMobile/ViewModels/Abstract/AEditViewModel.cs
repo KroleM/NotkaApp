@@ -1,4 +1,5 @@
-﻿using NotkaMobile.Services.Abstract;
+﻿using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Services.Abstract;
 using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
@@ -10,14 +11,13 @@ namespace NotkaMobile.ViewModels.Abstract
 		{
 			Title = title;
 			DataStore = dataStore;
-			CancelCommand = new Command(OnCancel);
-			SaveCommand = new Command(OnSave, ValidateSave);
-			this.PropertyChanged +=
-				(_, __) => SaveCommand.ChangeCanExecute();
+			CancelCommand = new AsyncRelayCommand(OnCancel);
+			SaveCommand = new AsyncRelayCommand(OnSave, ValidateSave);
+			this.PropertyChanged += (_, __) => SaveCommand.NotifyCanExecuteChanged();
 		}
 		protected IDataStore<T, U> DataStore { get; }
-		public Command SaveCommand { get; }
-		public Command CancelCommand { get; }
+		public IAsyncRelayCommand SaveCommand { get; }
+		public IAsyncRelayCommand CancelCommand { get; }
 		public T Item { get; set; }
 		private int _itemId;
 		public int ItemId
@@ -44,12 +44,12 @@ namespace NotkaMobile.ViewModels.Abstract
 		public abstract void LoadProperties();
 		public abstract T SetItem();
 		public abstract bool ValidateSave();
-		protected async void OnCancel()
+		protected async Task OnCancel()
 		{
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 		}
-		protected async void OnSave()
+		protected async Task OnSave()
 		{
 			await DataStore.UpdateItemAsync(SetItem());
 			await Shell.Current.GoToAsync("..");
