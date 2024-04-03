@@ -77,7 +77,17 @@
     <Grid RowDefinitions="Auto, Auto, *" 
           RowSpacing="5"
           Padding="5">
-        <SearchBar Placeholder="Wyszukaj"/>
+        <SearchBar x:Name="searchBar" 
+                   Placeholder="Wyszukaj"
+                   SearchCommand="{Binding PerformSearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior
+                        Command = "{Binding SearchTextChangedCommand}"
+                        CommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                        EventName="TextChanged" />
+            </SearchBar.Behaviors>
+        </SearchBar>
         <Button Grid.Row="1" Text="Sortowanie/Filtrowanie"/>
         <RefreshView Grid.Row="2" 
                      Command="{Binding LoadItemsCommand}"
@@ -87,7 +97,8 @@
                 ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
                 SelectionMode="None"
                 RemainingItemsThreshold="1"
-                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}">
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
+                ItemsUpdatingScrollMode="KeepScrollOffset">
             </CollectionView>
         </RefreshView>
     </Grid>

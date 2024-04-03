@@ -101,7 +101,8 @@
                 ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
                 SelectionMode="None"
                 RemainingItemsThreshold="1"
-                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}">
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
+                ItemsUpdatingScrollMode="KeepScrollOffset">
             </CollectionView>
         </Grid>
     </RefreshView>

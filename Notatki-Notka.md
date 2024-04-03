@@ -53,6 +53,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * Drugi możliwy powód: DataStory są (na razie) singletonami i one mogą blokować garbage collection widoków i ich view-modeli.
 * Trzeci możliwy powód: użycie `Command` zamiast `RelayCommand` [LINK][link5]
 * [Nawigacja w `Shell`][link2]:
+    - `GoToAsync()` operuje na ścieżkach, które są układane na stosie, czyli tak jakby strony są singletonami. Np. moje notatki to zawsze ta sama strona (ten sam VM), ale detale notatki to nowe strony (i nowe VM). Z detali nie można zrobić `GoToAsync(Notes)`, tylko trzeba cofać się na stosie `GoToAsync(..)`. 
     - `View-first` vs. [`ViewModel-first`][link3] Navigation
     - `await Shell.Current.GoToAsync("../../route");` podwójna nawigacja wstecz i do konkretnej ścieżki
     - W nawigacji przez Shell można **przekazywać** dowolne argumenty (np. obiekty), również we wstecznej nawigacji.\
@@ -86,6 +87,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * [Formatowanie daty][link10] w warstwie widoku.
 * Ciekawą funkcją widoku jest `ActivityIndicator` - może pokazywać ładowanie danych. Przykład jest w projekcie `MonkeyFinder` (dotnet-maui-workshop-main).
 * Wszystkie daty zapisywane w BD powinny być według uniwersalnego czasu, zaś ich ładowanie w aplikacji powinno konwertować je na czas lokalny (problem związany z lokalizacją). W BD użyty jest typ `DateTimeOffset`, a przy odczycie w aplikacji należy użyć konwersji `CreatedDate.LocalDateTime`.
+* `SearchBar` na Androidzie i iOS nie odpala komendy dla pustej wartości. [Obejście][link13]
 
 
 ## [MediatR][link6]
@@ -115,3 +117,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link10]: https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings
 [link11]: https://stevetalkscode.co.uk/openapireference-commands
 [link12]: https://devblogs.microsoft.com/dotnet/creating-discoverable-http-apis-with-asp-net-core-5-web-api/
+[link13]: https://stackoverflow.com/questions/76818812/searchbar-in-maui-doesnt-fire-the-searchcommand-if-the-text-is-empty-in-ios

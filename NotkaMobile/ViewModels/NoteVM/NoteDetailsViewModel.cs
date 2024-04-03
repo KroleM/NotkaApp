@@ -13,6 +13,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			: base(dataStore)
 		{
 		}
+
 		[ObservableProperty]
 		string _name;
 		[ObservableProperty]

@@ -1083,13 +1083,6 @@
             }
           },
           {
-            "name": "ValidTimeRange",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
             "name": "PageNumber",
             "in": "query",
             "schema": {
@@ -1103,6 +1096,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -3656,6 +3656,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],

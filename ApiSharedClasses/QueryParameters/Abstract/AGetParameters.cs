@@ -10,5 +10,6 @@
 			get => _pageSize;
 			set => _pageSize = (value > maxPageSize) ? maxPageSize : value;
 		}
+		public string? SearchPhrase { get; set; } = string.Empty;
 	}
 }

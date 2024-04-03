@@ -34,7 +34,7 @@ namespace NotkaAPI.Controllers
 		[HttpGet("{userId}", Name = "NoteGETAll")]
 		public async Task<ActionResult<PagedList<NoteForView>>> GetNote(int userId, [FromQuery] NoteParameters noteParameters)
 		{
-			if (!noteParameters.ValidTimeRange)
+			if (!noteParameters.ValidTimeRange())
 			{
 				return BadRequest("Max date cannot be less than min date");
 			}

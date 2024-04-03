@@ -1,5 +1,6 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Contracts;
 using NotkaAPI.Data;
@@ -22,23 +23,27 @@ namespace NotkaAPI.Repository
 			{
 				throw new NotFoundException();
 			}
-			Console.WriteLine(noteParameters.MaxDateOfCreation);
+
 			var notes = FindByCondition(n => n.UserId == userId
 										&& n.CreatedDate >= noteParameters.MinDateOfCreation
-										&& n.CreatedDate <= noteParameters.MaxDateOfCreation)
-						.Include(note => note.NoteTags)
-						.ThenInclude(notetag => notetag.Tag);
-						//.Include(note => note.Picture)
+										&& n.CreatedDate <= noteParameters.MaxDateOfCreation);
+
+			SearchByPhrase(ref notes, noteParameters.SearchPhrase);
+
+			//TBD Sorting?
+			
+			var notesWithIncludes = notes.Include(note => note.NoteTags).ThenInclude(notetag => notetag.Tag);
+			//.Include(note => note.Picture)
 
 			// Include->Picture powyżej prowadzi do duplikowania danych zdjęcia dla każdego wiersza tabeli (bo wiele NoteTagów dla jednej notatki).
 			// Propozycja optymalizacji - Split Queries: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
 
-			//TBD: Searching
-			return await PagedList<NoteForView>.CreateAsync(notes.OrderByDescending(n => n.ModifiedDate)
+			return await PagedList<NoteForView>.CreateAsync(notesWithIncludes.OrderByDescending(n => n.ModifiedDate)
 						.Select(note => ModelConverters.ConvertToNoteForView(note)),
 					noteParameters.PageNumber,
 					noteParameters.PageSize);
 		}
+
 		public async Task<NoteForView> GetNoteById(int userId, int id)
 		{
 			if (!await Context.Note.AnyAsync(n => n.Id == id))
@@ -169,6 +174,12 @@ namespace NotkaAPI.Repository
 				NoteId = noteId,
 				TagId = tag.Id,
 			});
+		}
+		private void SearchByPhrase(ref IQueryable<Note> notes, string? searchPhrase)
+		{
+			if (!notes.Any() || string.IsNullOrWhiteSpace(searchPhrase))
+				return;
+			notes = notes.Where(n => n.Name.ToLower().Contains(searchPhrase.Trim().ToLower()));
 		}
 	}
 }

@@ -56,9 +56,25 @@ namespace NotkaMobile.ViewModels.Abstract
 		}
 
 		[RelayCommand]
-		void Appearing()
+		private void Appearing()
 		{
 			IsBusy = true;
+		}
+		[RelayCommand]
+		private void PerformSearch(string query)
+		{
+			DataStore.Params.SearchPhrase = query;
+			//await ExecuteLoadItemsCommand(); //Nie, bo to też zmienia isBusy na true i GetNotes() wywołuje się 2 razy
+			IsBusy = true;
+		}
+		[RelayCommand]
+		private void SearchTextChanged(string newText)
+		{
+			if (string.IsNullOrWhiteSpace(newText))
+			{
+				PerformSearch(string.Empty);
+			}
+			return;
 		}
 
 		public T? SelectedItem
