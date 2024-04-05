@@ -1,6 +1,6 @@
 ﻿using ApiSharedClasses.QueryParameters;
+using ApiSharedClasses.SortValues;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Contracts;
 using NotkaAPI.Data;
@@ -30,15 +30,15 @@ namespace NotkaAPI.Repository
 
 			SearchByPhrase(ref notes, noteParameters.SearchPhrase);
 
-			//TBD Sorting?
-			
-			var notesWithIncludes = notes.Include(note => note.NoteTags).ThenInclude(notetag => notetag.Tag);
-			//.Include(note => note.Picture)
+			ApplySort(ref notes, noteParameters.SortOrder);
 
+			var notesWithIncludes = notes.Include(note => note.NoteTags.OrderBy(nt => nt.Tag.Name)).ThenInclude(notetag => notetag.Tag);
+			//.Include(note => note.Picture)
+			
 			// Include->Picture powyżej prowadzi do duplikowania danych zdjęcia dla każdego wiersza tabeli (bo wiele NoteTagów dla jednej notatki).
 			// Propozycja optymalizacji - Split Queries: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
 
-			return await PagedList<NoteForView>.CreateAsync(notesWithIncludes.OrderByDescending(n => n.ModifiedDate)
+			return await PagedList<NoteForView>.CreateAsync(notesWithIncludes
 						.Select(note => ModelConverters.ConvertToNoteForView(note)),
 					noteParameters.PageNumber,
 					noteParameters.PageSize);
@@ -180,6 +180,42 @@ namespace NotkaAPI.Repository
 			if (!notes.Any() || string.IsNullOrWhiteSpace(searchPhrase))
 				return;
 			notes = notes.Where(n => n.Name.ToLower().Contains(searchPhrase.Trim().ToLower()));
+		}
+		private void ApplySort(ref IQueryable<Note> notes, string? orderByString)
+		{
+			if (!notes.Any())
+				return;
+
+			NoteSortValue noteSortEnum = new();
+
+			if(Enum.TryParse(orderByString, out noteSortEnum))
+			{
+				switch(noteSortEnum)
+				{
+					case NoteSortValue.FromAtoZ:
+						notes = notes.OrderBy(x => x.Name).ThenByDescending(x => x.ModifiedDate);
+						break;
+					case NoteSortValue.FromZtoA:
+						notes = notes.OrderByDescending(x => x.Name).ThenByDescending(x => x.ModifiedDate);
+						break;
+					case NoteSortValue.ByCreationDateAscending:
+						notes = notes.OrderBy(x => x.CreatedDate).ThenByDescending(x => x.ModifiedDate);
+						break;
+					case NoteSortValue.ByCreationDateDescending:
+						notes = notes.OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.ModifiedDate);
+						break;
+					case NoteSortValue.ByModificationDateAscending:
+						notes = notes.OrderBy(x => x.ModifiedDate);
+						break;
+					case NoteSortValue.ByModificationDateDescending:
+						notes = notes.OrderByDescending(x => x.ModifiedDate);
+						break;
+				}
+			}
+			else
+			{
+				notes = notes.OrderByDescending(x => x.ModifiedDate);
+			}
 		}
 	}
 }

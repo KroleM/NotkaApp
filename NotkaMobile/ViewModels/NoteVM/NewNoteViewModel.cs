@@ -82,7 +82,6 @@ namespace NotkaMobile.ViewModels.NoteVM
 
 		public override NoteForView SetItem()
 		{
-			Console.WriteLine(DateTime.UtcNow);
 			return new NoteForView
 			{
 				Id = 0,

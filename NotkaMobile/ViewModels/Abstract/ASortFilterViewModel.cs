@@ -1,29 +1,38 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Helpers;
 using NotkaMobile.Services.Abstract;
 using System.Collections.ObjectModel;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
-	public class ASortFilterViewModel<T, U> : BaseViewModel
+	public abstract partial class ASortFilterViewModel<T, U> : BaseViewModel
 	{
 		public ASortFilterViewModel(IDataStore<T, U> dataStore)
 		{
 			DataStore = dataStore;
-			Title = "Filtrowanie/Sortowanie";
+			Title = "Sortowanie/Filtrowanie";
 			ExecuteCommand = new AsyncRelayCommand(OnExecute);
+			ClearChoicesCommand = new AsyncRelayCommand(OnClear);
+			CreateSortItems();
 		}
-
+		[ObservableProperty]
+		private SortClass? _selectedSortValue;
 		protected IDataStore<T, U> DataStore { get; }
 		public IAsyncRelayCommand ExecuteCommand { get; }
+		public IAsyncRelayCommand ClearChoicesCommand { get; }
 
-		public ObservableCollection<T> SortItems { get; }	//List? + niekoniecznie T
-		public ObservableCollection<T> FilterItems { get; }
+		public ObservableCollection<SortClass> SortItems { get; } = new();
+		public ObservableCollection<T> FilterItems { get; } = new();
 
-
-		public async Task OnExecute()
+		protected abstract void CreateSortItems();
+		public virtual async Task OnExecute()
 		{
-			//kod ustawiający parametry w DataStore?
 			await Shell.Current.GoToAsync("..");
+		}
+		public virtual Task OnClear()
+		{
+			return Task.CompletedTask;	//a way to declare "empty" Task method (it doesn't have to be overriden)
 		}
 	}
 }

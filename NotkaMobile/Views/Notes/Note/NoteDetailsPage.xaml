@@ -26,7 +26,7 @@
                 <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
                    Text="{Binding ModifiedDate, StringFormat='{0:G}'}" />
             </Grid>
-            <Grid ColumnDefinitions="Auto, *" Grid.Row="2" Margin="0,5"> <!--StackLayout może przeszkadzać w scrollowaniu CollectionView - zastąpić Gridem?-->
+            <Grid ColumnDefinitions="Auto, *" Grid.Row="2" Margin="0,5">
                 <Label Text="Tagi:" FontSize="Medium" VerticalOptions="Center"/>
                 <CollectionView Grid.Column="1" 
                                 ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList" HorizontalOptions="FillAndExpand">

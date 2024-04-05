@@ -28,6 +28,11 @@ namespace NotkaMobile.ViewModels.NoteVM
 			}
 			await Shell.Current.GoToAsync($"{nameof(NoteDetailsPage)}?{nameof(NoteDetailsViewModel.ItemId)}={item.Id}");
 		}
+		public override async Task OnSortFilterSelected()
+		{
+			await Shell.Current.GoToAsync(nameof(NoteSortFilterPage));
+		}
+
 		[RelayCommand]
 		private async Task Delete(NoteForView note)
 		{

@@ -1944,15 +1944,15 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<NoteForViewPagedList> NoteGETAllAsync(int userId, System.DateTimeOffset? minDateOfCreation, System.DateTimeOffset? maxDateOfCreation, int? pageNumber, int? pageSize, string searchPhrase)
+        public virtual System.Threading.Tasks.Task<NoteForViewPagedList> NoteGETAllAsync(int userId, System.DateTimeOffset? minDateOfCreation, System.DateTimeOffset? maxDateOfCreation, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase)
         {
-            return NoteGETAllAsync(userId, minDateOfCreation, maxDateOfCreation, pageNumber, pageSize, searchPhrase, System.Threading.CancellationToken.None);
+            return NoteGETAllAsync(userId, minDateOfCreation, maxDateOfCreation, pageNumber, pageSize, sortOrder, searchPhrase, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<NoteForViewPagedList> NoteGETAllAsync(int userId, System.DateTimeOffset? minDateOfCreation, System.DateTimeOffset? maxDateOfCreation, int? pageNumber, int? pageSize, string searchPhrase, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<NoteForViewPagedList> NoteGETAllAsync(int userId, System.DateTimeOffset? minDateOfCreation, System.DateTimeOffset? maxDateOfCreation, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
@@ -1975,6 +1975,10 @@ namespace NotkaMobile.Service.Reference
             if (pageSize != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("PageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (sortOrder != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("SortOrder") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sortOrder, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (searchPhrase != null)
             {
@@ -6513,15 +6517,15 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TagForViewPagedList> TagGETAllAsync(int userId, int? pageNumber, int? pageSize, string searchPhrase)
+        public virtual System.Threading.Tasks.Task<TagForViewPagedList> TagGETAllAsync(int userId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase)
         {
-            return TagGETAllAsync(userId, pageNumber, pageSize, searchPhrase, System.Threading.CancellationToken.None);
+            return TagGETAllAsync(userId, pageNumber, pageSize, sortOrder, searchPhrase, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TagForViewPagedList> TagGETAllAsync(int userId, int? pageNumber, int? pageSize, string searchPhrase, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TagForViewPagedList> TagGETAllAsync(int userId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
@@ -6536,6 +6540,10 @@ namespace NotkaMobile.Service.Reference
             if (pageSize != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("PageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (sortOrder != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("SortOrder") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sortOrder, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (searchPhrase != null)
             {

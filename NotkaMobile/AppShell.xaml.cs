@@ -14,6 +14,7 @@ namespace NotkaMobile
 			Routing.RegisterRoute(nameof(NewNotePage), typeof(NewNotePage));
 			Routing.RegisterRoute(nameof(NoteDetailsPage), typeof(NoteDetailsPage));
 			Routing.RegisterRoute(nameof(NoteEditPage), typeof(NoteEditPage));
+			Routing.RegisterRoute(nameof(NoteSortFilterPage), typeof(NoteSortFilterPage));
 			//Tags
 			Routing.RegisterRoute(nameof(NewTagPage), typeof(NewTagPage));
 			Routing.RegisterRoute(nameof(TagDetailsPage), typeof(TagDetailsPage));

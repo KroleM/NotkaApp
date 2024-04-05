@@ -50,6 +50,7 @@ namespace NotkaMobile
 			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
 			mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
 			mauiAppBuilder.Services.AddTransient<NotesViewModel>();
+			mauiAppBuilder.Services.AddTransient<NoteSortFilterViewModel>();
 			mauiAppBuilder.Services.AddTransient<NewNoteViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteEditViewModel>();
@@ -64,6 +65,7 @@ namespace NotkaMobile
 		{
 			mauiAppBuilder.Services.AddSingleton<LoginPage>();
 			mauiAppBuilder.Services.AddTransient<NotesPage>();
+			mauiAppBuilder.Services.AddTransient<NoteSortFilterPage>();
 			mauiAppBuilder.Services.AddTransient<NewNotePage>();
 			mauiAppBuilder.Services.AddTransient<NoteDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<NoteEditPage>();

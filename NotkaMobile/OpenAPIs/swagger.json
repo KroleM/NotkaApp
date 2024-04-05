@@ -1099,6 +1099,13 @@
             }
           },
           {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "SearchPhrase",
             "in": "query",
             "schema": {
@@ -3656,6 +3663,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {

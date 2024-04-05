@@ -17,6 +17,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			LoadItemsCommand = new AsyncRelayCommand(ExecuteLoadItemsCommand);
 			ItemTapped = new AsyncRelayCommand<T>(OnItemSelected);
 			AddItemCommand = new AsyncRelayCommand(OnAddItem);
+			SortFilterCommand = new AsyncRelayCommand(OnSortFilterSelected);
 		}
 
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
@@ -26,6 +27,7 @@ namespace NotkaMobile.ViewModels.Abstract
 		public IAsyncRelayCommand LoadItemsCommand { get; }
 		public IAsyncRelayCommand AddItemCommand { get; }
 		public IAsyncRelayCommand ItemTapped { get; }
+		public IAsyncRelayCommand SortFilterCommand { get; }
 
 		protected async Task ExecuteLoadItemsCommand()
 		{
@@ -92,10 +94,14 @@ namespace NotkaMobile.ViewModels.Abstract
 			await GoToAddPage();
 		}
 
-		public async virtual Task OnItemSelected(T? item)
+		public virtual Task OnItemSelected(T? item)
 		{
-			if (item == null)
-				return;
+			return Task.CompletedTask;
+		}
+
+		public virtual Task OnSortFilterSelected()
+		{
+			return Task.CompletedTask;
 		}
 	}
 }

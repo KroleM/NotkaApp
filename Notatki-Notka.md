@@ -88,6 +88,9 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * Ciekawą funkcją widoku jest `ActivityIndicator` - może pokazywać ładowanie danych. Przykład jest w projekcie `MonkeyFinder` (dotnet-maui-workshop-main).
 * Wszystkie daty zapisywane w BD powinny być według uniwersalnego czasu, zaś ich ładowanie w aplikacji powinno konwertować je na czas lokalny (problem związany z lokalizacją). W BD użyty jest typ `DateTimeOffset`, a przy odczycie w aplikacji należy użyć konwersji `CreatedDate.LocalDateTime`.
 * `SearchBar` na Androidzie i iOS nie odpala komendy dla pustej wartości. [Obejście][link13]
+* `Bottom sheet` - okienko wyjeżdżające z dołu ekranu. Są w internecie różne darmowe implementacje: [Link1][link14], [Link2][link15]
+* Ustawianie `SelectedItem` dla `CollectionView` programistycznie (w VM) nie działa w oczekiwany sposób - `VisualStateManager` nie zmienia stanu elementów i wybrany obiekt nie zmienia się. Link do [śledzenia tej sprawy][link17] i [drugi][link16].
+* Jeśli `CollectionView` jest zagnieżdżone w `StackLayout`, to może się niepoprawnie scrollować. Należy umieszczać je w Gridzie.
 
 
 ## [MediatR][link6]
@@ -118,3 +121,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link11]: https://stevetalkscode.co.uk/openapireference-commands
 [link12]: https://devblogs.microsoft.com/dotnet/creating-discoverable-http-apis-with-asp-net-core-5-web-api/
 [link13]: https://stackoverflow.com/questions/76818812/searchbar-in-maui-doesnt-fire-the-searchcommand-if-the-text-is-empty-in-ios
+[link14]: https://blogs.xgenoapps.com/post/2022/07/23/maui-bottom-sheet
+[link15]: https://docs.devexpress.com/MAUI/DevExpress.Maui.Controls.BottomSheet?v=23.1
+[link16]: https://stackoverflow.com/questions/75593079/programmatically-setting-the-selecteditem-of-a-collectionview-is-not-working-on
+[link17]: https://github.com/dotnet/maui/issues/18933
