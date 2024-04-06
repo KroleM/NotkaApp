@@ -13,7 +13,8 @@
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto, Auto, Auto, *, Auto" Padding="5">
-        <Label Text="Sortowanie:" 
+        <Label Text="Sortowanie"
+               TextDecorations="Underline"
                Margin="5" 
                HorizontalOptions="Center" />
         <CollectionView Grid.Row="1" x:Name="sortowanie"
@@ -36,9 +37,34 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Label Grid.Row="2"
-            Text="Filtrowanie:"
-            HorizontalOptions="Center" />
-
+               Text="Filtrowanie"
+               TextDecorations="Underline"
+               Margin="5"
+               HorizontalOptions="Center" />
+        <Grid Grid.Row="3"
+              RowDefinitions="Auto, Auto, Auto, *"
+              ColumnDefinitions="Auto, *"
+              RowSpacing="5"
+              Margin="5,0,5,5">
+            <Label Text="Data utworzenia od:"
+                   VerticalOptions="Center"/>
+            <DatePicker Grid.Column="1" 
+                        HorizontalOptions="EndAndExpand" VerticalOptions="Center"
+                        Date="{Binding MinDateOfCreation}"/>
+            <Label Grid.Row="1" Text="Data utworzenia do:" VerticalOptions="Center"/>
+            <DatePicker Grid.Row="1" Grid.Column="1" 
+                        HorizontalOptions="EndAndExpand" VerticalOptions="Center"
+                        Date="{Binding MaxDateOfCreation}"/>
+            <Label Grid.Row="2" Text="Zdjęcie:" VerticalOptions="Center"/>
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="1"
+                                   HorizontalOptions="EndAndExpand" VerticalOptions="Center"
+                                   RadioButtonGroup.GroupName="hasPictureRB"
+                                   RadioButtonGroup.SelectedValue="{Binding HasPicture, Converter={StaticResource boolToHasPicture}}">
+                <RadioButton Content="Dowolnie" Value="Dowolnie"/>
+                <RadioButton Content="Tak" Value="Tak"/>
+                <RadioButton Content="Nie" Value="Nie"/>
+            </HorizontalStackLayout>
+        </Grid>
         <Button Grid.Row="4"
                 Text="Pokaż wyniki"
                 Command="{Binding ExecuteCommand}"/>

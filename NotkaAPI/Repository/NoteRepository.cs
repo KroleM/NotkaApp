@@ -8,6 +8,7 @@ using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
+using System.Diagnostics;
 
 namespace NotkaAPI.Repository
 {
@@ -23,10 +24,12 @@ namespace NotkaAPI.Repository
 			{
 				throw new NotFoundException();
 			}
-
+			
 			var notes = FindByCondition(n => n.UserId == userId
 										&& n.CreatedDate >= noteParameters.MinDateOfCreation
-										&& n.CreatedDate <= noteParameters.MaxDateOfCreation);
+										&& n.CreatedDate <= noteParameters.MaxDateOfCreation
+										&& ((noteParameters.HasPicture ?? false) ? n.Picture != null : ((noteParameters.HasPicture ?? true) ? (n.Picture != null || n.Picture == null) : n.Picture == null))
+										);
 
 			SearchByPhrase(ref notes, noteParameters.SearchPhrase);
 

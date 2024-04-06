@@ -64,9 +64,9 @@ namespace NotkaAPI.Controllers
 				notes.HasNext,
 				notes.HasPrevious
 			};
-
+			
 			Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
-
+			//
 			return notes;
 		}
 

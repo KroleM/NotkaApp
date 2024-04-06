@@ -1083,6 +1083,13 @@
             }
           },
           {
+            "name": "HasPicture",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "PageNumber",
             "in": "query",
             "schema": {
