@@ -44,11 +44,13 @@
 
 		<!-- Splash Screen -->
 		<!-- <MauiSplashScreen Include="Resources\Splash\notka_splash_big.svg" Color="#6C3428" /> -->
-		<MauiSplashScreen Include="Resources\Images\notka_splash_vbig.png" Color="#6C3428" />
+		<MauiSplashScreen Include="Resources\Images\notka_splash_vbig.png" Color="#435B66" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<MauiImage Update="Resources\Images\material_settings.svg" TintColor="White" />
+		<MauiImage Update="Resources\Images\material_delete.svg" TintColor="White" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -142,6 +144,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Notes\Tag\TagsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

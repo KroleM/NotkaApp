@@ -6,7 +6,6 @@ using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views;
 using System.Diagnostics;
-using Task = System.Threading.Tasks.Task;
 
 namespace NotkaMobile.ViewModels
 {
@@ -61,7 +60,7 @@ namespace NotkaMobile.ViewModels
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(ex.ToString());
+				Debug.WriteLine("Appearing login error: {0}", ex.ToString());
 			}
 			finally
 			{

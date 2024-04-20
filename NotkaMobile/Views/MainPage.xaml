@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NotkaMobile.Views.MainPage">
+             x:Class="NotkaMobile.Views.MainPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels"
+             x:DataType="viewmodel:MainViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="material_settings.png"
+                     Command="{Binding GoToSettingsCommand}"/>
+    </ContentPage.ToolbarItems>
 
     <ScrollView>
         <VerticalStackLayout

@@ -18,14 +18,16 @@ namespace NotkaMobile
 			Window window = base.CreateWindow(activationState);
 
 			window.Activated += OnActivated;
-			//window.Deactivated += OnDestroying;	// FIXME works on Android, but causes strange behaviour on Windows (e.g. logout when media picker window is opened)
+#if ANDROID
+			window.Deactivated += OnDestroying;	// FIXME works on Android, but causes strange behaviour on Windows (e.g. logout when media picker window is opened)
+#endif
 			//window.Destroying += OnDestroying;	// FIXME doesn't work on Android
 
 			return window;
 		}
 		private async void OnActivated(object? sender, EventArgs e)
 		{
-		#if WINDOWS
+#if WINDOWS
 				const int DefaultWidth = 480;
 				const int DefaultHeight = 800;
 
@@ -43,7 +45,7 @@ namespace NotkaMobile
 				// move to screen center
 				window.X = (disp.Width / disp.Density - window.Width) / 2;
 				window.Y = (disp.Height / disp.Density - window.Height) / 2;
-		#endif
+#endif
 		}
 		private void OnDestroying(object? sender, EventArgs e)
 		{
