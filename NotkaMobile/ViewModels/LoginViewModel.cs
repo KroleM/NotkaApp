@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Networking;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
@@ -11,17 +10,17 @@ namespace NotkaMobile.ViewModels
 {
 	public partial class LoginViewModel : BaseViewModel
 	{
-		public User User { get; private set; } = new();
+		public UserForView User { get; private set; } = new();
         [ObservableProperty]
 		private string _email = string.Empty;
 		[ObservableProperty]
 		private string _password = string.Empty;
 		[ObservableProperty]
 		private bool _isHidden = true;
-		private LoginDataStore _loginDataStore;
+		private UserDataStore _loginDataStore;
 		private IConnectivity _connectivity;
 
-		public LoginViewModel(LoginDataStore loginDataStore, IConnectivity connectivity) 
+		public LoginViewModel(UserDataStore loginDataStore, IConnectivity connectivity) 
 		{
 			Title = "Logowanie";
 			_loginDataStore = loginDataStore;
@@ -70,6 +69,11 @@ namespace NotkaMobile.ViewModels
 		}
 		[RelayCommand]
 		private async Task GoToMainPage()
+		{
+			await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+		}
+		[RelayCommand]
+		private async Task GoToRegisterPage()
 		{
 			await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
 		}

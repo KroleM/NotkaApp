@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiSharedClasses.QueryParameters;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NotkaAPI.Contracts;
 using NotkaAPI.Data;
+using NotkaAPI.Helpers;
+using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
+using NotkaAPI.ViewModels;
+using NuGet.Protocol.Core.Types;
 
 namespace NotkaAPI.Controllers
 {
@@ -14,18 +21,32 @@ namespace NotkaAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public UserController(NotkaDatabaseContext context)
-        {
-            _context = context;
-        }
+		public UserController(IRepositoryWrapper repository)
+		{
+			_repository = repository;
+		}
 
-        // GET: api/User
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+		// GET: api/User
+		[HttpGet("{userId}", Name = "UserGETAll")]
+        public async Task<ActionResult<PagedList<UserForView>>> GetUser(int userId, [FromQuery] UserParameters userParameters)
         {
-            return await _context.User.ToListAsync();
+			PagedList<UserForView> users;
+			try
+			{
+				users = await _repository.User.GetUsers(userId, userParameters);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+            return users;
         }
 
         /*
@@ -44,90 +65,91 @@ namespace NotkaAPI.Controllers
         }
         */
 
-		[HttpGet("{email}/{hash}", Name = "GetUserWithAuth")]
-		public async Task<ActionResult<User>> GetUserWithAuth(string email, string hash)
+		[HttpGet("{email}/{hash}", Name = "UserGETWithAuth")]
+		public async Task<ActionResult<UserForView>> GetUserWithAuth(string email, string hash)
 		{
-            var user = await _context.User.SingleOrDefaultAsync(u => u.Email == email);
-
-			if (user == null)
+			try
+			{
+				return await _repository.User.GetUserWithAuth(email, hash);
+			}
+			catch (NotFoundException)
 			{
 				return NotFound();
-                //return StatusCode(404);
 			}
-            if (hash != user.PasswordHash)
-            {
-                return NotFound();
-            }
-
-			return user;
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 		}
 
 		// PUT: api/User/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+		[HttpPut("{id}", Name = "UserPUT")]
+        public async Task<IActionResult> PutUser(int id, UserForView user)
         {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
+			if (id != user.Id)
+			{
+				return BadRequest();
+			}
 
-            _context.Entry(user).State = EntityState.Modified;
+			try
+			{
+				await _repository.User.UpdateUser(id, user);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+			return NoContent();
+		}
 
         // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        [HttpPost(Name = "UserPOST")]
+        public async Task<ActionResult<UserForView>> PostUser(UserForView user)
         {
-            if (await _context.User.AnyAsync(u => u.Email == user.Email))
-            {
-                return Forbid();
-            }
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
+			if (user == null) return Forbid();
 
-            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
-            return Ok(user);
-        }
+			UserForView uploadedUser;
+			try
+			{
+				uploadedUser = await _repository.User.CreateUser(user);
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return Ok(uploadedUser);
+		}
 
         // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpDelete("{userId}/{id}", Name = "UserDELETE")]
+        public async Task<IActionResult> DeleteUser(int userId, int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+			try
+			{
+				await _repository.User.DeleteUser(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (ForbidException)
+			{
+				return Forbid();
+			}
 
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.User.Any(e => e.Id == id);
-        }
+			return NoContent();
+		}
     }
 }

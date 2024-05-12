@@ -6,9 +6,22 @@ namespace NotkaAPI.Repository
 	public class RepositoryWrapper : IRepositoryWrapper
 	{
 		private NotkaDatabaseContext _context;
+		private IUserRepository? _user;
 		private INoteRepository? _note;
 		private ITagRepository? _tag;
 
+		public IUserRepository User
+		{
+			get
+			{
+				if (_user == null)
+				{
+					_user = new UserRepository(_context);
+				}
+
+				return _user;
+			}
+		}
 		public INoteRepository Note
 		{
 			get

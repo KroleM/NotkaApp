@@ -20,12 +20,10 @@ namespace NotkaAPI.Controllers
     [ApiController]
     public class TagController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
 		private readonly IRepositoryWrapper _repository;
 
-		public TagController(NotkaDatabaseContext context, IRepositoryWrapper repository)
+		public TagController(IRepositoryWrapper repository)
         {
-            _context = context;
 			_repository = repository;
 		}
 
@@ -152,10 +150,5 @@ namespace NotkaAPI.Controllers
 
 			return NoContent();
 		}
-
-        private bool TagExists(int id)
-        {
-            return _context.Tag.Any(e => e.Id == id);
-        }
     }
 }

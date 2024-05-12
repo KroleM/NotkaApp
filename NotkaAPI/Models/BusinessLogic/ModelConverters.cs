@@ -1,6 +1,7 @@
 ﻿using NotkaAPI.Helpers;
 using NotkaAPI.Models.General;
 using NotkaAPI.Models.Notes;
+using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Models.BusinessLogic
@@ -21,6 +22,10 @@ namespace NotkaAPI.Models.BusinessLogic
 				//NotesForView = tag?.NoteTags.Select(notetag => new NoteForView().CopyProperties(notetag.Note)).ToList() ?? new(),
 				NotesForView = tag?.NoteTags.Select(notetag => ConvertToNoteForView(notetag?.Note)).ToList() ?? new(),
 			}.CopyProperties(tag);
+		}
+		public static UserForView ConvertToUserForView(User? user)
+		{
+			return new UserForView{ }.CopyProperties(user);
 		}
 	}
 }
