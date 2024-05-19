@@ -7,7 +7,8 @@ namespace NotkaMobile.Helpers
 	public static class Helpers
 	{
 		/// <summary>
-		/// Metoda typu rozszerzenie. Jako argument przyjmuje element, na którym została wywołana. Jeżeli akcja wywoła się bez problemu, zwraca true, a jak nie to false i wypisuje błąd.
+		/// Metoda typu rozszerzenie. Jako argument przyjmuje element, na którym została wywołana. 
+		/// Jeżeli akcja wywoła się bez problemu, zwraca true, a jak nie to false i wypisuje błąd.
 		/// </summary>
 		/// <param name="serviceMethod"></param>
 		/// <returns></returns>

@@ -48,7 +48,7 @@ namespace NotkaMobile.Services.Abstract
 			return await Task.FromResult(true);
 		}
 
-		public async Task<T> GetItemAsync(int id)
+		public virtual async Task<T> GetItemAsync(int id)
 		{
 			return await Task.FromResult(await Find(id));
 		}

@@ -11,18 +11,21 @@ namespace NotkaMobile.ViewModels
 		public SettingsViewModel(IDataStore<UserForView, UserParameters> dataStore) 
 			: base(dataStore)
 		{
+			Title = "Mój profil";
 		}
+
 		[ObservableProperty]
 		string _email;
 		[ObservableProperty]
 		string _firstName;
 		[ObservableProperty]
 		string _lastName;
-		[ObservableProperty]
-		string _name;
+
 		public override void LoadProperties(UserForView item)
 		{
-			throw new NotImplementedException();
+			Email = item.Email;
+			FirstName = item.FirstName;
+			LastName = item.LastName;
 		}
 	}
 }

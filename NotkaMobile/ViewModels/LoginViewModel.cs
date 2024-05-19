@@ -4,6 +4,7 @@ using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views;
+using NotkaMobile.Views.User;
 using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels
@@ -75,7 +76,8 @@ namespace NotkaMobile.ViewModels
 		[RelayCommand]
 		private async Task GoToRegisterPage()
 		{
-			await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+			//await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+			await Shell.Current.GoToAsync(nameof(NewUserPage));
 		}
 		[RelayCommand]
 		private async Task Login()
@@ -110,6 +112,7 @@ namespace NotkaMobile.ViewModels
 					await Shell.Current.DisplayAlert("Niepoprawne dane użytkownika", null, "OK");
 					Password = string.Empty;
 				}
+				Debug.WriteLine($"Unable to get data: {ex.Message}");
 			}
 			catch (Exception ex)
 			{

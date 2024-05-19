@@ -34,7 +34,7 @@
         <Entry Grid.Row="1" Grid.Column="1"
                Margin="0,2"
                ClearButtonVisibility="WhileEditing"
-               Text="{Binding NoteTitle}"/>
+               Text="AAAA test"/>
 
     </Grid>
 </ContentPage>

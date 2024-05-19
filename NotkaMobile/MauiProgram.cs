@@ -4,9 +4,11 @@ using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
 using NotkaMobile.ViewModels.NoteVM;
 using NotkaMobile.ViewModels.TagVM;
+using NotkaMobile.ViewModels.UserVM;
 using NotkaMobile.Views;
 using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
+using NotkaMobile.Views.User;
 
 namespace NotkaMobile
 {
@@ -60,6 +62,9 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<NewTagViewModel>();
 			mauiAppBuilder.Services.AddTransient<TagDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<TagEditViewModel>();
+			mauiAppBuilder.Services.AddTransient<NewUserViewModel>();
+			mauiAppBuilder.Services.AddTransient<UserDetailsViewModel>();
+			mauiAppBuilder.Services.AddTransient<UserEditViewModel>();
 
 			return mauiAppBuilder;
 		}
@@ -77,6 +82,8 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<NewTagPage>();
 			mauiAppBuilder.Services.AddTransient<TagDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<TagEditPage>();
+			mauiAppBuilder.Services.AddTransient<NewUserPage>();
+			mauiAppBuilder.Services.AddTransient<UserEditPage>();
 
 			return mauiAppBuilder;
 		}

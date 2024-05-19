@@ -36,7 +36,7 @@
                 windows:VisualElement.AccessKey="A"
                 windows:VisualElement.AccessKeyPlacement="Right"/>
         <Button Text="Rejestracja" 
-                Command="{Binding LoginCommand}"
+                Command="{Binding GoToRegisterPageCommand}"
                 windows:VisualElement.AccessKey="B"
                 Margin="0,3"/>
     </VerticalStackLayout>

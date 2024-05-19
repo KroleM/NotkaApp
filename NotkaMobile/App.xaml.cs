@@ -21,7 +21,7 @@ namespace NotkaMobile
 #if ANDROID
 			window.Deactivated += OnDestroying;	// FIXME works on Android, but causes strange behaviour on Windows (e.g. logout when media picker window is opened)
 #endif
-			//window.Destroying += OnDestroying;	// FIXME doesn't work on Android
+			window.Destroying += OnDestroying;	// FIXME doesn't work on Android
 
 			return window;
 		}

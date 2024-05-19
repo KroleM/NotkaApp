@@ -30,7 +30,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 		}
-		protected async virtual Task OnEdit()	//FIXME virtual will block command execution?
+		protected async virtual Task OnEdit()	//FIXME abstract?
 		{
 			//await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}?{nameof(NoteEditViewModel.ItemId)}={ItemId}");
 		}
@@ -58,7 +58,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			}
 			catch (Exception)
 			{
-				Debug.WriteLine("Failed to Load Item");
+				Debug.WriteLine("Failed to load Item");
 			}
 		}
 	}
