@@ -1,9 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NotkaMobile.Views;
 
 namespace NotkaMobile.ViewModels
 {
@@ -12,7 +8,7 @@ namespace NotkaMobile.ViewModels
 		[RelayCommand]
 		private async Task GoToSettings()
 		{
-			//await Shell.Current.GoToAsync(nameof(NoteSortFilterPage));
+			await Shell.Current.GoToAsync(nameof(SettingsPage));
 		}
 	}
 }

@@ -7,34 +7,23 @@
              x:DataType="viewmodel:SettingsViewModel"
              Title="{Binding Title}">
     <Grid Padding="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="48"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="0"
-               Text="Tytuł:"
-               VerticalOptions="Center" 
-               HorizontalTextAlignment="Start" />
-        <Label Grid.Column="0"
-               Text="Tytuł:"
-               VerticalOptions="Center" 
-               HorizontalTextAlignment="Start" />
-        <Label Grid.Row="1" Grid.Column="0"
-               Text="Tytuł:"
-               VerticalOptions="Center" 
-               HorizontalTextAlignment="Start" />
-        <Entry Grid.Row="1" Grid.Column="1"
-               Margin="0,2"
-               ClearButtonVisibility="WhileEditing"
-               Text="AAAA test"/>
+        <Grid ColumnDefinitions="100,*,100" RowDefinitions="Auto,Auto">
+            <Label Text="{Binding FirstName}"/>
+            <Label Grid.Column="1" Text="{Binding LastName}"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Email}"/>
+            <Button Grid.Column="2" Grid.RowSpan="2" Text=">"/>
+        </Grid>
+        <Button Grid.Row="4"
+                Text="Wyloguj się"
+                Command="{Binding LogoutCommand}"/>
 
     </Grid>
 </ContentPage>

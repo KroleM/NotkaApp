@@ -1,4 +1,5 @@
-﻿using NotkaMobile.Views.Notes.Note;
+﻿using NotkaMobile.Views;
+using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
 using NotkaMobile.Views.User;
 
@@ -22,6 +23,8 @@ namespace NotkaMobile
 			Routing.RegisterRoute(nameof(TagEditPage), typeof(TagEditPage));
 			//Users
 			Routing.RegisterRoute(nameof(NewUserPage), typeof(NewUserPage));
+			//Settings
+			Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
 		}
 	}
 }

@@ -76,7 +76,6 @@ namespace NotkaMobile.ViewModels
 		[RelayCommand]
 		private async Task GoToRegisterPage()
 		{
-			//await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
 			await Shell.Current.GoToAsync(nameof(NewUserPage));
 		}
 		[RelayCommand]
@@ -103,6 +102,7 @@ namespace NotkaMobile.ViewModels
 				Preferences.Default.Set("userEmail", Email);
 				Preferences.Default.Set("passwordHash", Password);
 				Preferences.Default.Set("userId", User.Id);
+				Password = string.Empty;
 				await GoToMainPage();
 			}
 			catch (ApiException ex)

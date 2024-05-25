@@ -19,7 +19,7 @@ namespace NotkaMobile.ViewModels.UserVM
 		[ObservableProperty]
 		string _lastName;
 		[ObservableProperty]
-		DateTimeOffset? _birthDate;
+		DateTime? _birthDate;
 		[ObservableProperty]
 		string _currentPassword;
 		[ObservableProperty]
@@ -29,7 +29,7 @@ namespace NotkaMobile.ViewModels.UserVM
 			Email = Item.Email;
 			FirstName = Item.FirstName;
 			LastName = Item.LastName;
-			BirthDate = Item.BirthDate;
+			BirthDate = Item.BirthDate?.DateTime;
 			CurrentPassword = string.Empty;
 			NewPassword = string.Empty;
 		}

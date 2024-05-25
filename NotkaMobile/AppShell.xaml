@@ -13,7 +13,8 @@
     <ShellItem>
         <ShellContent 
             Title="Logowanie"
-            ContentTemplate="{DataTemplate views:LoginPage}" />
+            ContentTemplate="{DataTemplate views:LoginPage}"
+            Route="Login"/>
     </ShellItem>
 
     <TabBar >
