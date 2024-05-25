@@ -124,6 +124,10 @@ namespace NotkaAPI.Controllers
 			{
 				uploadedUser = await _repository.User.CreateUser(user);
 			}
+			catch (ConflictException)
+			{
+				return Conflict();
+			}
 			catch
 			{
 				return BadRequest();

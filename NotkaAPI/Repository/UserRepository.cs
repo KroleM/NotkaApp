@@ -42,7 +42,7 @@ namespace NotkaAPI.Repository
 		{
 			if (await Context.User.AnyAsync(u => u.Email == user.Email))
 			{
-				throw new ForbidException();
+				throw new ConflictException();
 			}
 
 			var userToAdd = new User().CopyProperties(user);

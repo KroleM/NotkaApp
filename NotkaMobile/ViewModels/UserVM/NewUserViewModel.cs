@@ -38,6 +38,7 @@ namespace NotkaMobile.ViewModels.UserVM
 				Email = _email,
 				FirstName = _firstName,
 				LastName = _lastName,
+				BirthDate = _birthDate,
 				PasswordHash = Password,
 			};
 		}
@@ -61,10 +62,23 @@ namespace NotkaMobile.ViewModels.UserVM
 			{
 				IsBusy = true;
 				if (ValidateSave())
+				{
 					await DataStore.AddItemAsync(SetItem());
-
-				await Shell.Current.DisplayAlert("Gratulacje! Twoje konto zostało utworzone.", null, "OK");
-				await Shell.Current.GoToAsync("..");
+					await Shell.Current.DisplayAlert("Gratulacje! Twoje konto zostało utworzone.", null, "OK");
+					await Shell.Current.GoToAsync("..");
+				}
+				else
+				{
+					await Shell.Current.DisplayAlert("Wypełnij wszystkie dane.", null, "OK");
+				}
+			}
+			catch (ApiException ex)
+			{
+				if (ex.StatusCode == 409)
+				{
+					await Shell.Current.DisplayAlert("Ten e-mail istnieje już w bazie.", null, "OK");
+				}
+				Debug.WriteLine($"Unable to get data: {ex.Message}");
 			}
 			catch (Exception ex)
 			{

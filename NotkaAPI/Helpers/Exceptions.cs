@@ -9,4 +9,10 @@
 	public class UnauthorizedException : Exception
 	{
 	}
+	/// <summary>
+	/// HTTP response status code 409 (Conflict)
+	/// </summary>
+	public class ConflictException : Exception
+	{
+	}
 }

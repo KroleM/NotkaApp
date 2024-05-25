@@ -48,7 +48,7 @@ namespace NotkaMobile.Services
 
 		protected override void EraseParameters()
 		{
-			throw new NotImplementedException();
+			// empty
 		}
 		public override async Task<UserForView> GetItemAsync(int id)
 		{
