@@ -15,13 +15,22 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid ColumnDefinitions="100,*,100" RowDefinitions="Auto,Auto">
-            <Label Text="{Binding FirstName}"/>
-            <Label Grid.Column="1" Text="{Binding LastName}"/>
-            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Email}"/>
-            <Button Grid.Column="2" Grid.RowSpan="2" Text=">"/>
-        </Grid>
-        <Button Grid.Row="4"
+        <Border Style="{StaticResource SimpleBorder}" Margin="10">
+            <Grid ColumnDefinitions="Auto,*,100" RowDefinitions="Auto,Auto" Margin="5">
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding FirstName}"/>
+                            <Span Text=" "/>
+                            <Span Text="{Binding LastName}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Email}"/>
+                <Button Grid.Column="2" Grid.RowSpan="2" Background="Transparent" ImageSource="material_edit.png"/>
+            </Grid>
+        </Border>
+        <Button Grid.Row="4" Margin="10"
                 Text="Wyloguj się"
                 Command="{Binding LogoutCommand}"/>
 

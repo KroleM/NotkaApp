@@ -5,6 +5,7 @@ using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.Services.Abstract;
 using NotkaMobile.ViewModels.Abstract;
+using NotkaMobile.Views.User;
 
 namespace NotkaMobile.ViewModels
 {
@@ -36,6 +37,13 @@ namespace NotkaMobile.ViewModels
 			Preferences.Default.Remove("userEmail");
 			Preferences.Default.Remove("passwordHash");
 			await Shell.Current.GoToAsync("//Login");
+		}
+		[RelayCommand]
+		private async Task GoToUserDetails()
+		{
+			var userId = Preferences.Default.Get("userId", 0);
+			//await Shell.Current.GoToAsync(nameof(SettingsPage));
+			await Shell.Current.GoToAsync($"{nameof(UserDetailsPage)}?{nameof(SettingsViewModel.ItemId)}={userId}");
 		}
 	}
 }

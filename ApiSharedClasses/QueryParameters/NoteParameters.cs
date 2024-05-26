@@ -7,7 +7,7 @@ namespace ApiSharedClasses.QueryParameters
 		#region Properties
 
 		public DateTimeOffset MinDateOfCreation { get; set; } = new DateTimeOffset(new DateTime(2020, 1, 1));
-		public DateTimeOffset MaxDateOfCreation { get; set; } = DateTimeOffset.Now.AddHours(1);   //DateTimeOffset.MaxValue;
+		public DateTimeOffset MaxDateOfCreation { get; set; } = DateTimeOffset.Now.AddHours(24);   //DateTimeOffset.MaxValue;
 		public bool? HasPicture { get; set; }
 
 		#endregion

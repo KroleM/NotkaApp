@@ -23,6 +23,8 @@ namespace NotkaMobile
 			Routing.RegisterRoute(nameof(TagEditPage), typeof(TagEditPage));
 			//Users
 			Routing.RegisterRoute(nameof(NewUserPage), typeof(NewUserPage));
+			Routing.RegisterRoute(nameof(UserDetailsPage), typeof(UserDetailsPage));
+			Routing.RegisterRoute(nameof(UserEditPage), typeof(UserEditPage));
 			//Settings
 			Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
 		}

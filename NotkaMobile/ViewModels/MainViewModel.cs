@@ -8,7 +8,9 @@ namespace NotkaMobile.ViewModels
 		[RelayCommand]
 		private async Task GoToSettings()
 		{
-			await Shell.Current.GoToAsync(nameof(SettingsPage));
+			var userId = Preferences.Default.Get("userId", 0);
+			//await Shell.Current.GoToAsync(nameof(SettingsPage));
+			await Shell.Current.GoToAsync($"{nameof(SettingsPage)}?{nameof(SettingsViewModel.ItemId)}={userId}");
 		}
 	}
 }
