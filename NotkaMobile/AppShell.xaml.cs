@@ -25,6 +25,7 @@ namespace NotkaMobile
 			Routing.RegisterRoute(nameof(NewUserPage), typeof(NewUserPage));
 			Routing.RegisterRoute(nameof(UserDetailsPage), typeof(UserDetailsPage));
 			Routing.RegisterRoute(nameof(UserEditPage), typeof(UserEditPage));
+			Routing.RegisterRoute(nameof(UserPasswordChangePage), typeof(UserPasswordChangePage));
 			//Settings
 			Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
 		}

@@ -38,7 +38,7 @@ namespace NotkaMobile.Services
 
 		public override Task RefreshListFromService()
 		{
-			throw new NotImplementedException();
+			return Task.CompletedTask;
 		}
 
 		public override async Task<bool> UpdateItemInService(UserForView item)

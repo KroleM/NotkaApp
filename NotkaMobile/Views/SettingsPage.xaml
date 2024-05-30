@@ -27,7 +27,9 @@
                     </Label.FormattedText>
                 </Label>
                 <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Email}"/>
-                <Button Grid.Column="2" Grid.RowSpan="2" Background="Transparent" ImageSource="material_edit.png"/>
+                <Button Grid.Column="2" Grid.RowSpan="2" Background="Transparent" 
+                        ImageSource="material_edit.png"
+                        Command="{Binding GoToUserDetailsCommand}"/>
             </Grid>
         </Border>
         <Button Grid.Row="4" Margin="10"

@@ -2,8 +2,24 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.User.UserDetailsPage"
-             Title="UserDetailsPage">
-    <VerticalStackLayout>
-
-    </VerticalStackLayout>
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.UserVM"
+             x:DataType="viewmodel:UserDetailsViewModel">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="150,*" Padding="10">
+        <Label Text="Imię:"/>
+        <Label Grid.Column="1" Text="{Binding FirstName}"/>
+        <Label Grid.Row="1" Text="Nazwisko:"/>
+        <Label Grid.Row="1" Grid.Column="1" Text="{Binding LastName}"/>
+        <Label Grid.Row="2" Text="E-mail:"/>
+        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Email}"/>
+        <Label Grid.Row="3" Text="Data urodzenia:"/>
+        <Label Grid.Row="3" Grid.Column="1" Text="{Binding BirthDate, StringFormat='{0:d}'}"/>
+        <Button Grid.Row="4" Grid.ColumnSpan="2" 
+                Margin="0,5"
+                Text="Edytuj dane" 
+                Command="{Binding EditCommand}"/>
+        <Button Grid.Row="5" Grid.ColumnSpan="2" 
+                Margin="0,5"
+                Text="Zmiana hasła" 
+                Command="{Binding GoToPasswordChangeCommand}"/>
+    </Grid>
 </ContentPage>

@@ -1,5 +1,6 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
@@ -12,7 +13,6 @@ namespace NotkaMobile.ViewModels.UserVM
 		public UserDetailsViewModel(UserDataStore dataStore)
 			: base(dataStore)
 		{
-			ItemId = Preferences.Default.Get("userId", 0);
 		}
 
 		[ObservableProperty]
@@ -33,6 +33,12 @@ namespace NotkaMobile.ViewModels.UserVM
 		protected async override Task OnEdit()
 		{
 			await Shell.Current.GoToAsync($"{nameof(UserEditPage)}?{nameof(UserEditViewModel.ItemId)}={ItemId}");
+		}
+
+		[RelayCommand]
+		private async Task GoToPasswordChange()
+		{
+			await Shell.Current.GoToAsync($"{nameof(UserPasswordChangePage)}?{nameof(UserPasswordEditViewModel.ItemId)}={ItemId}");
 		}
 	}
 }

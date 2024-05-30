@@ -2,9 +2,9 @@ using NotkaMobile.ViewModels.UserVM;
 
 namespace NotkaMobile.Views.User;
 
-public partial class UserDetailsPage : ContentPage
+public partial class UserPasswordChangePage : ContentPage
 {
-	public UserDetailsPage(UserDetailsViewModel vm)
+	public UserPasswordChangePage(UserPasswordEditViewModel vm)
 	{
 		InitializeComponent();
 		BindingContext = vm;

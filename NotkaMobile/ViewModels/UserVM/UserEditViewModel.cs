@@ -9,7 +9,7 @@ namespace NotkaMobile.ViewModels.UserVM
 	public partial class UserEditViewModel : AEditViewModel<UserForView, UserParameters>
 	{
 		public UserEditViewModel(UserDataStore dataStore)
-			: base("Dane użytkownika", dataStore)
+			: base("Edycja danych", dataStore)
 		{
 		}
 		[ObservableProperty]
@@ -20,18 +20,13 @@ namespace NotkaMobile.ViewModels.UserVM
 		string _lastName;
 		[ObservableProperty]
 		DateTime? _birthDate;
-		[ObservableProperty]
-		string _currentPassword;
-		[ObservableProperty]
-		string _newPassword;
+
 		public override void LoadProperties()
 		{
 			Email = Item.Email;
 			FirstName = Item.FirstName;
 			LastName = Item.LastName;
 			BirthDate = Item.BirthDate?.DateTime;
-			CurrentPassword = string.Empty;
-			NewPassword = string.Empty;
 		}
 
 		public override UserForView SetItem()
@@ -40,6 +35,7 @@ namespace NotkaMobile.ViewModels.UserVM
 			Item.Email = this.Email;
 			Item.FirstName = this.FirstName;
 			Item.LastName = this.LastName;
+			Item.BirthDate = this.BirthDate;
 			Item.ModifiedDate = DateTimeOffset.Now;
 
 			return Item;
@@ -47,13 +43,8 @@ namespace NotkaMobile.ViewModels.UserVM
 
 		public override bool ValidateSave()
 		{
-			if (!string.IsNullOrEmpty(CurrentPassword))
-			{
-				if (CurrentPassword != Preferences.Default.Get("passwordHash", ""))
-					return false;
-				if (NewPassword.Length > 2)
-					return true;
-			}
+			if (!string.IsNullOrEmpty(Email) && Email.Contains('@')) return true;
+
 			return false;
 		}
 	}

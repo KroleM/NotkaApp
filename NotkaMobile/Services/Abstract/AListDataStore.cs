@@ -35,7 +35,7 @@ namespace NotkaMobile.Services.Abstract
 		public async Task<bool> UpdateItemAsync(T item)
 		{
 			await UpdateItemInService(item);
-			await RefreshListFromService();//RefreshListFromService();
+			await RefreshListFromService();
 			return await Task.FromResult(true);
 		}
 

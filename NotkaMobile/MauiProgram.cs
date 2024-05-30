@@ -65,6 +65,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<NewUserViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserEditViewModel>();
+			mauiAppBuilder.Services.AddTransient<UserPasswordEditViewModel>();
 
 			return mauiAppBuilder;
 		}
@@ -83,7 +84,9 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<TagDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<TagEditPage>();
 			mauiAppBuilder.Services.AddTransient<NewUserPage>();
+			mauiAppBuilder.Services.AddTransient<UserDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<UserEditPage>();
+			mauiAppBuilder.Services.AddTransient<UserPasswordChangePage>();
 
 			return mauiAppBuilder;
 		}
