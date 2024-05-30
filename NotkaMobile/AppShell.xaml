@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:NotkaMobile"
     xmlns:views="clr-namespace:NotkaMobile.Views"
     xmlns:notes="clr-namespace:NotkaMobile.Views.Notes.Note"
+    xmlns:lists="clr-namespace:NotkaMobile.Views.Notes.List"
     xmlns:tags="clr-namespace:NotkaMobile.Views.Notes.Tag"
     Shell.FlyoutBehavior="Disabled"
     Title="NotkaMobile">
@@ -35,7 +36,7 @@
                 Route="NotesPage"/>
             <ShellContent
                 Title="Listy"
-                ContentTemplate="{DataTemplate notes:NotesPage}" 
+                ContentTemplate="{DataTemplate lists:ListsPage}" 
                 Route="ListsPage"/>
         </Tab>
         <Tab Title="Tagi"

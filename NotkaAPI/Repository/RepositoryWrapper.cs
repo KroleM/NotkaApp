@@ -9,6 +9,7 @@ namespace NotkaAPI.Repository
 		private IUserRepository? _user;
 		private INoteRepository? _note;
 		private ITagRepository? _tag;
+		private IListRepository? _list;
 
 		public IUserRepository User
 		{
@@ -34,7 +35,6 @@ namespace NotkaAPI.Repository
 				return _note;
 			}
 		}
-
 		public ITagRepository Tag
 		{
 			get
@@ -45,6 +45,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _tag;
+			}
+		}
+		public IListRepository List
+		{
+			get
+			{
+				if (_list == null)
+				{
+					_list = new ListRepository(_context);
+				}
+
+				return _list;
 			}
 		}
 

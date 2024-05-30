@@ -1088,7 +1088,7 @@ namespace NotkaAPI.Migrations
             modelBuilder.Entity("NotkaAPI.Models.Notes.List", b =>
                 {
                     b.HasOne("NotkaAPI.Models.Users.User", "User")
-                        .WithMany("Lists")
+                        .WithMany("List")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1299,7 +1299,7 @@ namespace NotkaAPI.Migrations
 
             modelBuilder.Entity("NotkaAPI.Models.Users.User", b =>
                 {
-                    b.Navigation("Lists");
+                    b.Navigation("List");
 
                     b.Navigation("Login");
 

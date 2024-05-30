@@ -4,6 +4,17 @@
 
 ### API
 
+Na potrzeby instrukcji zakładam, że tworzę obsługę tabeli `Note`:
+1. `NoteForView` i zależne klasy (np. `TagForView`)
+2. Stworzenie odpowiedniej metody w `ModelConverters.cs`, np. `ConvertToNoteForView`
+2. `NoteParameters`
+3. `INoteRepository`
+4. `NoteRepository` - implementacja interfejsu i przerobienie metod na asynchroniczne (async)
+5. Wpis do `IRepositoryWrapper` + `RepositoryWrapper`
+6. `NoteController`
+
+
 ### Aplikacja mobilna
-1. DataStore - stworzenie nowego dziedzczącego z AListDataStore
-2. 
+1. DataStore - stworzenie nowego dziedzczącego z AListDataStore (przerobienie metod na asynchroniczne)
+2. ViewModel
+3. View

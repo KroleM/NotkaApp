@@ -18,12 +18,13 @@ namespace NotkaAPI.Models.Users
 		[Column(TypeName = "DATE")]
 		public DateTime? BirthDate { get; set; }
 		public string? Nick { get; set; }
+		//public Role? Role { get; set; }
 		//public Login? Login { get; set; }
 		//public List<RoleUser> RoleUsers { get; set; } = new();
 		//public List<Picture> Pictures { get; set; } = new();
         //public List<Note> Notes { get; set; } = new();
         //public List<Tag> Tags { get; set; } = new();
-        //public List<List> Lists { get; set; } = new();
+        //public List<List> List { get; set; } = new();
 		public List<User> RequestSender { get; set; } = new(); // ??
 		public List<User> RequestReceiver { get; set; } = new(); // ??
         public List<Request> Senders { get; set; } = new();

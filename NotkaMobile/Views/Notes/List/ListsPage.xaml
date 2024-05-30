@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Notes.List.ListsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:notesView="clr-namespace:NotkaMobile.Views.Notes.Note"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.ListVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             x:DataType="viewmodel:ListsViewModel"
+             Title="{Binding Title}">
+    <!--SwipeView użyty w CollectionView (albo RefreshView) powoduje krytyczny błąd w aplikacji na Windows. Zastosowałem tu obejście wzorowane na odpowiedzi 'Rabidgoalie' z 14.11.2023:
+https://github.com/dotnet/maui/issues/8870-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate
+            x:Key="WithDesktop"
+            x:DataType="{x:Type model:ListForView}">
+                <Grid Padding="0,0,0,5">
+                    <Border Style="{StaticResource ListElementBorder}"
+                        HeightRequest="80">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListsViewModel}}, Path=ItemTapped}"
+                                      CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*, 80">
+                            <notesView:NoteListElement Grid.Column="0"/>
+                            <Button Grid.Column="1"
+                                HeightRequest="80"
+                                WidthRequest="80"
+                                Text="Usuń"
+                                BackgroundColor="Red"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListsViewModel}}, Path=DeleteCommand}"
+                                CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate
+            x:Key="WithoutDesktop"
+            x:DataType="{x:Type model:ListForView}">
+                <Grid Padding="0,0,0,5">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Usuń"
+                                   BackgroundColor="Red"
+                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListsViewModel}}, Path=DeleteCommand}"
+                                   CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border Style="{StaticResource ListElementBorder}"
+                            HeightRequest="80">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListsViewModel}}, Path=ItemTapped}"
+                                  CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            <notesView:NoteListElement Grid.Column="0"/>
+                        </Border>
+                    </SwipeView>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+        <!--W powyższym event Appearing można by zamienić na nowocześniejszy: NavigatedFrom-->
+    </ContentPage.Behaviors>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj +" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto, Auto, *" 
+          RowSpacing="5"
+          Padding="5">
+        <SearchBar x:Name="searchBar" 
+               Placeholder="Wyszukaj"
+               SearchCommand="{Binding PerformSearchCommand}"
+               SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    Command = "{Binding SearchTextChangedCommand}"
+                    CommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                    EventName="TextChanged" />
+            </SearchBar.Behaviors>
+        </SearchBar>
+        <Button Grid.Row="1" 
+            Text="Sortowanie/Filtrowanie"
+            Command="{Binding SortFilterCommand}"/>
+        <RefreshView Grid.Row="2" 
+                 Command="{Binding LoadItemsCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView 
+                ItemsSource="{Binding Items}"
+                ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
+                SelectionMode="None"
+                RemainingItemsThreshold="1"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
+                ItemsUpdatingScrollMode="KeepScrollOffset">
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

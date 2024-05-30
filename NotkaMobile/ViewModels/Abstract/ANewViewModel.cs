@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Services.Abstract;
+using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
@@ -20,7 +21,14 @@ namespace NotkaMobile.ViewModels.Abstract
 		public abstract bool ValidateSave();
 		protected async Task OnSave()
 		{
-			await DataStore.AddItemAsync(SetItem());
+			try
+			{
+				await DataStore.AddItemAsync(SetItem());
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
 			// This will pop the current page off the navigation stack
 			await Shell.Current.GoToAsync("..");
 			// Add navigation to details page?

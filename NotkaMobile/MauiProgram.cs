@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Logging;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
+using NotkaMobile.ViewModels.ListVM;
 using NotkaMobile.ViewModels.NoteVM;
 using NotkaMobile.ViewModels.TagVM;
 using NotkaMobile.ViewModels.UserVM;
 using NotkaMobile.Views;
+using NotkaMobile.Views.Notes.List;
 using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
 using NotkaMobile.Views.User;
@@ -44,6 +46,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 			mauiAppBuilder.Services.AddSingleton<UserDataStore>();
 			mauiAppBuilder.Services.AddSingleton<NoteDataStore>();
+			mauiAppBuilder.Services.AddSingleton<ListDataStore>();
 			mauiAppBuilder.Services.AddSingleton<TagDataStore>();
 			return mauiAppBuilder;
 		}
@@ -66,6 +69,9 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<UserDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserEditViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserPasswordEditViewModel>();
+			mauiAppBuilder.Services.AddTransient<ListsViewModel>();
+			mauiAppBuilder.Services.AddTransient<NewListViewModel>();
+			mauiAppBuilder.Services.AddTransient<ListDetailsViewModel>();
 
 			return mauiAppBuilder;
 		}
@@ -87,6 +93,10 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<UserDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<UserEditPage>();
 			mauiAppBuilder.Services.AddTransient<UserPasswordChangePage>();
+			mauiAppBuilder.Services.AddTransient<ListsPage>();
+			mauiAppBuilder.Services.AddTransient<NewListPage>();
+			mauiAppBuilder.Services.AddTransient<ListDetailsPage>();
+			mauiAppBuilder.Services.AddTransient<ListSortFilterPage>();
 
 			return mauiAppBuilder;
 		}

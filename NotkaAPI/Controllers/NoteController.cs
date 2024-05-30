@@ -126,7 +126,7 @@ namespace NotkaAPI.Controllers
 			return Ok(uploadedNote);
 		}
 
-		// DELETE: api/Note/5
+		// DELETE: api/Note/1/7
 		[HttpDelete("{userId}/{id}", Name = "NoteDELETE")]
 		public async Task<IActionResult> DeleteNote(int userId, int id)
 		{
@@ -146,7 +146,7 @@ namespace NotkaAPI.Controllers
 			return NoContent();
 		}
 
-		//private bool NoteExists(int id)
+		//private bool ListExists(int id)
 		//{
 		//	//return _context.Note.Any(e => e.Id == id);
 		//	return (_context.Note?.Any(e => e.Id == id)).GetValueOrDefault();

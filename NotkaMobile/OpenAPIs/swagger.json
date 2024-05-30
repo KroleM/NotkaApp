@@ -214,95 +214,70 @@
         }
       }
     },
-    "/api/List": {
+    "/api/List/{userId}": {
       "get": {
         "tags": [
           "List"
         ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/List"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/List"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/List"
-                  }
-                }
-              }
+        "operationId": "ListGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        }
-      },
-      "post": {
-        "tags": [
-          "List"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/List"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/List"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/List"
-                  }
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/List"
+                  "$ref": "#/components/schemas/ListForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/List"
+                  "$ref": "#/components/schemas/ListForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/List"
+                  "$ref": "#/components/schemas/ListForViewPagedList"
                 }
               }
             }
@@ -310,12 +285,22 @@
         }
       }
     },
-    "/api/List/{id}": {
+    "/api/List/{userId}/{id}": {
       "get": {
         "tags": [
           "List"
         ],
+        "operationId": "ListGET",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -332,27 +317,61 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/List"
+                  "$ref": "#/components/schemas/ListForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/List"
+                  "$ref": "#/components/schemas/ListForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/List"
+                  "$ref": "#/components/schemas/ListForView"
                 }
               }
             }
           }
         }
       },
+      "delete": {
+        "tags": [
+          "List"
+        ],
+        "operationId": "ListDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/List/{id}": {
       "put": {
         "tags": [
           "List"
         ],
+        "operationId": "ListPUT",
         "parameters": [
           {
             "name": "id",
@@ -370,7 +389,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/List"
+                    "$ref": "#/components/schemas/ListForView"
                   }
                 ]
               }
@@ -379,7 +398,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/List"
+                    "$ref": "#/components/schemas/ListForView"
                   }
                 ]
               }
@@ -388,7 +407,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/List"
+                    "$ref": "#/components/schemas/ListForView"
                   }
                 ]
               }
@@ -400,25 +419,65 @@
             "description": "Success"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/List": {
+      "post": {
         "tags": [
           "List"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "operationId": "ListPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListForView"
+                  }
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListForView"
+                }
+              }
+            }
           }
         }
       }
@@ -5315,13 +5374,6 @@
               "$ref": "#/components/schemas/ListElement"
             },
             "nullable": true
-          },
-          "listType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ListType"
-              }
-            ]
           }
         },
         "additionalProperties": false
@@ -5383,6 +5435,146 @@
         },
         "additionalProperties": false
       },
+      "ListElementForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "listId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "answer": {
+            "type": "string",
+            "nullable": true
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "yesNo": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tagsForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagForView"
+            },
+            "nullable": true
+          },
+          "listElementsForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListElementForView"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ListTag": {
         "type": "object",
         "properties": {
@@ -5427,15 +5619,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "ListType": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "Login": {
         "type": "object",
@@ -6308,6 +6491,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/NoteForView"
+            },
+            "nullable": true
+          },
+          "listsForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListForView"
             },
             "nullable": true
           }
