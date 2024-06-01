@@ -52,47 +52,58 @@ namespace NotkaMobile
 		}
 		public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
 		{
-			//mauiAppBuilder.Services.AddSingleton<ViewModels.MainViewModel>();
+			//General
 			mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
 			mauiAppBuilder.Services.AddTransient<SettingsViewModel>();
 			mauiAppBuilder.Services.AddTransient<MainViewModel>();
+			//Note
 			mauiAppBuilder.Services.AddTransient<NotesViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteSortFilterViewModel>();
 			mauiAppBuilder.Services.AddTransient<NewNoteViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteEditViewModel>();
+			//Tag
 			mauiAppBuilder.Services.AddTransient<TagsViewModel>();
 			mauiAppBuilder.Services.AddTransient<NewTagViewModel>();
 			mauiAppBuilder.Services.AddTransient<TagDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<TagEditViewModel>();
+			//User
 			mauiAppBuilder.Services.AddTransient<NewUserViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserEditViewModel>();
 			mauiAppBuilder.Services.AddTransient<UserPasswordEditViewModel>();
+			//List
 			mauiAppBuilder.Services.AddTransient<ListsViewModel>();
 			mauiAppBuilder.Services.AddTransient<NewListViewModel>();
 			mauiAppBuilder.Services.AddTransient<ListDetailsViewModel>();
+			mauiAppBuilder.Services.AddTransient<ListEditViewModel>();
+			mauiAppBuilder.Services.AddTransient<ListSortFilterViewModel>();
 
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
 		{
+			//General
 			mauiAppBuilder.Services.AddSingleton<LoginPage>();
 			mauiAppBuilder.Services.AddTransient<SettingsPage>();
 			mauiAppBuilder.Services.AddTransient<MainPage>();
+			//Note
 			mauiAppBuilder.Services.AddTransient<NotesPage>();
 			mauiAppBuilder.Services.AddTransient<NoteSortFilterPage>();
 			mauiAppBuilder.Services.AddTransient<NewNotePage>();
 			mauiAppBuilder.Services.AddTransient<NoteDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<NoteEditPage>();
+			//Tag
 			mauiAppBuilder.Services.AddTransient<TagsPage>();
 			mauiAppBuilder.Services.AddTransient<NewTagPage>();
 			mauiAppBuilder.Services.AddTransient<TagDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<TagEditPage>();
+			//User
 			mauiAppBuilder.Services.AddTransient<NewUserPage>();
 			mauiAppBuilder.Services.AddTransient<UserDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<UserEditPage>();
 			mauiAppBuilder.Services.AddTransient<UserPasswordChangePage>();
+			//List
 			mauiAppBuilder.Services.AddTransient<ListsPage>();
 			mauiAppBuilder.Services.AddTransient<NewListPage>();
 			mauiAppBuilder.Services.AddTransient<ListDetailsPage>();

@@ -175,6 +175,7 @@ namespace NotkaAPI.Repository
 		private async Task AddToContextListElementAsync(ListElementForView listElementForView, int listId)
 		{
 			var listElement = new ListElement().CopyProperties(listElementForView);
+			listElement.ListId = listId;
 			if (listElement.Id == 0)
 			{
 				Context.ListElement.Add(listElement);

@@ -26,6 +26,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0"
                Text="Tytuł:"
@@ -104,21 +105,38 @@
                         MinimumHeightRequest="100"
                         Text="{Binding Text}"/>
 
-            <CollectionView Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
+            <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,2"
+                    Text="Dodaj element"
+                    Command="{Binding AddNewListElementCommand}" />
+
+            <CollectionView Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,2"
                         HorizontalOptions="StartAndExpand"
                         ItemsLayout="VerticalList"
                         ItemsSource="{Binding ListElements}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:ListElementForView}">
-                        <Border Style="{StaticResource SimpleBorder}" Margin="0,5,5,5" MinimumHeightRequest="40">
-                            <HorizontalStackLayout >
-                                <Entry Text="{Binding Description}" VerticalOptions="Center" FontSize="14" />
-                                <Button Text="X" Padding="1" MinimumHeightRequest="30" MinimumWidthRequest="30"
-                                    Style="{StaticResource SmallButton}"
-                                    VerticalOptions="Center"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewListViewModel}}, Path=RemoveListElement}"
-                                    CommandParameter="{Binding .}"/>
-                            </HorizontalStackLayout>
+                        <Border Padding="3" StrokeThickness="0" Margin="5,5,5,5" MinimumHeightRequest="40">
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" >
+                                <Image Grid.RowSpan="2" Source="material_square.png" />
+                                <Editor Grid.Column="1" Grid.RowSpan="2" Text="{Binding Description}" FontSize="14" />
+                                <Button Grid.Column="2" Text="X" Padding="1" MinimumHeightRequest="30" MinimumWidthRequest="30"
+                                        Style="{StaticResource SmallButton}"
+                                        Margin="3,0,0,1"
+                                        VerticalOptions="Center"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewListViewModel}}, Path=RemoveListElementCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                <Picker Grid.Row="1" Grid.Column="2" Margin="3,1,0,0" SelectedItem="{Binding Score}">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:Int32}">
+                                            <x:Int32>1</x:Int32>
+                                            <x:Int32>2</x:Int32>
+                                            <x:Int32>3</x:Int32>
+                                            <x:Int32>4</x:Int32>
+                                            <x:Int32>5</x:Int32>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

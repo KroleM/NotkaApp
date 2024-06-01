@@ -24,7 +24,6 @@ namespace NotkaMobile.ViewModels.ListVM
 		private TagDataStore _tagDataStore;
 		private byte[] _bytesArray;
 		public List<TagForView> Tags { get; set; } = new();
-		public Picture? Photo { get; set; }
 
 		[ObservableProperty]
 		ObservableCollection<TagForView> _selectedTags = new();
@@ -40,9 +39,6 @@ namespace NotkaMobile.ViewModels.ListVM
 
 		[ObservableProperty]
 		string _text = string.Empty;
-
-		[ObservableProperty]
-		ImageSource? _photoSource;
 
 		private string _currentTag = string.Empty;
 		public string CurrentTag
@@ -95,6 +91,7 @@ namespace NotkaMobile.ViewModels.ListVM
 				ModifiedDate = DateTimeOffset.Now,
 				UserId = Preferences.Default.Get("userId", 0),
 				TagsForView = SelectedTags,
+				ListElementsForView = ListElements,
 			};
 		}
 		public override bool ValidateSave()

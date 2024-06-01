@@ -77,8 +77,7 @@
                         </Border>
                     </toolkit:Expander.Header>
                     <!--<toolkit:ByteArrayToImageSourceConverter/>-->
-                    <Image Aspect="AspectFit"
-                               Source="{Binding PhotoSource}"/>
+                    <Image Aspect="AspectFit" Source="{Binding PhotoSource}"/>
                 </toolkit:Expander>
                 <Border Grid.Row="1" Style="{StaticResource SimpleBorder}" VerticalOptions="FillAndExpand">
                     <Label Text="{Binding Description}" />

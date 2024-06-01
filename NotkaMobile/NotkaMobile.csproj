@@ -66,6 +66,7 @@
 	  <None Remove="Resources\Images\material_close.svg" />
 	  <None Remove="Resources\Images\material_delete.svg" />
 	  <None Remove="Resources\Images\material_edit.svg" />
+	  <None Remove="Resources\Images\material_square.svg" />
 	  <None Remove="Resources\Images\material_tag.svg" />
 	  <None Remove="Resources\Images\notka_splash_big.png" />
 	  <None Remove="Resources\Images\notka_splash_vbig.png" />
@@ -117,6 +118,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Notes\List\ListDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Notes\List\ListEditPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Notes\List\ListSortFilterPage.xaml">

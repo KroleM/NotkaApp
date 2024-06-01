@@ -2,11 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.List.ListDetailsPage"
-             Title="ListDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.ListVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             xmlns:helpers="clr-namespace:NotkaMobile.Helpers"
+             x:DataType="viewmodel:ListDetailsViewModel">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edytuj" 
+                     Command="{Binding EditCommand}"/>
+        <ToolbarItem IconImageSource="material_delete.png"
+                     Command="{Binding DeleteCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="5">
+            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="0,5"/>
+            <Grid Grid.Row="1" ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,5">
+                <Label Text="Data utworzenia:" />
+                <Label Grid.Column="1"  Margin="15,0,0,0" 
+                       Text="{Binding CreatedDate, StringFormat='{0:G}'}" />
+                <Label Grid.Row="1"
+                       Text="Data modyfikacji:" />
+                <Label Grid.Row="1" Grid.Column="1" Margin="15,0,0,0"
+                       Text="{Binding ModifiedDate, StringFormat='{0:G}'}" />
+            </Grid>
+            <Grid ColumnDefinitions="Auto, *" Grid.Row="2" Margin="0,5">
+                <Label Text="Tagi:" FontSize="Medium" VerticalOptions="Center"/>
+                <CollectionView Grid.Column="1" 
+                            ItemsSource="{Binding TagsForView}" SelectionMode="None" ItemsLayout="HorizontalList" HorizontalOptions="FillAndExpand">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:TagForView}">
+                            <Border Style="{StaticResource SimpleBorder}" Margin="5,0,0,0">
+                                <Label>
+                                    <!--<Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=ItemTapped}"
+                                              CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>-->
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="#" FontSize="Medium"/>
+                                            <Span Text="{Binding Name}" FontSize="Medium"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+            <Grid Grid.Row="3" RowDefinitions="Auto, *">
+                <Border Style="{StaticResource SimpleBorder}" 
+                        MinimumHeightRequest="80"
+                        IsVisible="{Binding Description, Converter={toolkit:IsStringNotNullOrEmptyConverter}}">
+                    <Label Text="{Binding Description}" />
+                </Border>
+                <CollectionView Grid.Row="1" Margin="0,2"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsLayout="VerticalList"
+                        ItemsSource="{Binding ListElementsForView}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:ListElementForView}">
+                            <Border Padding="3" StrokeThickness="0" Margin="5,5,5,5" MinimumHeightRequest="40">
+                                <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" >
+                                    <Image Grid.RowSpan="2" Source="material_square.png" />
+                                    <Border Grid.Column="1" Grid.RowSpan="2" Padding="3" VerticalOptions="FillAndExpand">
+                                        <Label Text="{Binding Description}" FontSize="14" />
+                                    </Border>
+                                    <Label Grid.Column="2" Text="Priorytet" Padding="2" FontSize="10" 
+                                           />
+                                    <Label Grid.Row="1" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                           Text="{Binding Score}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+        </Grid>
+    </ScrollView>
 </ContentPage>
