@@ -2,11 +2,145 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Notes.List.ListEditPage"
-             Title="ListEditPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.ListVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             xmlns:helpers="clr-namespace:NotkaMobile.Helpers"
+             x:DataType="viewmodel:ListEditViewModel"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Zapisz" 
+                     Command="{Binding SaveCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Grid Padding="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0"
+               Text="Tytuł:"
+               VerticalOptions="Center" 
+               HorizontalTextAlignment="Start" />
+            <Entry Grid.Column="1"
+               Margin="0,2"
+               ClearButtonVisibility="WhileEditing"
+               Text="{Binding Name}"/>
+            <Label Grid.Row="1" Grid.Column="0"
+               Text="Tagi:"
+               VerticalOptions="Center" 
+               HorizontalTextAlignment="Start" />
+            <Grid Grid.Row="1" Grid.Column="1"
+              ColumnDefinitions="*, Auto"
+              HorizontalOptions="Fill">
+                <Entry HorizontalOptions="FillAndExpand" 
+                   Placeholder="Tag" 
+                   Margin="0,2" 
+                   ClearButtonVisibility="WhileEditing" 
+                   Text="{Binding CurrentTag}"/>
+                <Button Grid.Column="1" HorizontalOptions="End" Text="+" FontSize="Medium" Margin="2" 
+                    Command="{Binding AddSelectedTagCommand}"
+                    IsEnabled="{Binding CurrentTag, Converter={StaticResource isStringNotNullOrWhiteSpaceConverter}}" />
+            </Grid>
+
+            <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"
+                  VerticalOptions="StartAndExpand" ZIndex="2" 
+                  IsVisible="{Binding PromptedTags, Converter={StaticResource isListNotNullOrEmptyConverter}}"
+                  Background="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Charcoal}}"  Opacity="0.9"
+                  ItemsSource="{Binding PromptedTags}">
+                <ListView.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="ItemTapped"
+                                            Command="{Binding SelectTagCommand}" 
+                                            EventArgsConverter="{StaticResource itemTappedEventArgsConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:TagForView}">
+                        <ViewCell>
+                            <Label VerticalTextAlignment="Center" Margin="5" FontSize="Small">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="#"/>
+                                        <Span Text="{Binding Name}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <CollectionView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsLayout="HorizontalList"
+                        ItemsSource="{Binding SelectedTags}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:TagForView}">
+                        <Border Style="{StaticResource SimpleBorder}" Margin="0,5,5,5" MinimumHeightRequest="40">
+                            <HorizontalStackLayout >
+                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="14" Padding="0,0,5,0"/>
+                                <Button Text="X" Padding="1" MinimumHeightRequest="30" MinimumWidthRequest="30"
+                                    Style="{StaticResource SmallButton}"
+                                    VerticalOptions="Center"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListEditViewModel}}, Path=RemoveSelectedTagCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Editor Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,2"
+                        AutoSize="TextChanges"
+                        Placeholder="Opis"
+                        MinimumHeightRequest="100"
+                        Text="{Binding Description}"/>
+
+            <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,2"
+                    Text="Dodaj element"
+                    Command="{Binding AddNewListElementCommand}" />
+
+            <CollectionView Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,2"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsLayout="VerticalList"
+                        ItemsSource="{Binding ListElements}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:ListElementForView}">
+                        <Border Padding="3" StrokeThickness="0" Margin="5,5,5,5" MinimumHeightRequest="40">
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" >
+                                <Image Grid.RowSpan="2" Source="material_square.png" />
+                                <Editor Grid.Column="1" Grid.RowSpan="2" Text="{Binding Description}" FontSize="14" />
+                                <Button Grid.Column="2" Text="X" Padding="1" MinimumHeightRequest="30" MinimumWidthRequest="30"
+                                        Style="{StaticResource SmallButton}"
+                                        Margin="3,0,0,1"
+                                        VerticalOptions="Center"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListEditViewModel}}, Path=RemoveListElementCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                <Picker Grid.Row="1" Grid.Column="2" Margin="3,1,0,0" SelectedItem="{Binding Score}">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:Int32}">
+                                            <x:Int32>1</x:Int32>
+                                            <x:Int32>2</x:Int32>
+                                            <x:Int32>3</x:Int32>
+                                            <x:Int32>4</x:Int32>
+                                            <x:Int32>5</x:Int32>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </ScrollView>
 </ContentPage>

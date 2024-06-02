@@ -107,6 +107,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<ListsPage>();
 			mauiAppBuilder.Services.AddTransient<NewListPage>();
 			mauiAppBuilder.Services.AddTransient<ListDetailsPage>();
+			mauiAppBuilder.Services.AddTransient<ListEditPage>();
 			mauiAppBuilder.Services.AddTransient<ListSortFilterPage>();
 
 			return mauiAppBuilder;

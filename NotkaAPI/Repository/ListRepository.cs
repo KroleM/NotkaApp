@@ -181,6 +181,11 @@ namespace NotkaAPI.Repository
 				Context.ListElement.Add(listElement);
 				await Context.SaveChangesAsync();
 			}
+			else
+			{
+				Context.ListElement.Update(listElement);
+			}
+			
 		}
 		private void SearchByPhrase(ref IQueryable<List> lists, string? searchPhrase)
 		{
