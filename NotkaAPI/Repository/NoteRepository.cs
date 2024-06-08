@@ -184,6 +184,7 @@ namespace NotkaAPI.Repository
 				return;
 			notes = notes.Where(n => n.Name.ToLower().Contains(searchPhrase.Trim().ToLower()));
 		}
+		//This method is common for at least two repositories: Note & List. It could be in a seperate (common) class.
 		private void ApplySort(ref IQueryable<Note> notes, string? orderByString)
 		{
 			if (!notes.Any())
