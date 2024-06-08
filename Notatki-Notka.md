@@ -101,7 +101,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     Do solucji `NotkaAPI` dodałem osobny projekt typu `Class Library`, aby współdzielić go z `NotkaMobile`, w której to (jako że jest w osobnej solucji) musiałem najpierw dodać do solucji `ApiSharedClasses` jako 'external project', a następnie referencję do tego projektu z `NotkaMobile`.
  * 2024.03.03\
     Vertical/HorizontalStackLayout gryzie się z `CollectionView` i uniemożliwia scrollowanie. Sposób: użyć Grid.\
-    W WebAPI należy nadawać nazwy metod kontrollerów. W przeciwnym razie mogą zostać nadane dość losowe nazwy. Przykład:
+    W WebAPI należy nadawać nazwy metod kontrolerów. W przeciwnym razie mogą zostać nadane dość losowe nazwy. Przykład:
     ```
     [HttpGet("/orders/{id}", Name = nameof(GetOrder))]
     ```

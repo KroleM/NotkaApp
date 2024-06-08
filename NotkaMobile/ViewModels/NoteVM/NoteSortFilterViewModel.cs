@@ -12,7 +12,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 	public partial class NoteSortFilterViewModel : ASortFilterViewModel<NoteForView, NoteParameters>
 	{
 		public NoteSortFilterViewModel(NoteDataStore dataStore) 
-			: base(dataStore)
+			: base("Sortowanie/Filtrowanie", dataStore)
 		{
 			MinDateOfCreation = DataStore.Params.MinDateOfCreation.LocalDateTime;
 			MaxDateOfCreation = DataStore.Params.MaxDateOfCreation.LocalDateTime;

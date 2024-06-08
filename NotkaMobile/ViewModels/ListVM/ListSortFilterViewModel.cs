@@ -11,7 +11,7 @@ namespace NotkaMobile.ViewModels.ListVM
 	public partial class ListSortFilterViewModel : ASortFilterViewModel<ListForView, ListParameters>
 	{
 		public ListSortFilterViewModel(ListDataStore dataStore)
-			: base(dataStore)
+			: base("Sortowanie", dataStore)
 		{
 			LoadSelectedSortValue();
 		}

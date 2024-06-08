@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Helpers;
-using NotkaMobile.Services.Abstract;
 using System.Collections.ObjectModel;
+using NotkaDesktop.Services.Abstract;
 
-namespace NotkaMobile.ViewModels.Abstract
+namespace NotkaDesktop.ViewModels.Abstract
 {
 	public abstract partial class ASortFilterViewModel<T, U> : BaseViewModel
 	{
@@ -26,9 +26,10 @@ namespace NotkaMobile.ViewModels.Abstract
 		public ObservableCollection<T> FilterItems { get; } = new();
 
 		protected abstract void CreateSortItems();
+		//FIXME
 		public virtual async Task OnExecute()
 		{
-			await Shell.Current.GoToAsync("..");
+			//await Shell.Current.GoToAsync("..");
 		}
 		public virtual Task OnClear()
 		{
