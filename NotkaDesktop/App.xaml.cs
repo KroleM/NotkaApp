@@ -13,7 +13,7 @@ namespace NotkaDesktop
 		{
 			base.OnStartup(e);
 			MainWindow window = new MainWindow();
-			window.DataContext = new MainWindowViewModel();
+			window.DataContext = new ApplicationViewModel();
 			window.Show();
 		}
 	}

@@ -4,9 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotkaDesktop.Views"
+        xmlns:viewmodels="clr-namespace:NotkaDesktop.ViewModels"
         mc:Ignorable="d"
-        Title="Notka Desktop" Height="450" Width="800">
+        Title="Notka Intranet" 
+        MinHeight="400" MinWidth="300"
+        Height="500" Width="400">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+            <Border Style="{StaticResource LogInBorder}">
+                <StackPanel Orientation="Vertical" 
+                            Style="{StaticResource LogInStackPanel}">
+                    <Image Source="../Resources/Images/notka_splash_vbig.png"
+                           MaxHeight="80"/>
+                    <Label Content="E-mail" />
+                    <TextBox Text="{Binding Email}" />
+                    <Label Content="Hasło" />
+                    <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                    <!--<StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsHidden}" />
+                        <Label Content="Ukryj hasło" />
+                    </StackPanel>-->
+                    <Button Content="Zaloguj się" 
+                            Margin="0,3"
+                            Command="{Binding LoginCommand}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:MainWindowViewModel}">
+            <local:MainView/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

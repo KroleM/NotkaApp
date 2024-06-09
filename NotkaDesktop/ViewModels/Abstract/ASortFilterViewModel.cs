@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using NotkaMobile.Helpers;
 using System.Collections.ObjectModel;
 using NotkaDesktop.Services.Abstract;
+using NotkaDesktop.Helpers;
 
 namespace NotkaDesktop.ViewModels.Abstract
 {

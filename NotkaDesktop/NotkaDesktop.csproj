@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\notka_splash_vbig.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="obj\swaggerClient.cs" />
   </ItemGroup>
 
@@ -35,6 +39,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiSharedClasses\ApiSharedClasses.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\notka_splash_vbig.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
