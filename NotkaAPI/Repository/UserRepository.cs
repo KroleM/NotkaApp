@@ -20,8 +20,30 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<UserForView>> GetUsers(int userId, UserParameters userParameters)
 		{
-			//FIXME pobranie userów zależnie od roli (uprawnień)
-			throw new NotImplementedException();
+			//if (Context.User.Where(n => n.UserId == userId) == null)
+			//{
+			//	throw new NotFoundException();
+			//}
+
+			//var notes = FindByCondition(n => n.UserId == userId
+			//							&& n.CreatedDate >= noteParameters.MinDateOfCreation
+			//							&& n.CreatedDate <= noteParameters.MaxDateOfCreation
+			//							&& ((noteParameters.HasPicture ?? false) ? n.Picture != null : ((noteParameters.HasPicture ?? true) ? (n.Picture != null || n.Picture == null) : n.Picture == null))
+			//							);
+
+			//SearchByPhrase(ref notes, noteParameters.SearchPhrase);
+
+			//ApplySort(ref notes, noteParameters.SortOrder);
+
+			//var notesWithIncludes = notes.Include(note => note.NoteTags.OrderBy(nt => nt.Tag.Name)).ThenInclude(notetag => notetag.Tag);
+
+			//return await PagedList<NoteForView>.CreateAsync(notesWithIncludes
+			//			.Select(note => ModelConverters.ConvertToNoteForView(note)),
+			//				noteParameters.PageNumber,
+			//				noteParameters.PageSize);
+
+			var usersForView = Context.User.Select(user => ModelConverters.ConvertToUserForView(user));
+			return await PagedList<UserForView>.CreateAsync(usersForView, 1, 10);
 		}
 		public async Task<UserForView> GetUserWithAuth(string email, string hash)
 		{

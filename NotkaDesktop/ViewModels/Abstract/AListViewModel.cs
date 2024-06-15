@@ -18,6 +18,7 @@ namespace NotkaDesktop.ViewModels.Abstract
 			ItemTapped = new AsyncRelayCommand<T>(OnItemSelected);
 			AddItemCommand = new AsyncRelayCommand(OnAddItem);
 			SortFilterCommand = new AsyncRelayCommand(OnSortFilterSelected);
+			ExecuteLoadItemsCommand();
 		}
 
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
@@ -29,7 +30,7 @@ namespace NotkaDesktop.ViewModels.Abstract
 		public IAsyncRelayCommand ItemTapped { get; }
 		public IAsyncRelayCommand SortFilterCommand { get; }
 
-		protected async Task ExecuteLoadItemsCommand()
+		public async Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
 			try

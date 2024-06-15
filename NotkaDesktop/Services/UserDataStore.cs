@@ -1,12 +1,14 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using NotkaDesktop.Service.Reference;
 using NotkaDesktop.Services.Abstract;
+using NotkaDesktop.ViewModels;
 
 namespace NotkaMobile.Services
 {
 	public class UserDataStore : AListDataStore<UserForView, UserParameters>
 	{
-		public UserDataStore() 
+		public UserDataStore()
+			: base()
 		{ 
 			Params = new UserParameters();
 		}
@@ -22,7 +24,7 @@ namespace NotkaMobile.Services
 
 		public override async Task<bool> DeleteItemFromService(UserForView item)
 		{
-			//FIXME
+			//FIXME - Preferences
 			//return await _service.UserDELETEAsync(Preferences.Default.Get("userId", 0), item.Id).HandleRequest();
 			return true;
 		}
@@ -37,9 +39,17 @@ namespace NotkaMobile.Services
 			throw new NotImplementedException();
 		}
 
-		public override Task RefreshListFromService()
+		public override async Task RefreshListFromService()
 		{
-			return Task.CompletedTask;
+			//return Task.CompletedTask;
+			var PagedList = _service.UserGETAllAsync(ApplicationViewModel.s_userId, Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase).Result;
+			Items = PagedList.Items.ToList();
+			PageParameters.CurrentPage = PagedList.CurrentPage;
+			PageParameters.TotalPages = PagedList.TotalPages;
+			PageParameters.PageSize = PagedList.PageSize;
+			PageParameters.TotalCount = PagedList.TotalCount;
+			PageParameters.HasPrevious = PagedList.HasPrevious;
+			PageParameters.HasNext = PagedList.HasNext;
 		}
 
 		public override async Task<bool> UpdateItemInService(UserForView item)

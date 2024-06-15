@@ -15,6 +15,8 @@ namespace NotkaDesktop.ViewModels
 		private string _email = string.Empty;
 		[ObservableProperty]
 		private string _password = string.Empty;
+		[ObservableProperty]
+		private string _errorText = string.Empty;
 		//[ObservableProperty]
 		//[NotifyPropertyChangedFor(nameof(Password))]
 		//private bool _isHidden = true;
@@ -36,26 +38,30 @@ namespace NotkaDesktop.ViewModels
 				{
 					User = await _loginDataStore.LoginUser(Email, Password);
 				}
+				else
+				{
+					ErrorText = "Niepoprawne dane użytkownika";
+					return;
+				}
 
-				//Preferences.Default.Set("userEmail", Email);
-				//Preferences.Default.Set("passwordHash", Password);
-				//Preferences.Default.Set("userId", User.Id);
+				//if (User.Role != ...)
+
 				ApplicationViewModel.s_userId = User.Id;
 				Password = string.Empty;
-				//await GoToMainPage();
 				LoggedIn?.Invoke(this, EventArgs.Empty);
 			}
 			catch (ApiException ex)
 			{
 				if (ex.StatusCode == 404)
 				{
-					//await Shell.Current.DisplayAlert("Niepoprawne dane użytkownika", null, "OK");
+					ErrorText = "Niepoprawne dane użytkownika";
 					Password = string.Empty;
 				}
 				Debug.WriteLine($"Unable to get data: {ex.Message}");
 			}
 			catch (Exception ex)
 			{
+				ErrorText = "W aplikacji wystąpił błąd. Spróbuj później.";
 				Debug.WriteLine($"Unable to get data: {ex.Message}");
 				//await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
 			}

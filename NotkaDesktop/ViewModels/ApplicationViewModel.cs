@@ -14,7 +14,7 @@ namespace NotkaDesktop.ViewModels
 		[ObservableProperty]
 		private BaseViewModel _currentViewModel;
 		private LoginViewModel _loginViewModel;
-		private MainWindowViewModel _mainWindowViewModel;
+		private MainWindowViewModel? _mainWindowViewModel;
 		#endregion
 
 		#region Fields & Properties
@@ -26,8 +26,8 @@ namespace NotkaDesktop.ViewModels
 		{
 			_loginViewModel = new LoginViewModel(_userDataStore);
 			_loginViewModel.LoggedIn += OnLoggedIn;
-			_mainWindowViewModel = new MainWindowViewModel();
-			_mainWindowViewModel.LoggedOut += OnLoggedOut;
+			//_mainWindowViewModel = new MainWindowViewModel();
+			//_mainWindowViewModel.LoggedOut += OnLoggedOut;
 			_currentViewModel = _loginViewModel;
 			
 		}
@@ -36,11 +36,15 @@ namespace NotkaDesktop.ViewModels
 
 		private void OnLoggedIn(object source, EventArgs eventArgs)
 		{
+			_mainWindowViewModel = new MainWindowViewModel();
+			_mainWindowViewModel.LoggedOut += OnLoggedOut;
 			CurrentViewModel = _mainWindowViewModel;
 		}
 		private void OnLoggedOut(object source, EventArgs eventArgs)
 		{
 			CurrentViewModel = _loginViewModel;
+			s_userId = 0;
+			_mainWindowViewModel.LoggedOut -= OnLoggedOut;
 		}
 	}
 }

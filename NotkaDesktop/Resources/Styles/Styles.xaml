@@ -23,6 +23,11 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <Style TargetType="{x:Type Label}" x:Key="ErrorLabel">
+        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="MinHeight" Value="30"/>
+    </Style>
+
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="0,5"/>
@@ -36,6 +41,41 @@
  	                    Path=(Validation.Errors)/ErrorContent}"/>
             </Trigger>
         </Style.Triggers>-->
+    </Style>
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{StaticResource CharcoalBrush}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="MinHeight" Value="30"/>
+        <Setter Property="MinWidth" Value="30"/>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="LeftMenuButton">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Margin" Value="0,5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter HorizontalAlignment="Stretch" Content="{Binding Path=Content, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+                        <Image HorizontalAlignment="Right" Grid.Column="2" Source="/Resources/Images/arrow_forward.png" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

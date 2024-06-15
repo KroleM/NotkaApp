@@ -38,6 +38,7 @@ namespace NotkaMobile.ViewModels.ListVM
 			await DataStore.DeleteItemAsync(item.Id);
 			await ExecuteLoadItemsCommand();
 		}
+		//FIXME move to AListViewModel?
 		[RelayCommand]
 		private async Task LoadMoreItems()
 		{
