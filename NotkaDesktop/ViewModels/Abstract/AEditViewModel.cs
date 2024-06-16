@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using NotkaDesktop.Helpers;
 using NotkaDesktop.Services.Abstract;
 using System.Diagnostics;
 
@@ -6,14 +8,17 @@ namespace NotkaDesktop.ViewModels.Abstract
 {
 	public abstract class AEditViewModel<T, U> : BaseViewModel
 	{
-		protected AEditViewModel(string title, IDataStore<T, U> dataStore)
+		protected AEditViewModel(string title, IDataStore<T, U> dataStore, int itemId)
 		{
 			Title = title;
 			DataStore = dataStore;
+			ItemId = itemId;
 			CancelCommand = new AsyncRelayCommand(OnCancel);
 			SaveCommand = new AsyncRelayCommand(OnSave, ValidateSave);
 			this.PropertyChanged += (_, __) => SaveCommand.NotifyCanExecuteChanged();
 		}
+		public string SaveText { get; } = "Zapisz";
+		public string CancelText { get; } = "Anuluj";
 		protected IDataStore<T, U> DataStore { get; }
 		public IAsyncRelayCommand SaveCommand { get; }
 		public IAsyncRelayCommand CancelCommand { get; }
@@ -43,17 +48,21 @@ namespace NotkaDesktop.ViewModels.Abstract
 		public abstract void LoadProperties();
 		public abstract T SetItem();
 		public abstract bool ValidateSave();
-		//FIXME
 		protected async Task OnCancel()
 		{
-			// This will pop the current page off the navigation stack
-			//await Shell.Current.GoToAsync("..");
+			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.Cancel));
 		}
-		//FIXME
 		protected async Task OnSave()
-		{
-			await DataStore.UpdateItemAsync(SetItem());
-			//await Shell.Current.GoToAsync("..");
+		{			
+			try
+			{
+				await DataStore.UpdateItemAsync(SetItem());
+				WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.BackAndRefresh));
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
 		}
 	}
 }

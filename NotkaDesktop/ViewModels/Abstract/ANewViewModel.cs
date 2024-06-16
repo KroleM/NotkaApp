@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using NotkaDesktop.Helpers;
 using NotkaDesktop.Services.Abstract;
 using System.Diagnostics;
 
@@ -14,6 +16,8 @@ namespace NotkaDesktop.ViewModels.Abstract
 			CancelCommand = new AsyncRelayCommand(OnCancel);
 			this.PropertyChanged += (_, __) => SaveCommand.NotifyCanExecuteChanged(); //SaveCommand.ChangeCanExecute();
 		}
+		public string CreateText { get; } = "Utwórz";
+		public string CancelText { get; } = "Anuluj";
 		protected IDataStore<T, U> DataStore { get; }
 		public IAsyncRelayCommand SaveCommand { get; }
 		public IAsyncRelayCommand CancelCommand { get; }
@@ -24,19 +28,16 @@ namespace NotkaDesktop.ViewModels.Abstract
 			try
 			{
 				await DataStore.AddItemAsync(SetItem());
+				WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.BackAndRefresh));
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex);
-			}
-			// This will pop the current page off the navigation stack
-			//await Shell.Current.GoToAsync("..");
-			// Add navigation to details page?
+			}			
 		}
 		private async Task OnCancel()
 		{
-			// This will pop the current page off the navigation stack
-			//await Shell.Current.GoToAsync("..");
+			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.Cancel));
 		}
 	}
 }

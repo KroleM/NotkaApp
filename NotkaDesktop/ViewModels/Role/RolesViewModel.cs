@@ -19,5 +19,11 @@ namespace NotkaDesktop.ViewModels
 			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.NewRole));
 			return Task.CompletedTask;
 		}
+
+		public override Task OnItemSelected(RoleForView? item)
+		{
+			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.EditRole));
+			return Task.CompletedTask;
+		}
 	}
 }

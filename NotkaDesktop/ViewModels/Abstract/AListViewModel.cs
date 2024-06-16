@@ -15,20 +15,30 @@ namespace NotkaDesktop.ViewModels.Abstract
 			DataStore = dataStore;
 			Items = new ObservableCollection<T>();
 			LoadItemsCommand = new AsyncRelayCommand(ExecuteLoadItemsCommand);
-			ItemTapped = new AsyncRelayCommand<T>(OnItemSelected);
+			EditItemCommand = new AsyncRelayCommand<T>(OnItemSelected);
 			AddItemCommand = new AsyncRelayCommand(OnAddItem);
 			SortFilterCommand = new AsyncRelayCommand(OnSortFilterSelected);
 			ExecuteLoadItemsCommand();
 		}
+		public string AddText { get; } = "Dodaj";
+		public string EditText { get; } = "Edytuj";
+		public string DeleteText { get; } = "Usuń";
 
-		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
 		private T? _selectedItem;
 		protected IDataStore<T, U> DataStore { get; }
 		public ObservableCollection<T> Items { get; }
 		public IAsyncRelayCommand LoadItemsCommand { get; }
 		public IAsyncRelayCommand AddItemCommand { get; }
-		public IAsyncRelayCommand ItemTapped { get; }
+		public IAsyncRelayCommand EditItemCommand { get; }
 		public IAsyncRelayCommand SortFilterCommand { get; }
+		public T? SelectedItem
+		{
+			get => _selectedItem;
+			set
+			{
+				SetProperty(ref _selectedItem, value);
+			}
+		}
 
 		public async Task ExecuteLoadItemsCommand()
 		{
@@ -67,7 +77,6 @@ namespace NotkaDesktop.ViewModels.Abstract
 		private void PerformSearch(string query)
 		{
 			DataStore.Params.SearchPhrase = query;
-			//await ExecuteLoadItemsCommand(); //Nie, bo to też zmienia isBusy na true i GetNotes() wywołuje się 2 razy
 			IsBusy = true;
 		}
 		[RelayCommand]
@@ -79,27 +88,34 @@ namespace NotkaDesktop.ViewModels.Abstract
 			}
 			return;
 		}
-
-		public T? SelectedItem
+		[RelayCommand]
+		private async Task LoadMoreItems()
 		{
-			get => _selectedItem;
-			set
+			try
 			{
-				SetProperty(ref _selectedItem, value);
-				OnItemSelected(value);
+				await Task.Delay(10);   //this prevents strange ObservableCollection synchronization error
+				if (DataStore.PageParameters.HasNext && Items.Count > 0)
+				{
+					DataStore.Params.PageNumber++;
+					var items = await DataStore.GetItemsAsync(true);
+					foreach (var item in items)
+					{
+						Items.Add(item);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
 			}
 		}
+
 		public abstract Task GoToAddPage();
+		public abstract Task OnItemSelected(T? item);
 		public async Task OnAddItem()
 		{
 			await GoToAddPage();
 		}
-
-		public virtual Task OnItemSelected(T? item)
-		{
-			return Task.CompletedTask;
-		}
-
 		public virtual Task OnSortFilterSelected()
 		{
 			return Task.CompletedTask;

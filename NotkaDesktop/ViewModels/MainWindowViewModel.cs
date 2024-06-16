@@ -23,6 +23,7 @@ namespace NotkaDesktop.ViewModels
 		private UsersViewModel? _usersViewModel;
 		private RolesViewModel? _rolesViewModel;
 		private NewRoleViewModel? _newRoleViewModel;
+		private RoleEditViewModel? _roleEditViewModel;
 		
 		#endregion
 
@@ -44,6 +45,8 @@ namespace NotkaDesktop.ViewModels
 
 		[ObservableProperty]
 		private BaseViewModel _rightPanelViewModel;
+		private BaseViewModel _previousRightPanelViewModel;
+		private MainWindowView _previousRightPanelType;
 		#endregion
 
 		#region Constructor
@@ -94,12 +97,45 @@ namespace NotkaDesktop.ViewModels
 		{
 			switch (viewRequestMessage.Value)
 			{
+				case MainWindowView.Cancel:
+					CancelView();
+					break;
+				case MainWindowView.BackAndRefresh:
+					GoBackAndRefresh();
+					break;
+				case MainWindowView.Roles:	//??
+					ShowRoles();
+					break;
 				case MainWindowView.NewRole:
 					ShowNewRole();
 					break;
+				case MainWindowView.EditRole:
+					ShowEditRole();
+					break;
 			}
 		}
-
+		private void CancelView()
+		{
+			if (_previousRightPanelViewModel == null)
+			{
+				RightPanelViewModel = _mainPageViewModel;
+			}
+			else
+			{
+				RightPanelViewModel = _previousRightPanelViewModel;
+			}
+		}
+		private void GoBackAndRefresh()
+		{
+			if (_previousRightPanelViewModel == null)
+			{
+				RightPanelViewModel = _mainPageViewModel;
+			}
+			else
+			{
+				WeakReferenceMessenger.Default.Send(new ViewRequestMessage(_previousRightPanelType));
+			}
+		}
 		private void ShowMainPage()
 		{
 			RightPanelViewModel = _mainPageViewModel;
@@ -122,8 +158,21 @@ namespace NotkaDesktop.ViewModels
 		{
 			if (RightPanelViewModel == _newRoleViewModel) return;
 
+			_previousRightPanelType = MainWindowView.Roles;
+			_previousRightPanelViewModel = RightPanelViewModel;			
 			_newRoleViewModel = new(_roleDataStore);
 			RightPanelViewModel = _newRoleViewModel;
+		}
+		private void ShowEditRole()
+		{
+			if (RightPanelViewModel == _roleEditViewModel) return;
+			if (RightPanelViewModel is not RolesViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Roles;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as RolesViewModel).SelectedItem.Id;
+			_roleEditViewModel = new(_roleDataStore, itemId);
+			RightPanelViewModel = _roleEditViewModel;
 		}
 		#endregion
 	}

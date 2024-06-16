@@ -3,11 +3,11 @@
 namespace NotkaDesktop.Views.Role
 {
 	/// <summary>
-	/// Interaction logic for RolesView.xaml
+	/// Interaction logic for RoleEditView.xaml
 	/// </summary>
-	public partial class RolesView : ListViewBase
+	public partial class RoleEditView : EditViewBase
 	{
-		public RolesView()
+		public RoleEditView()
 		{
 			InitializeComponent();
 		}

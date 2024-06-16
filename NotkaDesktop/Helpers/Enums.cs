@@ -8,8 +8,12 @@ namespace NotkaDesktop.Helpers
 {
 	public enum MainWindowView
 	{
+		Cancel,
+		BackAndRefresh,
+		Roles,
 		NewRole,
 		EditRole,
-
+		Users,
+		EditUser,
 	}
 }

@@ -16,5 +16,10 @@ namespace NotkaDesktop.ViewModels
 		{
 			throw new NotImplementedException();
 		}
+
+		public override Task OnItemSelected(UserForView? item)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
