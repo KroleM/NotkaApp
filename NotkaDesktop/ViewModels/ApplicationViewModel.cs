@@ -45,6 +45,7 @@ namespace NotkaDesktop.ViewModels
 			CurrentViewModel = _loginViewModel;
 			s_userId = 0;
 			_mainWindowViewModel.LoggedOut -= OnLoggedOut;
+			_mainWindowViewModel.Destroy();
 		}
 	}
 }

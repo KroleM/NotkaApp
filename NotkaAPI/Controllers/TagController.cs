@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApiSharedClasses.QueryParameters;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NotkaAPI.Contracts;
-using NotkaAPI.Data;
 using NotkaAPI.Helpers;
-using NotkaAPI.Models.BusinessLogic;
-using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class TagController : ControllerBase
     {

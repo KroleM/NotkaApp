@@ -22,7 +22,6 @@ namespace NotkaMobile.ViewModels.ListVM
 		#region Fields & Properties
 
 		private TagDataStore _tagDataStore;
-		private byte[] _bytesArray;
 		public List<TagForView> Tags { get; set; } = new();
 
 		[ObservableProperty]

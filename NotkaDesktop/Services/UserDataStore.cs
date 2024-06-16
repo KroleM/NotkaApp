@@ -1,4 +1,5 @@
 ﻿using ApiSharedClasses.QueryParameters;
+using NotkaDesktop.Helpers;
 using NotkaDesktop.Service.Reference;
 using NotkaDesktop.Services.Abstract;
 using NotkaDesktop.ViewModels;
@@ -24,9 +25,8 @@ namespace NotkaMobile.Services
 
 		public override async Task<bool> DeleteItemFromService(UserForView item)
 		{
-			//FIXME - Preferences
-			//return await _service.UserDELETEAsync(Preferences.Default.Get("userId", 0), item.Id).HandleRequest();
-			return true;
+			return await _service.UserDELETEAsync(ApplicationViewModel.s_userId, item.Id).HandleRequest();
+			//return true;
 		}
 
 		public override async Task<UserForView> Find(UserForView item)
@@ -54,21 +54,13 @@ namespace NotkaMobile.Services
 
 		public override async Task<bool> UpdateItemInService(UserForView item)
 		{
-			//FIXME
-			//return await _service.UserPUTAsync(item.Id, item).HandleRequest();
-			return true;
+			return await _service.UserPUTAsync(item.Id, item).HandleRequest();
 		}
 
 		protected override void EraseParameters()
 		{
 			// empty
 		}
-		//FIXME
-		//public override async Task<UserForView> GetItemAsync(int id)
-		//{
-		//	var email = Preferences.Default.Get("userEmail", "");
-		//	var pass = Preferences.Default.Get("passwordHash", "");
-		//	return await Task.FromResult(await LoginUser(email, pass));
-		//}
+
 	}
 }

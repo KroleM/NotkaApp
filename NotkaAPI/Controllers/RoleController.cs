@@ -1,108 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NotkaAPI.Data;
+using NotkaAPI.Contracts;
+using NotkaAPI.Helpers;
 using NotkaAPI.Models.Users;
+using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public RoleController(NotkaDatabaseContext context)
+		public RoleController(IRepositoryWrapper repository)
         {
-            _context = context;
-        }
+			_repository = repository;
+		}
 
         // GET: api/Role
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRole()
-        {
-            return await _context.Role.ToListAsync();
-        }
+		[HttpGet("{userId}", Name = "RoleGETAll")]
+		public async Task<ActionResult<PagedList<RoleForView>>> GetRole(int userId, [FromQuery] RoleParameters roleParameters)
+		{
+			PagedList<RoleForView> roles;
+			try
+			{
+				roles = await _repository.Role.GetRoles(userId, roleParameters);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return roles;
+		}
 
         // GET: api/Role/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
-        {
-            var role = await _context.Role.FindAsync(id);
-
-            if (role == null)
-            {
-                return NotFound();
-            }
-
-            return role;
-        }
+		[HttpGet("{userId}/{id}", Name = "RoleGET")]
+		public async Task<ActionResult<RoleForView>> GetRole(int userId, int id)
+		{
+			try
+			{
+				return await _repository.Role.GetRoleById(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
 
         // PUT: api/Role/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, Role role)
+		[HttpPut("{id}", Name = "RolePUT")]
+		public async Task<IActionResult> PutRole(int id, RoleForView role)
         {
-            if (id != role.Id)
-            {
-                return BadRequest();
-            }
+			if (id != role.Id)
+			{
+				return BadRequest();
+			}
 
-            _context.Entry(role).State = EntityState.Modified;
+			try
+			{
+				await _repository.Role.UpdateRole(id, role);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			return NoContent();
+		}
 
-            return NoContent();
-        }
-
-        // POST: api/Role
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Role>> PostRole(Role role)
+		// POST: api/Role
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost(Name = "RolePOST")]
+		public async Task<ActionResult<RoleForView>> PostRole(RoleForView role)
         {
-            _context.Role.Add(role);
-            await _context.SaveChangesAsync();
+			if (role == null) return Forbid();
 
-            return CreatedAtAction("GetRole", new { id = role.Id }, role);
-        }
+			RoleForView uploadedRole;
+			try
+			{
+				uploadedRole = await _repository.Role.CreateRole(role);
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-        // DELETE: api/Role/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRole(int id)
-        {
-            var role = await _context.Role.FindAsync(id);
-            if (role == null)
-            {
-                return NotFound();
-            }
+			return Ok(uploadedRole);
+		}
 
-            _context.Role.Remove(role);
-            await _context.SaveChangesAsync();
+		// DELETE: api/Role/5
+		[HttpDelete("{userId}/{id}", Name = "RoleDELETE")]
+		public async Task<IActionResult> DeleteRole(int userId, int id)
+		{
+			try
+			{
+				await _repository.Role.DeleteRole(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (ForbidException)
+			{
+				return Forbid();
+			}
 
-            return NoContent();
-        }
-
-        private bool RoleExists(int id)
-        {
-            return _context.Role.Any(e => e.Id == id);
-        }
+			return NoContent();
+		}
     }
 }

@@ -15,6 +15,14 @@ namespace NotkaAPI.Models.BusinessLogic
 				TagsForView = note?.NoteTags.Select(notetag => new TagForView().CopyProperties(notetag.Tag)).ToList() ?? new(),
 			}.CopyProperties(note);
 		}
+		public static ListForView ConvertToListForView(List? list)
+		{
+			return new ListForView
+			{
+				TagsForView = list?.ListTags.Select(listtag => new TagForView().CopyProperties(listtag.Tag)).ToList() ?? new(),
+				ListElementsForView = list?.ListElements.Select(le => new ListElementForView().CopyProperties(le)).ToList() ?? new(),
+			}.CopyProperties(list);
+		}
 		public static TagForView ConvertToTagForView(Tag? tag)
 		{
 			return new TagForView
@@ -25,15 +33,17 @@ namespace NotkaAPI.Models.BusinessLogic
 		}
 		public static UserForView ConvertToUserForView(User? user)
 		{
-			return new UserForView{ }.CopyProperties(user);
-		}
-		public static ListForView ConvertToListForView(List? list)
-		{
-			return new ListForView
+			return new UserForView
 			{
-				TagsForView = list?.ListTags.Select(listtag => new TagForView().CopyProperties(listtag.Tag)).ToList() ?? new(),
-				ListElementsForView = list?.ListElements.Select(le => new ListElementForView().CopyProperties(le)).ToList() ?? new(),
-			}.CopyProperties(list);
+				RolesForView = user?.RoleUsers.Select(roleuser => ConvertToRoleForView(roleuser?.Role)).ToList() ?? new(),
+			}.CopyProperties(user);
+		}
+		public static RoleForView ConvertToRoleForView(Role? role) 
+		{
+			return new RoleForView
+			{
+
+			}.CopyProperties(role);
 		}
 	}
 }

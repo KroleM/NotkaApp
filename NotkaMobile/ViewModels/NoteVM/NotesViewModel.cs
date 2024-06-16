@@ -41,6 +41,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 			//await Shell.Current.GoToAsync("..");
 			await ExecuteLoadItemsCommand();
 		}
+		//FIXME move to AListViewModel
 		[RelayCommand]
 		private async Task LoadMoreItems()
 		{

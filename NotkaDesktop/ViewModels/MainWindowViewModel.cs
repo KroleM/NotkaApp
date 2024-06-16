@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using NotkaDesktop.Helpers;
+using NotkaDesktop.Services;
 using NotkaDesktop.ViewModels.Abstract;
 using NotkaMobile.Services;
 using System.Collections.ObjectModel;
@@ -12,11 +15,15 @@ namespace NotkaDesktop.ViewModels
 
 		#region DataStores
 		private UserDataStore _userDataStore = new UserDataStore();
+		private RoleDataStore _roleDataStore = new RoleDataStore();
 		#endregion
 
 		#region ViewModels
-		private UsersViewModel? _usersViewModel;
 		private MainPageViewModel? _mainPageViewModel;
+		private UsersViewModel? _usersViewModel;
+		private RolesViewModel? _rolesViewModel;
+		private NewRoleViewModel? _newRoleViewModel;
+		
 		#endregion
 
 		#region Fields & Properties
@@ -57,12 +64,18 @@ namespace NotkaDesktop.ViewModels
 		#endregion
 
 		#region Public methods
-
+		public void Destroy()
+		{
+			WeakReferenceMessenger.Default.UnregisterAll(this);
+		}
 		#endregion
 
 		#region Private methods
 		private List<CommandViewModel> CreateLeftPanelCommands()
 		{
+			//Here: Register for WeakReferenceMessenger
+			WeakReferenceMessenger.Default.Register<ViewRequestMessage>(this, (r, m) => OpenView(m));
+
 			return new List<CommandViewModel>
 			{
 				new CommandViewModel(
@@ -72,9 +85,19 @@ namespace NotkaDesktop.ViewModels
 					"Użytkownicy",
 					new RelayCommand(() => this.ShowUsers())),
 				new CommandViewModel(
-					"Spółki",
-					new RelayCommand(() => this.ShowUsers())),
+					"Role",
+					new RelayCommand(() => this.ShowRoles())),
 			};
+		}
+
+		private void OpenView(ViewRequestMessage viewRequestMessage)
+		{
+			switch (viewRequestMessage.Value)
+			{
+				case MainWindowView.NewRole:
+					ShowNewRole();
+					break;
+			}
 		}
 
 		private void ShowMainPage()
@@ -83,12 +106,24 @@ namespace NotkaDesktop.ViewModels
 		}
 		private void ShowUsers()
 		{
-			//if (_rightPanelViewModel == _usersViewModel) return;
+			if (RightPanelViewModel == _usersViewModel) return;
 
-			//_usersViewModel.ExecuteLoadItemsCommand();
 			_usersViewModel = new(_userDataStore);
 			RightPanelViewModel = _usersViewModel;
-			//update data in usersViewModel?
+		}
+		private void ShowRoles()
+		{
+			if (RightPanelViewModel == _rolesViewModel) return;
+
+			_rolesViewModel = new(_roleDataStore);
+			RightPanelViewModel = _rolesViewModel;
+		}
+		private void ShowNewRole()
+		{
+			if (RightPanelViewModel == _newRoleViewModel) return;
+
+			_newRoleViewModel = new(_roleDataStore);
+			RightPanelViewModel = _newRoleViewModel;
 		}
 		#endregion
 	}

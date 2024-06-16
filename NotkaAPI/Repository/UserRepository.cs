@@ -97,8 +97,7 @@ namespace NotkaAPI.Repository
 		}
 		public async Task DeleteUser(int userId, int id)
 		{
-			var user = await Context.User
-					.SingleOrDefaultAsync(tag => tag.Id == id);
+			var user = await Context.User.SingleOrDefaultAsync(user => user.Id == id);
 
 			if (user == null)
 			{

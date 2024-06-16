@@ -2445,95 +2445,70 @@
         }
       }
     },
-    "/api/Role": {
+    "/api/Role/{userId}": {
       "get": {
         "tags": [
           "Role"
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Role"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Role"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Role"
-                  }
-                }
-              }
+        "operationId": "RoleGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        }
-      },
-      "post": {
-        "tags": [
-          "Role"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Role"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Role"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Role"
-                  }
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/RoleForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/RoleForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/RoleForViewPagedList"
                 }
               }
             }
@@ -2541,12 +2516,22 @@
         }
       }
     },
-    "/api/Role/{id}": {
+    "/api/Role/{userId}/{id}": {
       "get": {
         "tags": [
           "Role"
         ],
+        "operationId": "RoleGET",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -2563,27 +2548,61 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/RoleForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/RoleForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Role"
+                  "$ref": "#/components/schemas/RoleForView"
                 }
               }
             }
           }
         }
       },
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "RoleDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Role/{id}": {
       "put": {
         "tags": [
           "Role"
         ],
+        "operationId": "RolePUT",
         "parameters": [
           {
             "name": "id",
@@ -2601,7 +2620,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Role"
+                    "$ref": "#/components/schemas/RoleForView"
                   }
                 ]
               }
@@ -2610,7 +2629,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Role"
+                    "$ref": "#/components/schemas/RoleForView"
                   }
                 ]
               }
@@ -2619,7 +2638,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Role"
+                    "$ref": "#/components/schemas/RoleForView"
                   }
                 ]
               }
@@ -2631,25 +2650,65 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/Role": {
+      "post": {
         "tags": [
           "Role"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "operationId": "RolePOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RoleForView"
+                  }
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleForView"
+                }
+              }
+            }
           }
         }
       }
@@ -6125,6 +6184,79 @@
         },
         "additionalProperties": false
       },
+      "RoleForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RoleUser": {
         "type": "object",
         "properties": {
@@ -6747,6 +6879,13 @@
             "type": "string",
             "nullable": true
           },
+          "roleUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleUser"
+            },
+            "nullable": true
+          },
           "requestSender": {
             "type": "array",
             "items": {
@@ -6815,6 +6954,13 @@
           "birthDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "rolesForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleForView"
+            },
             "nullable": true
           }
         },

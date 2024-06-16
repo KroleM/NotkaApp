@@ -7,6 +7,7 @@ namespace NotkaAPI.Repository
 	{
 		private NotkaDatabaseContext _context;
 		private IUserRepository? _user;
+		private IRoleRepository? _role;
 		private INoteRepository? _note;
 		private ITagRepository? _tag;
 		private IListRepository? _list;
@@ -21,6 +22,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _user;
+			}
+		}
+		public IRoleRepository Role
+		{
+			get
+			{
+				if (_role == null)
+				{
+					_role = new RoleRepository(_context);
+				}
+
+				return _role;
 			}
 		}
 		public INoteRepository Note
