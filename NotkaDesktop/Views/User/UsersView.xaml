@@ -10,6 +10,9 @@
         <Border BorderThickness="0,0,0,2" HorizontalAlignment="Left" Margin="5" BorderBrush="CadetBlue" >
             <Label Content="{Binding Title}"/>
         </Border>
+        <Button Grid.Column="1" Margin="0,0,5,5" HorizontalAlignment="Left"
+                Content="{Binding EditText}"
+                Command="{Binding EditItemCommand}"/>
         <DataGrid AutoGenerateColumns="False" 
                   ItemsSource="{Binding Items}" 
                   SelectedItem="{Binding SelectedItem}"

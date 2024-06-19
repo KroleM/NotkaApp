@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace NotkaDesktop.Views.Role
+﻿namespace NotkaDesktop.Views.Role
 {
 	/// <summary>
 	/// Interaction logic for RoleEditView.xaml

@@ -24,7 +24,8 @@
                                     Command="{Binding AddItemCommand}"/>
                             <Button Grid.Column="1" Content="{Binding EditText}" Margin="0,0,5,0"
                                     Command="{Binding EditItemCommand}"/>
-                            <Button Grid.Column="2" Content="{Binding DeleteText}" Margin="0,0,5,0"/>
+                            <Button Grid.Column="2" Content="{Binding DeleteText}" Margin="0,0,5,0"
+                                    Command="{Binding DeleteItemCommand}"/>
                         </Grid>
                         <ContentPresenter Margin="0,5,0,5" />
                     </StackPanel>

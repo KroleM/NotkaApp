@@ -8,6 +8,7 @@ using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
+using System.Security.Policy;
 
 namespace NotkaAPI.Repository
 {
@@ -44,6 +45,18 @@ namespace NotkaAPI.Repository
 
 			var usersForView = Context.User.Select(user => ModelConverters.ConvertToUserForView(user));
 			return await PagedList<UserForView>.CreateAsync(usersForView, 1, 10);
+		}
+		public async Task<UserForView> GetUserById(int userId, int id)
+		{
+			//weryfikacja roli usera pytającego
+			var user = await Context.User.SingleOrDefaultAsync(u => u.Id == id);
+
+			if (user == null)
+			{
+				throw new NotFoundException();
+			}
+
+			return ModelConverters.ConvertToUserForView(user);
 		}
 		public async Task<UserForView> GetUserWithAuth(string email, string hash)
 		{

@@ -31,12 +31,12 @@ namespace NotkaMobile.Services
 
 		public override async Task<UserForView> Find(UserForView item)
 		{
-			throw new NotImplementedException();
+			return await _service.UserGETAsync(ApplicationViewModel.s_userId, item.Id);
 		}
 
 		public override async Task<UserForView> Find(int id)
 		{
-			throw new NotImplementedException();
+			return await _service.UserGETAsync(ApplicationViewModel.s_userId, id);
 		}
 
 		public override async Task RefreshListFromService()

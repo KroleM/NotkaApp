@@ -15,9 +15,12 @@ namespace NotkaDesktop.ViewModels.Abstract
 			DataStore = dataStore;
 			Items = new ObservableCollection<T>();
 			LoadItemsCommand = new AsyncRelayCommand(ExecuteLoadItemsCommand);
-			EditItemCommand = new AsyncRelayCommand<T>(OnItemSelected);
 			AddItemCommand = new AsyncRelayCommand(OnAddItem);
+			EditItemCommand = new AsyncRelayCommand(OnEditItem, ValidateEditOrDelete);
+			DeleteItemCommand = new AsyncRelayCommand(OnDeleteItem, ValidateEditOrDelete);
 			SortFilterCommand = new AsyncRelayCommand(OnSortFilterSelected);
+			this.PropertyChanged += (_, __) => EditItemCommand.NotifyCanExecuteChanged();
+			this.PropertyChanged += (_, __) => DeleteItemCommand.NotifyCanExecuteChanged();
 			ExecuteLoadItemsCommand();
 		}
 		public string AddText { get; } = "Dodaj";
@@ -30,6 +33,7 @@ namespace NotkaDesktop.ViewModels.Abstract
 		public IAsyncRelayCommand LoadItemsCommand { get; }
 		public IAsyncRelayCommand AddItemCommand { get; }
 		public IAsyncRelayCommand EditItemCommand { get; }
+		public IAsyncRelayCommand DeleteItemCommand { get; }
 		public IAsyncRelayCommand SortFilterCommand { get; }
 		public T? SelectedItem
 		{
@@ -111,14 +115,19 @@ namespace NotkaDesktop.ViewModels.Abstract
 		}
 
 		public abstract Task GoToAddPage();
-		public abstract Task OnItemSelected(T? item);
-		public async Task OnAddItem()
+		public abstract Task OnDeleteItem();
+		public abstract Task OnEditItem();
+		private async Task OnAddItem()
 		{
 			await GoToAddPage();
 		}
 		public virtual Task OnSortFilterSelected()
 		{
 			return Task.CompletedTask;
+		}
+		private bool ValidateEditOrDelete()
+		{
+			return SelectedItem != null;
 		}
 	}
 }

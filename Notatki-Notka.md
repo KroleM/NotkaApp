@@ -106,6 +106,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     [HttpGet("/orders/{id}", Name = nameof(GetOrder))]
     ```
     ConnectedServices -> Service References -> `swaggerClient.cs` - wygenerowany kod można rozszerzać poprzez utworzenie własnej klasy częściowej (partial) o tej samej nazwie. Daje to pewność, że w razie aktualizacji klienta HTTP wprowadzony kod nie zostanie utracony.
+* 2024.06.19 Gdy w API dwie ścieżki tego samego typu (Routes), np. GET, mają taką samą liczbę argumentów, to rozróżnić je można po `route constraint`. Atrybut ma wówczas taką postać: `[HttpGet("{userId:int}")]`
 
 
 [link1]: https://learn.microsoft.com/en-us/sql/ssms/scripting/generate-and-publish-scripts-wizard?view=sql-server-ver16

@@ -49,21 +49,27 @@ namespace NotkaAPI.Controllers
             return users;
         }
 
-        /*
 		// GET: api/User/5
-		[HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+		[HttpGet("{userId:int}/{id}", Name = "UserGET")]	//{userId:int} - route constraint
+		public async Task<ActionResult<UserForView>> GetUser(int userId, int id)
         {
-            var user = await _context.User.FindAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
-        }
-        */
+			try
+			{
+				return await _repository.User.GetUserById(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
 
 		[HttpGet("{email}/{hash}", Name = "UserGETWithAuth")]
 		public async Task<ActionResult<UserForView>> GetUserWithAuth(string email, string hash)

@@ -1,4 +1,6 @@
 ﻿using ApiSharedClasses.QueryParameters;
+using CommunityToolkit.Mvvm.Messaging;
+using NotkaDesktop.Helpers;
 using NotkaDesktop.Service.Reference;
 using NotkaDesktop.ViewModels.Abstract;
 using NotkaMobile.Services;
@@ -17,9 +19,18 @@ namespace NotkaDesktop.ViewModels
 			throw new NotImplementedException();
 		}
 
-		public override Task OnItemSelected(UserForView? item)
+		public override async Task OnDeleteItem()
 		{
-			throw new NotImplementedException();
+			if (SelectedItem != null)
+			{
+				await DataStore.DeleteItemAsync(SelectedItem.Id);
+			}
+		}
+
+		public override Task OnEditItem()
+		{
+			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.EditUser));
+			return Task.CompletedTask;
 		}
 	}
 }

@@ -7,6 +7,7 @@ namespace NotkaAPI.Contracts
 	public interface IUserRepository
 	{
 		Task<PagedList<UserForView>> GetUsers(int userId, UserParameters userParameters);
+		Task<UserForView> GetUserById(int userId, int id);
 		Task<UserForView> GetUserWithAuth(string email, string hash);
 		Task<UserForView> CreateUser(UserForView user);
 		Task UpdateUser(int id, UserForView user);

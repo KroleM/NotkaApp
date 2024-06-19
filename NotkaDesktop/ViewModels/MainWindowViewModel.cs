@@ -21,6 +21,7 @@ namespace NotkaDesktop.ViewModels
 		#region ViewModels
 		private MainPageViewModel? _mainPageViewModel;
 		private UsersViewModel? _usersViewModel;
+		private UserEditViewModel? _userEditViewModel;
 		private RolesViewModel? _rolesViewModel;
 		private NewRoleViewModel? _newRoleViewModel;
 		private RoleEditViewModel? _roleEditViewModel;
@@ -103,6 +104,12 @@ namespace NotkaDesktop.ViewModels
 				case MainWindowView.BackAndRefresh:
 					GoBackAndRefresh();
 					break;
+				case MainWindowView.Users:
+					ShowUsers();
+					break;
+				case MainWindowView.EditUser:
+					ShowEditUser();
+					break;
 				case MainWindowView.Roles:	//??
 					ShowRoles();
 					break;
@@ -142,15 +149,25 @@ namespace NotkaDesktop.ViewModels
 		}
 		private void ShowUsers()
 		{
-			if (RightPanelViewModel == _usersViewModel) return;
+			if (RightPanelViewModel == _usersViewModel) return;	//could cause bad behavior when using Delete
 
 			_usersViewModel = new(_userDataStore);
 			RightPanelViewModel = _usersViewModel;
 		}
+		private void ShowEditUser()
+		{
+			if (RightPanelViewModel == _userEditViewModel) return;	//cannot be invoked if UserEdit already invoked
+			if (RightPanelViewModel is not UsersViewModel) return;	//can only be invoked from Users View (Model)
+
+			_previousRightPanelType = MainWindowView.Users;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as UsersViewModel).SelectedItem.Id; //int for loading particular item
+			(RightPanelViewModel as UsersViewModel).SelectedItem = null;	//cancel the selection
+			_userEditViewModel = new(_userDataStore, _roleDataStore, itemId);
+			RightPanelViewModel = _userEditViewModel;	//change view
+		}
 		private void ShowRoles()
 		{
-			if (RightPanelViewModel == _rolesViewModel) return;
-
 			_rolesViewModel = new(_roleDataStore);
 			RightPanelViewModel = _rolesViewModel;
 		}
@@ -171,6 +188,7 @@ namespace NotkaDesktop.ViewModels
 			_previousRightPanelType = MainWindowView.Roles;
 			_previousRightPanelViewModel = RightPanelViewModel;
 			int itemId = (RightPanelViewModel as RolesViewModel).SelectedItem.Id;
+			(RightPanelViewModel as RolesViewModel).SelectedItem = null;
 			_roleEditViewModel = new(_roleDataStore, itemId);
 			RightPanelViewModel = _roleEditViewModel;
 		}

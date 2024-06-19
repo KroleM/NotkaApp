@@ -20,7 +20,16 @@ namespace NotkaDesktop.ViewModels
 			return Task.CompletedTask;
 		}
 
-		public override Task OnItemSelected(RoleForView? item)
+		public override async Task OnDeleteItem()
+		{
+			if (SelectedItem != null)
+			{
+				await DataStore.DeleteItemAsync(SelectedItem.Id);
+			}
+			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.Roles));
+		}
+
+		public override Task OnEditItem()
 		{
 			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.EditRole));
 			return Task.CompletedTask;
