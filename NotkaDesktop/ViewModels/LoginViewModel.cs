@@ -44,7 +44,11 @@ namespace NotkaDesktop.ViewModels
 					return;
 				}
 
-				//if (User.Role != ...)
+				if (!User.RolesForView.Any(r => r.Id == 3))
+				{
+					ErrorText = "Użytkownik nie posiada odpowiednich uprawnień";
+					return;
+				}
 
 				ApplicationViewModel.s_userId = User.Id;
 				Password = string.Empty;
@@ -63,7 +67,6 @@ namespace NotkaDesktop.ViewModels
 			{
 				ErrorText = "W aplikacji wystąpił błąd. Spróbuj później.";
 				Debug.WriteLine($"Unable to get data: {ex.Message}");
-				//await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
 			}
 			finally
 			{

@@ -26,4 +26,11 @@ namespace NotkaMobile.Helpers
 			}
 		}
 	}
+
+	public enum UserRoles
+	{
+		Admin = 0,
+		Basic = 1,
+		Premium = 2,
+	}
 }

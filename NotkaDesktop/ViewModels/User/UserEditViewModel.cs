@@ -1,8 +1,8 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using NotkaDesktop.Service.Reference;
 using NotkaDesktop.Services;
-using NotkaDesktop.Services.Abstract;
 using NotkaDesktop.ViewModels.Abstract;
 using NotkaMobile.Services;
 using System.Collections.ObjectModel;
@@ -25,6 +25,9 @@ namespace NotkaDesktop.ViewModels
 		ObservableCollection<RoleForView> _selectedRoles = new();
 
 		[ObservableProperty]
+		RoleForView _newRole;
+
+		[ObservableProperty]
 		string _firstName = string.Empty;
 
 		[ObservableProperty]
@@ -43,6 +46,12 @@ namespace NotkaDesktop.ViewModels
 			LastName = Item.LastName;
 			IsActive = Item.IsActive;
 			BirthDate = Item.BirthDate?.DateTime;
+
+			SelectedRoles.Clear();
+			foreach (var role in Item.RolesForView)
+			{
+				SelectedRoles.Add(role);
+			}
 		}
 
 		public override UserForView SetItem()
@@ -52,6 +61,7 @@ namespace NotkaDesktop.ViewModels
 			Item.IsActive = this.IsActive;
 			Item.BirthDate = this.BirthDate;
 			Item.ModifiedDate = DateTimeOffset.Now;
+			Item.RolesForView = this.SelectedRoles;
 			return Item;
 		}
 
@@ -67,6 +77,24 @@ namespace NotkaDesktop.ViewModels
 			_roleDataStore.Params.PageSize = 0;
 			await _roleDataStore.RefreshListFromService();
 			Roles = _roleDataStore.Items;
+		}
+		#endregion
+		#region Commands
+		[RelayCommand]
+		private void AddRole()
+		{
+			if (!SelectedRoles.Contains(NewRole) && NewRole != null)
+			{
+				SelectedRoles.Add(NewRole);
+			}
+		}
+		[RelayCommand]
+		private void RemoveRole(RoleForView role)
+		{
+			if (SelectedRoles.Contains(role))
+			{
+				SelectedRoles.Remove(role);
+			}
 		}
 		#endregion
 	}

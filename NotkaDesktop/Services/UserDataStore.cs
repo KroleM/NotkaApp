@@ -26,7 +26,6 @@ namespace NotkaMobile.Services
 		public override async Task<bool> DeleteItemFromService(UserForView item)
 		{
 			return await _service.UserDELETEAsync(ApplicationViewModel.s_userId, item.Id).HandleRequest();
-			//return true;
 		}
 
 		public override async Task<UserForView> Find(UserForView item)

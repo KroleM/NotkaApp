@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Helpers;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
@@ -89,7 +90,7 @@ namespace NotkaMobile.ViewModels
 				if (_connectivity.NetworkAccess != NetworkAccess.Internet)
 				{
 					await Shell.Current.DisplayAlert("Brak połączenia!",
-						$"Sprawdź połączenie z internetem i spróbuj ponownie.", "OK");
+						"Sprawdź połączenie z internetem i spróbuj ponownie.", "OK");
 					return;
 				}
 
@@ -99,9 +100,27 @@ namespace NotkaMobile.ViewModels
 					User = await _loginDataStore.LoginUser(Email, Password);
 				}
 
+				if (!User.RolesForView.Any(r => r.Id == 3 || r.Id == 4))
+				{
+					await Shell.Current.DisplayAlert("Niepoprawne dane użytkownika", 
+						"Brak odpowiednich uprawnień", "OK");
+					return;
+				}
+
+				string role = string.Empty;
+				if (User.RolesForView.Any(r => r.Id == 4))
+				{
+					role = UserRoles.Premium.ToString();
+				}
+				else if(User.RolesForView.Any(r => r.Id == 3))
+				{
+					role = UserRoles.Basic.ToString();
+				}
+
 				Preferences.Default.Set("userEmail", Email);
 				Preferences.Default.Set("passwordHash", Password);
 				Preferences.Default.Set("userId", User.Id);
+				Preferences.Default.Set("role", role);
 				Password = string.Empty;
 				await GoToMainPage();
 			}

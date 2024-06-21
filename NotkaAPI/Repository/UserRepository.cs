@@ -1,6 +1,7 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using Azure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
@@ -21,46 +22,36 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<UserForView>> GetUsers(int userId, UserParameters userParameters)
 		{
-			//if (Context.User.Where(n => n.UserId == userId) == null)
-			//{
-			//	throw new NotFoundException();
-			//}
-
-			//var notes = FindByCondition(n => n.UserId == userId
-			//							&& n.CreatedDate >= noteParameters.MinDateOfCreation
-			//							&& n.CreatedDate <= noteParameters.MaxDateOfCreation
-			//							&& ((noteParameters.HasPicture ?? false) ? n.Picture != null : ((noteParameters.HasPicture ?? true) ? (n.Picture != null || n.Picture == null) : n.Picture == null))
-			//							);
-
-			//SearchByPhrase(ref notes, noteParameters.SearchPhrase);
-
-			//ApplySort(ref notes, noteParameters.SortOrder);
-
-			//var notesWithIncludes = notes.Include(note => note.NoteTags.OrderBy(nt => nt.Tag.Name)).ThenInclude(notetag => notetag.Tag);
-
-			//return await PagedList<NoteForView>.CreateAsync(notesWithIncludes
-			//			.Select(note => ModelConverters.ConvertToNoteForView(note)),
-			//				noteParameters.PageNumber,
-			//				noteParameters.PageSize);
+			//Check if user is Admin
+			if (!Context.User.Any(u  => u.Id == userId && u.RoleUsers.Any(ru => ru.RoleId == 3)))
+			{
+				throw new UnauthorizedException();
+			}
 
 			var usersForView = Context.User.Select(user => ModelConverters.ConvertToUserForView(user));
+
 			return await PagedList<UserForView>.CreateAsync(usersForView, 1, 10);
 		}
 		public async Task<UserForView> GetUserById(int userId, int id)
 		{
 			//weryfikacja roli usera pytającego
-			var user = await Context.User.SingleOrDefaultAsync(u => u.Id == id);
-
-			if (user == null)
+			if (!await Context.User.AnyAsync(u => u.Id == id))
 			{
 				throw new NotFoundException();
 			}
+			var user = await Context.User
+						.Include(user => user.RoleUsers)
+						.ThenInclude(roleuser => roleuser.Role)
+						.SingleOrDefaultAsync(user => user.Id == id);
 
 			return ModelConverters.ConvertToUserForView(user);
 		}
 		public async Task<UserForView> GetUserWithAuth(string email, string hash)
 		{
-			var user = await Context.User.SingleOrDefaultAsync(u => u.Email == email);
+			var user = await Context.User
+				.Include(user => user.RoleUsers)
+				.ThenInclude(roleuser => roleuser.Role)
+				.SingleOrDefaultAsync(u => u.Email == email);
 
 			if (user == null)
 			{
@@ -94,7 +85,20 @@ namespace NotkaAPI.Repository
 
 			try
 			{
-				await Context.SaveChangesAsync();
+				using (var dbContextTransaction = Context.Database.BeginTransaction())
+				{
+					//RoleUser
+					Context.RoleUser.RemoveRange(await Context.RoleUser.Where(ru => ru.UserId == userToAdd.Id).ToArrayAsync());
+					if (!user.RolesForView.IsNullOrEmpty())
+					{
+						foreach (var roleForView in user.RolesForView)
+						{
+							await AddToContextRoleUserAsync(roleForView, userToAdd.Id);
+						}
+					}
+					await Context.SaveChangesAsync();
+					dbContextTransaction.Commit();
+				}
 			}
 			catch (DbUpdateConcurrencyException)
 			{
@@ -128,6 +132,22 @@ namespace NotkaAPI.Repository
 		private bool UserExists(int id)
 		{
 			return Context.User.Any(e => e.Id == id);
+		}
+		private async Task AddToContextRoleUserAsync(RoleForView roleForView, int userId)
+		{
+			var role = new Role().CopyProperties(roleForView);
+			//if (role.Id == 0)
+			//{
+			//	Context.Role.Add(role);
+			//	await Context.SaveChangesAsync();
+			//}
+			Context.RoleUser.Add(new RoleUser
+			{
+				Id = 0,
+				IsActive = true,
+				UserId = userId,
+				RoleId = role.Id,
+			});
 		}
 	}
 }
