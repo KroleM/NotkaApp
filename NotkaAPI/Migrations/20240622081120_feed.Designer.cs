@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotkaAPI.Data;
 
@@ -11,9 +12,11 @@ using NotkaAPI.Data;
 namespace NotkaAPI.Migrations
 {
     [DbContext(typeof(NotkaDatabaseContext))]
-    partial class NotkaDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240622081120_feed")]
+    partial class feed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

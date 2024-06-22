@@ -8,6 +8,7 @@ namespace NotkaAPI.Repository
 		private NotkaDatabaseContext _context;
 		private IUserRepository? _user;
 		private IRoleRepository? _role;
+		private IFeedRepository? _feed;
 		private INoteRepository? _note;
 		private ITagRepository? _tag;
 		private IListRepository? _list;
@@ -34,6 +35,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _role;
+			}
+		}
+		public IFeedRepository Feed
+		{
+			get
+			{
+				if (_feed == null)
+				{
+					_feed = new FeedRepository(_context);
+				}
+
+				return _feed;
 			}
 		}
 		public INoteRepository Note

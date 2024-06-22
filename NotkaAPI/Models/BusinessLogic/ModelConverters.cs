@@ -1,4 +1,5 @@
 ﻿using NotkaAPI.Helpers;
+using NotkaAPI.Models.CMS;
 using NotkaAPI.Models.General;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
@@ -40,10 +41,11 @@ namespace NotkaAPI.Models.BusinessLogic
 		}
 		public static RoleForView ConvertToRoleForView(Role? role) 
 		{
-			return new RoleForView
-			{
-
-			}.CopyProperties(role);
+			return new RoleForView { }.CopyProperties(role);
+		}
+		public static FeedForView ConvertToFeedForView(Feed? feed)
+		{
+			return new FeedForView { }.CopyProperties(feed);
 		}
 	}
 }

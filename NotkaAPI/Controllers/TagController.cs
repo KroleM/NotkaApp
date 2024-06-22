@@ -122,7 +122,7 @@ namespace NotkaAPI.Controllers
 			return Ok(uploadedTag);
 		}
 
-        // DELETE: api/Tag/5
+        // DELETE: api/Tag/5/1
         [HttpDelete("{userId}/{id}", Name = "TagDELETE")]
         public async Task<IActionResult> DeleteTag(int userId, int id)
         {

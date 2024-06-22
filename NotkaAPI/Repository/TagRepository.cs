@@ -6,7 +6,6 @@ using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
-using static Azure.Core.HttpHeader;
 
 namespace NotkaAPI.Repository
 {
@@ -29,8 +28,8 @@ namespace NotkaAPI.Repository
 			//TBD: Searching
 			return await PagedList<TagForView>.CreateAsync(tags.OrderBy(t => t.Name)
 							.Select(tag => ModelConverters.ConvertToTagForView(tag)),
-						tagParameters.PageNumber,
-						tagParameters.PageSize);
+										tagParameters.PageNumber,
+										tagParameters.PageSize);
 		}
 		public async Task<TagForView> GetTagById(int userId, int id)
 		{

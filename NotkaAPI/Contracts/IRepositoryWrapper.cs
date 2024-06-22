@@ -4,6 +4,7 @@
 	{
 		IUserRepository User { get; }
 		IRoleRepository Role { get; }
+		IFeedRepository Feed { get; }
 		INoteRepository Note { get; }
 		ITagRepository Tag { get; }
 		IListRepository List { get; }

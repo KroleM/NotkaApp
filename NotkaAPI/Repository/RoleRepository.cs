@@ -18,7 +18,7 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<RoleForView>> GetRoles(int userId, RoleParameters roleParameters)
 		{
-			//sprawdzenie, czy role ma odpowiednią rolę
+			//sprawdzenie, czy user ma odpowiednią rolę?
 			var rolesForView = Context.Role.Select(role => ModelConverters.ConvertToRoleForView(role));
 			return await PagedList<RoleForView>.CreateAsync(rolesForView, 1, 10);
 		}
