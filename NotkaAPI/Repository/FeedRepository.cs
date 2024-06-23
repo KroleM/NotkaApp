@@ -5,22 +5,25 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.CMS;
+using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Repository
 {
 	public class FeedRepository : RepositoryBase<Feed>, IFeedRepository
 	{
-		public FeedRepository(NotkaDatabaseContext repositoryContext) 
+		public FeedRepository(NotkaDatabaseContext repositoryContext)
 			: base(repositoryContext)
 		{
 		}
 
 		public async Task<PagedList<FeedForView>> GetFeeds(int userId, FeedParameters feedParameters)
 		{
-			var feeds = FindByCondition(f => f.IsActive == feedParameters.IsActive);
+			var feeds = FindByCondition(f => ((feedParameters.IsActive ?? false) ? f.IsActive == true : ((feedParameters.IsActive ?? true) ? (f.IsActive == true || f.IsActive == false) : f.IsActive == false)));
 
-			return await PagedList<FeedForView>.CreateAsync(feeds.OrderBy(t => t.CreatedDate)
+			var feedsWithIncludes = feeds.Include(feed => feed.Picture);
+
+			return await PagedList<FeedForView>.CreateAsync(feedsWithIncludes.OrderBy(f => f.CreatedDate)
 							.Select(feed => ModelConverters.ConvertToFeedForView(feed)),
 										feedParameters.PageNumber,
 										feedParameters.PageSize);
@@ -45,6 +48,8 @@ namespace NotkaAPI.Repository
 			}
 
 			var feedToAdd = new Feed().CopyProperties(feed);
+			Context.Feed.Add(feedToAdd);
+			await Context.SaveChangesAsync();
 
 			var uploadedFeed = await Context.Feed
 				.Include(feed => feed.Picture)
@@ -59,7 +64,17 @@ namespace NotkaAPI.Repository
 
 			try
 			{
-				await Context.SaveChangesAsync();
+				using (var dbContextTransaction = Context.Database.BeginTransaction())
+				{
+					//Picture
+					if (feedToAdd.Picture != null)
+					{
+						await Context.Picture.AddAsync(feedToAdd.Picture);
+					}
+
+					await Context.SaveChangesAsync();
+					dbContextTransaction.Commit();
+				}
 			}
 			catch (DbUpdateConcurrencyException)
 			{

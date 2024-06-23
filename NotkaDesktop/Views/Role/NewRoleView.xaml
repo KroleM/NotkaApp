@@ -19,10 +19,12 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="Nazwa"/>
-            <TextBox Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Nazwa" />
+            <TextBox Grid.Column="1" Margin="1" 
+                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Grid.Row="1" Content="Opis"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="1" 
+                     Text="{Binding Description}"/>
             <Label Grid.Row="2" Content="Czy aktywny"/>
             <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsActive}" VerticalAlignment="Center"/>
         </Grid>

@@ -12,6 +12,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * Operacje PUT - [modyfikowanie rekordów w BD][link4].
 * `SaveChanges(Async)` wysyła wartości właściwości danej encji do bazy danych.
 * [Serwer vs. Client][link9] - rozwiązywanie kwerend IQueryable vs. IEnumerable.
+* Usunięcie ostatniej migracji można wykonać poleceniem `Remove-Migration`
 
 `Swagger`:
 * Właściwości będące typami referencyjnymi nie są standardowo udostępniane jako `nullable`, ale właściwości będące typami wartościowymi (np. int?, DateTime?) mogą być "nulowalne". Istotą problemu jest brak nullowalności typów referencyjnych. Aby to zmienić należy w konfiguracji projektu Web API użyć opcji `UseAllOfToExtendReferenceSchemas`:

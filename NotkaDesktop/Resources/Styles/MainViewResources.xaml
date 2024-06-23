@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodels="clr-namespace:NotkaDesktop.ViewModels"
+                    xmlns:userviews="clr-namespace:NotkaDesktop.Views.User"
+                    xmlns:roleviews="clr-namespace:NotkaDesktop.Views.Role"
+                    xmlns:feedviews="clr-namespace:NotkaDesktop.Views.Feed">
+
+    <!--Connection between ViewModels and Views necessary to show Views in the MainView-->
+    <DataTemplate DataType="{x:Type viewmodels:MainPageViewModel}">
+        <Label Content="MAIN PAGE!"/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:UsersViewModel}">
+        <userviews:UsersView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:UserEditViewModel}">
+        <userviews:UserEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:RolesViewModel}">
+        <roleviews:RolesView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:NewRoleViewModel}">
+        <roleviews:NewRoleView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:RoleEditViewModel}">
+        <roleviews:RoleEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:FeedsViewModel}">
+        <feedviews:FeedsView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:NewFeedViewModel}">
+        <feedviews:NewFeedView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:FeedEditViewModel}">
+        <feedviews:FeedEditView/>
+    </DataTemplate>
+
+</ResourceDictionary>

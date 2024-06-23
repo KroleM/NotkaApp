@@ -18,3 +18,9 @@ Na potrzeby instrukcji zakładam, że tworzę obsługę tabeli `Note`:
 1. DataStore - stworzenie nowego dziedzczącego z AListDataStore (przerobienie metod na asynchroniczne)
 2. ViewModel
 3. View
+
+### Aplikacja desktopowa
+1. DataStore
+2. 
+
+Wpis do `MainWindowViewModel.cs` odnośnie tworzonej. zakładki

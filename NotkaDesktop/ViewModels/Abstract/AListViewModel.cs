@@ -44,7 +44,7 @@ namespace NotkaDesktop.ViewModels.Abstract
 			}
 		}
 
-		public async Task ExecuteLoadItemsCommand()
+		public async Task ExecuteLoadItemsCommand() //virtual?
 		{
 			IsBusy = true;
 			try
@@ -93,7 +93,7 @@ namespace NotkaDesktop.ViewModels.Abstract
 			return;
 		}
 		[RelayCommand]
-		private async Task LoadMoreItems()
+		private async Task LoadMoreItems()  //virtual?
 		{
 			try
 			{

@@ -1,6 +1,4 @@
 ﻿using ApiSharedClasses.QueryParameters;
-using ApiSharedClasses.QueryParameters.Abstract;
-using NotkaDesktop.Service.Reference;
 
 namespace NotkaDesktop.Services.Abstract
 {
@@ -15,8 +13,6 @@ namespace NotkaDesktop.Services.Abstract
 		public AListDataStore()
 			: base()
 		{
-			//I comment it, because it causes double item loading
-			//RefreshListFromService();
 		}
 		public async Task<bool> AddItemAsync(T item)
 		{

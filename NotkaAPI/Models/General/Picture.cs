@@ -11,6 +11,6 @@ namespace NotkaAPI.Models.General
         public int UserId { get; set; }
         //public User User { get; set; }  // czy potrzebne?
         public int? NoteId { get; set; }
-        //public Note? Note { get; set; }  // czy potrzebne?
+		//public Note? Note { get; set; }  // czy potrzebne?
 	}
 }

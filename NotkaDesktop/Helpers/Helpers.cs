@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿using NotkaDesktop.Service.Reference;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace NotkaDesktop.Helpers
 {
@@ -22,6 +26,25 @@ namespace NotkaDesktop.Helpers
 				Debug.WriteLine(ex.Message);
 				return false;
 			}
+		}
+
+		public static ImageSource? LoadPhoto(byte[] imageData)
+		{
+			var imageSource = new BitmapImage();
+			using (MemoryStream memoryStream = new MemoryStream(imageData))
+			{
+
+				memoryStream.Position = 0;
+				imageSource.BeginInit();
+				imageSource.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+				imageSource.CacheOption = BitmapCacheOption.OnLoad;
+				imageSource.UriSource = null;
+				imageSource.StreamSource = memoryStream;
+				imageSource.EndInit();
+			}
+			imageSource.Freeze();
+
+			return imageSource;
 		}
 	}
 }

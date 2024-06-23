@@ -15,5 +15,8 @@ namespace NotkaDesktop.Helpers
 		EditRole,
 		Users,
 		EditUser,
+		Feeds,
+		NewFeed,
+		EditFeed
 	}
 }

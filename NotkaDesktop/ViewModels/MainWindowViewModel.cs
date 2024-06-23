@@ -16,6 +16,7 @@ namespace NotkaDesktop.ViewModels
 		#region DataStores
 		private UserDataStore _userDataStore = new UserDataStore();
 		private RoleDataStore _roleDataStore = new RoleDataStore();
+		private FeedDataStore _feedDataStore = new FeedDataStore();
 		#endregion
 
 		#region ViewModels
@@ -25,6 +26,9 @@ namespace NotkaDesktop.ViewModels
 		private RolesViewModel? _rolesViewModel;
 		private NewRoleViewModel? _newRoleViewModel;
 		private RoleEditViewModel? _roleEditViewModel;
+		private FeedsViewModel? _feedsViewModel;
+		private NewFeedViewModel? _newFeedViewModel;
+		private FeedEditViewModel? _feedEditViewModel;
 		
 		#endregion
 
@@ -55,7 +59,6 @@ namespace NotkaDesktop.ViewModels
 		{
 			_mainPageViewModel = new MainPageViewModel();
 			RightPanelViewModel = _mainPageViewModel;
-			//_usersViewModel = new(_userDataStore);
 		}
 		#endregion
 
@@ -91,6 +94,9 @@ namespace NotkaDesktop.ViewModels
 				new CommandViewModel(
 					"Role",
 					new RelayCommand(() => this.ShowRoles())),
+				new CommandViewModel(
+					"Aktualności",
+					new RelayCommand(() => this.ShowFeed())),
 			};
 		}
 
@@ -118,6 +124,15 @@ namespace NotkaDesktop.ViewModels
 					break;
 				case MainWindowView.EditRole:
 					ShowEditRole();
+					break;
+				case MainWindowView.Feeds:
+					ShowFeed();
+					break;
+				case MainWindowView.NewFeed:
+					ShowNewFeed();
+					break;
+				case MainWindowView.EditFeed:
+					ShowEditFeed();
 					break;
 			}
 		}
@@ -191,6 +206,32 @@ namespace NotkaDesktop.ViewModels
 			(RightPanelViewModel as RolesViewModel).SelectedItem = null;
 			_roleEditViewModel = new(_roleDataStore, itemId);
 			RightPanelViewModel = _roleEditViewModel;
+		}
+		private void ShowFeed()
+		{
+			_feedsViewModel = new(_feedDataStore);
+			RightPanelViewModel = _feedsViewModel;
+		}
+		private void ShowNewFeed()
+		{
+			if (RightPanelViewModel == _newFeedViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Feeds;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			_newFeedViewModel = new(_feedDataStore);
+			RightPanelViewModel = _newFeedViewModel;
+		}
+		private void ShowEditFeed()
+		{
+			if (RightPanelViewModel == _feedEditViewModel) return;
+			if (RightPanelViewModel is not FeedsViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Feeds;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as FeedsViewModel).NewSelectedItem.Id;
+			(RightPanelViewModel as FeedsViewModel).NewSelectedItem = null;
+			_feedEditViewModel = new(_feedDataStore, itemId);
+			RightPanelViewModel = _feedEditViewModel;
 		}
 		#endregion
 	}
