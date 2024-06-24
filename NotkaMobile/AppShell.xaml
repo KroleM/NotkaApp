@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:NotkaMobile"
     xmlns:views="clr-namespace:NotkaMobile.Views"
+    xmlns:feed="clr-namespace:NotkaMobile.Views.Feed"
     xmlns:notes="clr-namespace:NotkaMobile.Views.Notes.Note"
     xmlns:lists="clr-namespace:NotkaMobile.Views.Notes.List"
     xmlns:tags="clr-namespace:NotkaMobile.Views.Notes.Tag"
@@ -27,6 +28,14 @@
                 ContentTemplate="{DataTemplate views:MainPage}"
                 Route="MainPage"/>
         </Tab>
+        <!--<Tab Title="Strona domowa"
+             Route="Feed"
+             Icon="material_home">
+            <ShellContent
+                Title="Aktualności"
+                ContentTemplate="{DataTemplate feed:FeedsPage}"
+                Route="Feed"/>
+        </Tab>-->
         <Tab Title="Notatnik"
              Route="NotesModulePage"
              Icon="material_notes">

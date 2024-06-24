@@ -92,6 +92,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * `Bottom sheet` - okienko wyjeżdżające z dołu ekranu. Są w internecie różne darmowe implementacje: [Link1][link14], [Link2][link15]
 * Ustawianie `SelectedItem` dla `CollectionView` programistycznie (w VM) nie działa w oczekiwany sposób - `VisualStateManager` nie zmienia stanu elementów i wybrany obiekt nie zmienia się. Link do [śledzenia tej sprawy][link17] i [drugi][link16].
 * Jeśli `CollectionView` jest zagnieżdżone w `StackLayout`, to może się niepoprawnie scrollować. Należy umieszczać je w Gridzie.
+* "Pułapka" przy wczytywaniu obrazów.
 
 
 ## [MediatR][link6]

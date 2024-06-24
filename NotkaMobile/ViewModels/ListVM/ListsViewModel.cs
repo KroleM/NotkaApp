@@ -39,28 +39,28 @@ namespace NotkaMobile.ViewModels.ListVM
 			await ExecuteLoadItemsCommand();
 		}
 		//FIXME move to AListViewModel?
-		[RelayCommand]
-		private async Task LoadMoreItems()
-		{
-			try
-			{
-				await Task.Delay(10);   //this prevents strange ObservableCollection synchronization error
-				if (DataStore.PageParameters.HasNext && Items.Count > 0)
-				{
-					DataStore.Params.PageNumber++;
-					Debug.WriteLine("Lists page number: {0}", DataStore.Params.PageNumber); //FIXME delete?
-					var items = await DataStore.GetItemsAsync(true);
-					foreach (var item in items)
-					{
-						Items.Add(item);
-					}
-					Debug.WriteLine("Lists items count = {0}", Items.Count);
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-			}
-		}
+		//[RelayCommand]
+		//private async Task LoadMoreItems()
+		//{
+		//	try
+		//	{
+		//		await Task.Delay(10);   //this prevents strange ObservableCollection synchronization error
+		//		if (DataStore.PageParameters.HasNext && Items.Count > 0)
+		//		{
+		//			DataStore.Params.PageNumber++;
+		//			Debug.WriteLine("Lists page number: {0}", DataStore.Params.PageNumber); //FIXME delete?
+		//			var items = await DataStore.GetItemsAsync(true);
+		//			foreach (var item in items)
+		//			{
+		//				Items.Add(item);
+		//			}
+		//			Debug.WriteLine("Lists items count = {0}", Items.Count);
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		Debug.WriteLine(ex);
+		//	}
+		//}
 	}
 }

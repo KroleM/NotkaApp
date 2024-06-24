@@ -6,6 +6,7 @@ using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views;
 using NotkaMobile.Views.User;
+using NotkaMobile.Views.Feed;
 using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels
@@ -73,6 +74,7 @@ namespace NotkaMobile.ViewModels
 		private async Task GoToMainPage()
 		{
 			await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+			//await Shell.Current.GoToAsync($"//Feed");
 		}
 		[RelayCommand]
 		private async Task GoToRegisterPage()

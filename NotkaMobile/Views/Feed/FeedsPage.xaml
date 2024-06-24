@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Feed.FeedsPage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.FeedVM"
+             x:DataType="viewmodel:FeedsViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate
+                x:Key="FeedItem"
+                x:DataType="{x:Type viewmodel:FeedWithImageViewModel}">
+                <Grid>
+                    <Border>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeedsViewModel}}, Path=FeedSelectedCommand}"
+                                          CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="55"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.RowSpan="2" HorizontalOptions="Start" Margin="2"
+                                   Source="{Binding PhotoSource}"/>
+                            <Label Grid.Column="1"
+                                   Padding="0"
+                                   Text="{Binding Name}" 
+                                   FontSize="16" FontAttributes="Bold"/>
+                            <Label Grid.Row="1" Grid.Column="1"  MaximumHeightRequest="50"
+                                   Text="{Binding Description}" 
+                                   FontSize="14" 
+                                   LineBreakMode="TailTruncation"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, Auto, *" 
+          RowSpacing="5"
+          Padding="5">
+        <CollectionView 
+                ItemsSource="{Binding ItemsWithImage}"
+                ItemTemplate="{StaticResource FeedItem}"
+                SelectionMode="None"
+                RemainingItemsThreshold="1"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
+                ItemsUpdatingScrollMode="KeepScrollOffset">
+        </CollectionView>
+    </Grid>
+</ContentPage>

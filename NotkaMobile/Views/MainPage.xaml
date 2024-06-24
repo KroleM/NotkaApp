@@ -15,6 +15,7 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <Button Text="Aktualności" Command="{Binding GoToFeedCommand}"/>
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"

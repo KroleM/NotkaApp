@@ -42,7 +42,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 		}
 		private ImageSource LoadPhoto(Picture? picture)
 		{
-			if (picture == null) return null;
+			if (picture == null || picture.BitPicture == null)
+				return null;
 
 			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
 		}

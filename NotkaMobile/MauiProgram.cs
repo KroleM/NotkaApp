@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Logging;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels;
+using NotkaMobile.ViewModels.FeedVM;
 using NotkaMobile.ViewModels.ListVM;
 using NotkaMobile.ViewModels.NoteVM;
 using NotkaMobile.ViewModels.TagVM;
 using NotkaMobile.ViewModels.UserVM;
 using NotkaMobile.Views;
+using NotkaMobile.Views.Feed;
 using NotkaMobile.Views.Notes.List;
 using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
@@ -48,6 +50,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<NoteDataStore>();
 			mauiAppBuilder.Services.AddSingleton<ListDataStore>();
 			mauiAppBuilder.Services.AddSingleton<TagDataStore>();
+			mauiAppBuilder.Services.AddSingleton<FeedDataStore>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
@@ -56,6 +59,9 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
 			mauiAppBuilder.Services.AddTransient<SettingsViewModel>();
 			mauiAppBuilder.Services.AddTransient<MainViewModel>();
+			//Feed
+			mauiAppBuilder.Services.AddTransient<FeedsViewModel>();
+			mauiAppBuilder.Services.AddTransient<FeedDetailsViewModel>();
 			//Note
 			mauiAppBuilder.Services.AddTransient<NotesViewModel>();
 			mauiAppBuilder.Services.AddTransient<NoteSortFilterViewModel>();
@@ -78,6 +84,7 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<ListDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<ListEditViewModel>();
 			mauiAppBuilder.Services.AddTransient<ListSortFilterViewModel>();
+			//
 
 			return mauiAppBuilder;
 		}
@@ -87,6 +94,9 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<LoginPage>();
 			mauiAppBuilder.Services.AddTransient<SettingsPage>();
 			mauiAppBuilder.Services.AddTransient<MainPage>();
+			//Feed
+			mauiAppBuilder.Services.AddTransient<FeedsPage>();
+			mauiAppBuilder.Services.AddTransient<FeedDetailsPage>();
 			//Note
 			mauiAppBuilder.Services.AddTransient<NotesPage>();
 			mauiAppBuilder.Services.AddTransient<NoteSortFilterPage>();

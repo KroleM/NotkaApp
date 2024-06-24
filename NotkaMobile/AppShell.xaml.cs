@@ -1,4 +1,5 @@
 ﻿using NotkaMobile.Views;
+using NotkaMobile.Views.Feed;
 using NotkaMobile.Views.Notes.List;
 using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
@@ -34,6 +35,9 @@ namespace NotkaMobile
 			Routing.RegisterRoute(nameof(UserPasswordChangePage), typeof(UserPasswordChangePage));
 			//Settings
 			Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+			//Feed
+			Routing.RegisterRoute(nameof(FeedsPage), typeof(FeedsPage));
+			Routing.RegisterRoute(nameof(FeedDetailsPage), typeof(FeedDetailsPage));
 		}
 	}
 }

@@ -5,7 +5,6 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.CMS;
-using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Repository
@@ -19,7 +18,8 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<FeedForView>> GetFeeds(int userId, FeedParameters feedParameters)
 		{
-			var feeds = FindByCondition(f => ((feedParameters.IsActive ?? false) ? f.IsActive == true : ((feedParameters.IsActive ?? true) ? (f.IsActive == true || f.IsActive == false) : f.IsActive == false)));
+			//Ten warunek ma 2 wartości: true, (bierze wszystko)
+			var feeds = FindByCondition(f => ((feedParameters.IsActive ? f.IsActive == true : (f.IsActive == true || f.IsActive == false))));
 
 			var feedsWithIncludes = feeds.Include(feed => feed.Picture);
 

@@ -1,29 +1,22 @@
 ﻿using ApiSharedClasses.QueryParameters;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using NotkaDesktop.Helpers;
-using NotkaDesktop.Service.Reference;
-using NotkaDesktop.Services;
-using NotkaDesktop.ViewModels.Abstract;
+using NotkaMobile.Service.Reference;
+using NotkaMobile.Services;
+using NotkaMobile.ViewModels.Abstract;
+using NotkaMobile.Views.Feed;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
 
-namespace NotkaDesktop.ViewModels
+namespace NotkaMobile.ViewModels.FeedVM
 {
 	public partial class FeedsViewModel : AListViewModel<FeedForView, FeedParameters>
 	{
 		public FeedsViewModel(FeedDataStore dataStore) 
 			: base("Aktualności", dataStore)
 		{
+			ExecuteLoadItemsCommand();
 			CreateFeedWithImageList();
-			IsActive = DataStore.Params.IsActive;
 		}
-
 		public ObservableCollection<FeedWithImageViewModel> ItemsWithImage { get; } = new();
-
-		[ObservableProperty]
-		private bool _isActive = false;
 
 		private FeedWithImageViewModel? _newSelectedItem;
 		public FeedWithImageViewModel? NewSelectedItem
@@ -39,23 +32,24 @@ namespace NotkaDesktop.ViewModels
 
 		public override Task GoToAddPage()
 		{
-			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.NewFeed));
-			return Task.CompletedTask;
+			throw new NotImplementedException();
 		}
-
-		public override async Task OnDeleteItem()
+		public override async Task OnItemSelected(FeedForView? item)
 		{
-			if (NewSelectedItem != null)
+			if (item == null)
 			{
-				await DataStore.DeleteItemAsync(NewSelectedItem.Id);
+				return;
 			}
-			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.Feeds));
+			await Shell.Current.GoToAsync($"{nameof(FeedDetailsPage)}?{nameof(FeedDetailsViewModel.ItemId)}={item.Id}");
 		}
-
-		public override Task OnEditItem()
+		[RelayCommand]
+		private async Task FeedSelected(FeedWithImageViewModel? item)
 		{
-			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.EditFeed));
-			return Task.CompletedTask;
+			if (item == null)
+			{
+				return;
+			}
+			await Shell.Current.GoToAsync($"{nameof(FeedDetailsPage)}?{nameof(FeedDetailsViewModel.ItemId)}={item.Id}");
 		}
 
 		private void CreateFeedWithImageList()
@@ -75,20 +69,12 @@ namespace NotkaDesktop.ViewModels
 				});
 			}
 		}
-
-		private ImageSource? LoadPhoto(Picture? picture)
+		private ImageSource LoadPhoto(Picture? picture)
 		{
-			if (picture == null || picture.BitPicture == null || picture.BitPicture.Length == 0) return null;
-			
-			return Helpers.Helpers.LoadPhoto(picture.BitPicture);
-		}
+			if (picture == null || picture.BitPicture == null)
+				return null;
 
-		[RelayCommand]
-		async Task Filter()
-		{
-			DataStore.Params.IsActive = IsActive;
-			await ExecuteLoadItemsCommand();
-			CreateFeedWithImageList();
+			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
 		}
 	}
 }

@@ -20,6 +20,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			SortFilterCommand = new AsyncRelayCommand(OnSortFilterSelected);
 		}
 
+		#region Fields & Properties
 		//public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
 		private T? _selectedItem;
 		protected IDataStore<T, U> DataStore { get; }
@@ -28,7 +29,36 @@ namespace NotkaMobile.ViewModels.Abstract
 		public IAsyncRelayCommand AddItemCommand { get; }
 		public IAsyncRelayCommand ItemTapped { get; }
 		public IAsyncRelayCommand SortFilterCommand { get; }
+		public T? SelectedItem
+		{
+			get => _selectedItem;
+			set
+			{
+				SetProperty(ref _selectedItem, value);
+				OnItemSelected(value);
+			}
+		}
+		#endregion
 
+		#region Methods
+		public abstract Task GoToAddPage();
+		public async Task OnAddItem()
+		{
+			await GoToAddPage();
+		}
+		public virtual Task OnItemSelected(T? item)
+		{
+			return Task.CompletedTask;
+		}
+		public virtual Task OnSortFilterSelected()
+		{
+			return Task.CompletedTask;
+		}
+		public void OnAppearing()
+		{
+			IsBusy = true;
+			SelectedItem = default(T);
+		}
 		protected async Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
@@ -51,12 +81,9 @@ namespace NotkaMobile.ViewModels.Abstract
 				IsBusy = false;
 			}
 		}
-		public void OnAppearing()
-		{
-			IsBusy = true;
-			SelectedItem = default(T);
-		}
+		#endregion
 
+		#region Commands
 		[RelayCommand]
 		private void Appearing()
 		{
@@ -78,30 +105,29 @@ namespace NotkaMobile.ViewModels.Abstract
 			}
 			return;
 		}
-
-		public T? SelectedItem
+		[RelayCommand]
+		private async Task LoadMoreItems()
 		{
-			get => _selectedItem;
-			set
+			try
 			{
-				SetProperty(ref _selectedItem, value);
-				OnItemSelected(value);
+				await Task.Delay(10);
+				if (DataStore.PageParameters.HasNext && Items.Count > 0)
+				{
+					DataStore.Params.PageNumber++;
+					Debug.WriteLine("Page number: {0}", DataStore.Params.PageNumber);
+					var items = await DataStore.GetItemsAsync(true);
+					foreach (var item in items)
+					{
+						Items.Add(item);
+					}
+					Debug.WriteLine("Items count = {0}", Items.Count);
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
 			}
 		}
-		public abstract Task GoToAddPage();
-		public async Task OnAddItem()
-		{
-			await GoToAddPage();
-		}
-
-		public virtual Task OnItemSelected(T? item)
-		{
-			return Task.CompletedTask;
-		}
-
-		public virtual Task OnSortFilterSelected()
-		{
-			return Task.CompletedTask;
-		}
+		#endregion
 	}
 }
