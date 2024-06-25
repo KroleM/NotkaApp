@@ -110,7 +110,7 @@ namespace NotkaMobile.ViewModels.Abstract
 		{
 			try
 			{
-				await Task.Delay(10);
+				await Task.Delay(10);   //this prevents strange ObservableCollection synchronization error
 				if (DataStore.PageParameters.HasNext && Items.Count > 0)
 				{
 					DataStore.Params.PageNumber++;

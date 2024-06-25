@@ -20,22 +20,22 @@
     </ShellItem>
 
     <TabBar >
-        <Tab Title="Strona domowa"
+        <!--<Tab Title="Strona domowa"
              Route="MainPage"
              Icon="material_home">
             <ShellContent
                 Title="Strona główna"
                 ContentTemplate="{DataTemplate views:MainPage}"
                 Route="MainPage"/>
-        </Tab>
-        <!--<Tab Title="Strona domowa"
+        </Tab>-->
+        <Tab Title="Strona domowa"
              Route="Feed"
              Icon="material_home">
             <ShellContent
                 Title="Aktualności"
                 ContentTemplate="{DataTemplate feed:FeedsPage}"
                 Route="Feed"/>
-        </Tab>-->
+        </Tab>
         <Tab Title="Notatnik"
              Route="NotesModulePage"
              Icon="material_notes">

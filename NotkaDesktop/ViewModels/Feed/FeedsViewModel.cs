@@ -7,6 +7,7 @@ using NotkaDesktop.Service.Reference;
 using NotkaDesktop.Services;
 using NotkaDesktop.ViewModels.Abstract;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Media;
 
 namespace NotkaDesktop.ViewModels
@@ -89,6 +90,43 @@ namespace NotkaDesktop.ViewModels
 			DataStore.Params.IsActive = IsActive;
 			await ExecuteLoadItemsCommand();
 			CreateFeedWithImageList();
+			LoadMoreItemsWithImageCommand.NotifyCanExecuteChanged();
+		}
+		
+		[RelayCommand(CanExecute = nameof(HasNextPage))]
+		private async Task LoadMoreItemsWithImage()
+		{
+			try
+			{
+				await Task.Delay(10);   //this prevents strange ObservableCollection synchronization error
+				if (DataStore.PageParameters.HasNext && Items.Count > 0)
+				{
+					DataStore.Params.PageNumber++;
+					Debug.WriteLine("Page number: {0}", DataStore.Params.PageNumber);
+					var items = await DataStore.GetItemsAsync(true);
+					foreach (var feedForView in items)
+					{
+						ItemsWithImage.Add(new FeedWithImageViewModel
+						{
+							Id = feedForView.Id,
+							IsActive = feedForView.IsActive,
+							CreatedDate = feedForView.CreatedDate,
+							ModifiedDate = feedForView.ModifiedDate,
+							Name = feedForView.Name,
+							Description = feedForView.Description,
+							PhotoSource = LoadPhoto(feedForView.Picture),
+						});
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
+		}
+		private bool HasNextPage()
+		{
+			return DataStore.PageParameters.HasNext;
 		}
 	}
 }

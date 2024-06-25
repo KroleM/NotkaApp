@@ -23,7 +23,7 @@ namespace NotkaAPI.Repository
 
 			var feedsWithIncludes = feeds.Include(feed => feed.Picture);
 
-			return await PagedList<FeedForView>.CreateAsync(feedsWithIncludes.OrderBy(f => f.CreatedDate)
+			return await PagedList<FeedForView>.CreateAsync(feedsWithIncludes.OrderByDescending(f => f.CreatedDate)
 							.Select(feed => ModelConverters.ConvertToFeedForView(feed)),
 										feedParameters.PageNumber,
 										feedParameters.PageSize);

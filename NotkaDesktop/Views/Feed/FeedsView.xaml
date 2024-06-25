@@ -9,17 +9,25 @@
                     mc:Ignorable="d" 
                     d:DataContext="{d:DesignInstance Type=viewmodels:FeedsViewModel}"
                     d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Orientation="Vertical">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="500"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,3">
             <Button Content="Filtruj" Command="{Binding FilterCommand}"/>
             <Label Content="Tylko aktywne: "/>
             <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsActive}"/>
         </StackPanel>
-        <ListBox Margin="0" BorderThickness="0"
+
+        <ListBox Grid.Row="1" Margin="0" BorderThickness="0" x:Name="feedLB"
                  ItemsSource="{Binding ItemsWithImage}"
                  SelectedItem="{Binding NewSelectedItem}"
-                 HorizontalContentAlignment="Stretch"
-                 MaxWidth="{Binding Path=Width, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                 HorizontalContentAlignment="Stretch" 
+                 VerticalAlignment="Stretch" >
+            <!--MaxWidth="{Binding Path=Width, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                 MaxHeight="{Binding Path=Height, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"-->
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="2" BorderBrush="{StaticResource CharcoalBrush}" Padding="0" 
@@ -31,7 +39,7 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image Grid.RowSpan="2" HorizontalAlignment="Left" Margin="2"
                                    Source="{Binding PhotoSource}"/>
@@ -41,13 +49,16 @@
                                    FontSize="16" FontWeight="Bold"/>
                             <TextBlock Grid.Row="1" Grid.Column="1"  MaxHeight="50"
                                        Text="{Binding Description}" 
-                                       FontSize="14"  HorizontalAlignment="Stretch"
-                                       TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                                       FontSize="14"  HorizontalAlignment="Left"
+                                       TextWrapping="Wrap" TextTrimming="WordEllipsis"
                                        MaxWidth="700"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </StackPanel>
+        <Button Grid.Row="2" Width="150" Content="Załaduj więcej"
+                Command="{Binding LoadMoreItemsWithImageCommand}"/>
+
+    </Grid>
 </views:ListViewBase>

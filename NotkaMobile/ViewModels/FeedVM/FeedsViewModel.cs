@@ -3,8 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
+using NotkaMobile.Views;
 using NotkaMobile.Views.Feed;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.FeedVM
 {
@@ -34,6 +36,13 @@ namespace NotkaMobile.ViewModels.FeedVM
 		{
 			throw new NotImplementedException();
 		}
+		private ImageSource LoadPhoto(Picture? picture)
+		{
+			if (picture == null || picture.BitPicture == null)
+				return null;
+
+			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
+		}
 		public override async Task OnItemSelected(FeedForView? item)
 		{
 			if (item == null)
@@ -50,6 +59,13 @@ namespace NotkaMobile.ViewModels.FeedVM
 				return;
 			}
 			await Shell.Current.GoToAsync($"{nameof(FeedDetailsPage)}?{nameof(FeedDetailsViewModel.ItemId)}={item.Id}");
+		}
+
+		[RelayCommand]
+		private async Task GoToSettings()
+		{
+			var userId = Preferences.Default.Get("userId", 0);
+			await Shell.Current.GoToAsync($"{nameof(SettingsPage)}?{nameof(SettingsViewModel.ItemId)}={userId}");
 		}
 
 		private void CreateFeedWithImageList()
@@ -69,12 +85,38 @@ namespace NotkaMobile.ViewModels.FeedVM
 				});
 			}
 		}
-		private ImageSource LoadPhoto(Picture? picture)
-		{
-			if (picture == null || picture.BitPicture == null)
-				return null;
 
-			return ImageSource.FromStream(() => new MemoryStream(picture.BitPicture));
+		[RelayCommand]
+		private async Task LoadMoreItemsWithImage()
+		{
+			try
+			{
+				await Task.Delay(10);   //this prevents strange ObservableCollection synchronization error
+				if (DataStore.PageParameters.HasNext && Items.Count > 0)
+				{
+					DataStore.Params.PageNumber++;
+					Debug.WriteLine("Page number: {0}", DataStore.Params.PageNumber);
+					var items = await DataStore.GetItemsAsync(true);
+					foreach (var feedForView in items)
+					{
+						ItemsWithImage.Add(new FeedWithImageViewModel
+						{
+							Id = feedForView.Id,
+							IsActive = feedForView.IsActive,
+							CreatedDate = feedForView.CreatedDate,
+							ModifiedDate = feedForView.ModifiedDate,
+							Name = feedForView.Name,
+							Description = feedForView.Description,
+							PhotoSource = LoadPhoto(feedForView.Picture),
+						});
+					}
+					Debug.WriteLine("Items count = {0}", Items.Count);
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
 		}
 	}
 }

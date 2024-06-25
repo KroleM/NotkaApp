@@ -4,7 +4,6 @@ using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes.Note;
-using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
@@ -41,29 +40,5 @@ namespace NotkaMobile.ViewModels.NoteVM
 			//await Shell.Current.GoToAsync("..");
 			await ExecuteLoadItemsCommand();
 		}
-		//FIXME move to AListViewModel
-		//[RelayCommand]
-		//private async Task LoadMoreItems()
-		//{
-		//	try
-		//	{
-		//		await Task.Delay(10);	//this prevents strange ObservableCollection synchronization error
-		//		if (DataStore.PageParameters.HasNext && Items.Count > 0)
-		//		{					
-		//			DataStore.Params.PageNumber++;
-		//			Debug.WriteLine("Notes page number: {0}", DataStore.Params.PageNumber);
-		//			var items = await DataStore.GetItemsAsync(true);
-		//			foreach (var item in items)
-		//			{
-		//				Items.Add(item);
-		//			}
-		//			Debug.WriteLine("Notes items count = {0}", Items.Count);
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		Debug.WriteLine(ex);
-		//	}
-		//}
 	}
 }

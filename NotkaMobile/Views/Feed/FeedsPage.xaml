@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Feed.FeedsPage"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.FeedVM"
-             x:DataType="viewmodel:FeedsViewModel">
+             x:DataType="viewmodel:FeedsViewModel"
+             Title="{Binding Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate
                 x:Key="FeedItem"
                 x:DataType="{x:Type viewmodel:FeedWithImageViewModel}">
                 <Grid>
-                    <Border>
+                    <Border Margin="0,0,0,5" Padding="5">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeedsViewModel}}, Path=FeedSelectedCommand}"
@@ -23,18 +24,21 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="2" HorizontalOptions="Start" Margin="2"
-                                   Source="{Binding PhotoSource}"/>
+                            <Grid Grid.RowSpan="2" BackgroundColor="White" VerticalOptions="CenterAndExpand" Margin="0,0,5,0">
+                                <Image HorizontalOptions="Center"
+                                       Source="{Binding PhotoSource}"/>
+                            </Grid>
                             <Label Grid.Column="1"
-                                   Padding="0"
-                                   Text="{Binding Name}" 
-                                   FontSize="16" FontAttributes="Bold"/>
-                            <Label Grid.Row="1" Grid.Column="1"  MaximumHeightRequest="50"
-                                   Text="{Binding Description}" 
+                                   FontSize="16" FontAttributes="Bold"
+                                   Text="{Binding Name}" />
+                            <Label Grid.Row="1" Grid.Column="1"  
+                                   MaximumHeightRequest="50"
                                    FontSize="14" 
-                                   LineBreakMode="TailTruncation"/>
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2"
+                                   Text="{Binding Description}" />
                         </Grid>
                     </Border>
                 </Grid>
@@ -42,15 +46,18 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto, Auto, *" 
-          RowSpacing="5"
-          Padding="5">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="material_settings.png"
+                     Command="{Binding GoToSettingsCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="5">
         <CollectionView 
                 ItemsSource="{Binding ItemsWithImage}"
                 ItemTemplate="{StaticResource FeedItem}"
                 SelectionMode="None"
                 RemainingItemsThreshold="1"
-                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsWithImageCommand}"
                 ItemsUpdatingScrollMode="KeepScrollOffset">
         </CollectionView>
     </Grid>
