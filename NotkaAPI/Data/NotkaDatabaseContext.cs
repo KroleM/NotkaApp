@@ -31,11 +31,12 @@ namespace NotkaAPI.Data
 		public DbSet<NoteTag> NoteTag { get; set; }
 		public DbSet<TaskTag> TaskTag { get; set; }
 		public DbSet<RoleUser> RoleUser { get; set; }
-        public DbSet<Stock> Stock { get; set; }
-        public DbSet<StockExchange> StockExchange { get; set; }
-		public DbSet<StockNote> StockNote { get; set; }
-		public DbSet<StockPrice> StockPrice { get; set; }
 		public DbSet<Currency> Currency { get; set; }
+		public DbSet<Country> Country { get; set; }
+		public DbSet<StockExchange> StockExchange { get; set; }
+		public DbSet<Stock> Stock { get; set; }        
+		public DbSet<StockNote> StockNote { get; set; }
+		public DbSet<StockPrice> StockPrice { get; set; }		
 		public DbSet<Portfolio> Portfolio { get; set; }
 		public DbSet<PortfolioStock> PortfolioStock { get; set; }
 		public DbSet<Transaction> Transaction { get; set; }

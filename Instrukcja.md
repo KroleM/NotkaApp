@@ -21,6 +21,7 @@ Na potrzeby instrukcji zakładam, że tworzę obsługę tabeli `Note`:
 
 ### Aplikacja desktopowa
 1. DataStore
-2. 
+2. ViewModele (Lista, New, Edit)
+3. View (dziedziczenie z klasy generycznej?)
 
 Wpis do `MainWindowViewModel.cs` odnośnie tworzonej. zakładki

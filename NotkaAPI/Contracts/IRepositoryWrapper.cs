@@ -8,6 +8,7 @@
 		INoteRepository Note { get; }
 		ITagRepository Tag { get; }
 		IListRepository List { get; }
+		ICurrencyRepository Currency { get; }
 		Task SaveAsync();
 	}
 }

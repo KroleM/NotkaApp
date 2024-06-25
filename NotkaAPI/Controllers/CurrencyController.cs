@@ -1,108 +1,134 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NotkaAPI.Contracts;
 using NotkaAPI.Data;
+using NotkaAPI.Helpers;
 using NotkaAPI.Models.Investments;
+using NotkaAPI.Models.Users;
+using NotkaAPI.ViewModels;
+using System.Data;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class CurrencyController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public CurrencyController(NotkaDatabaseContext context)
+		public CurrencyController(IRepositoryWrapper repository)
         {
-            _context = context;
-        }
+			_repository = repository;
+		}
 
         // GET: api/Currency
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Currency>>> GetCurrency()
+		[HttpGet("{userId}", Name = "CurrencyGETAll")]
+		public async Task<ActionResult<PagedList<CurrencyForView>>> GetCurrency(int userId, [FromQuery] CurrencyParameters currencyParameters)
         {
-            return await _context.Currency.ToListAsync();
-        }
+			PagedList<CurrencyForView> currencies;
+			try
+			{
+				currencies = await _repository.Currency.GetCurrencies(userId, currencyParameters);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-        // GET: api/Currency/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Currency>> GetCurrency(int id)
+			return currencies;
+		}
+
+		// GET: api/Currency/5
+		[HttpGet("{userId}/{id}", Name = "CurrencyGET")]
+		public async Task<ActionResult<CurrencyForView>> GetCurrency(int userId, int id)
+		{
+			try
+			{
+				return await _repository.Currency.GetCurrencyById(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		// PUT: api/Currency/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}", Name = "CurrencyPUT")]
+		public async Task<IActionResult> PutCurrency(int id, CurrencyForView currency)
         {
-            var currency = await _context.Currency.FindAsync(id);
+			if (id != currency.Id)
+			{
+				return BadRequest();
+			}
 
-            if (currency == null)
-            {
-                return NotFound();
-            }
+			try
+			{
+				await _repository.Currency.UpdateCurrency(id, currency);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            return currency;
-        }
+			return NoContent();
+		}
 
-        // PUT: api/Currency/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurrency(int id, Currency currency)
+		// POST: api/Currency
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost(Name = "CurrencyPOST")]
+		public async Task<ActionResult<CurrencyForView>> PostCurrency(CurrencyForView currency)
         {
-            if (id != currency.Id)
-            {
-                return BadRequest();
-            }
+			if (currency == null) return Forbid();
 
-            _context.Entry(currency).State = EntityState.Modified;
+			CurrencyForView uploadedCurrency;
+			try
+			{
+				uploadedCurrency = await _repository.Currency.CreateCurrency(currency);
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CurrencyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			return Ok(uploadedCurrency);
+		}
 
-            return NoContent();
-        }
+		// DELETE: api/Currency/5
+		[HttpDelete("{userId}/{id}", Name = "CurrencyDELETE")]
+		public async Task<IActionResult> DeleteCurrency(int userId, int id)
+		{
+			try
+			{
+				await _repository.Currency.DeleteCurrency(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (ForbidException)
+			{
+				return Forbid();
+			}
 
-        // POST: api/Currency
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Currency>> PostCurrency(Currency currency)
-        {
-            _context.Currency.Add(currency);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCurrency", new { id = currency.Id }, currency);
-        }
-
-        // DELETE: api/Currency/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCurrency(int id)
-        {
-            var currency = await _context.Currency.FindAsync(id);
-            if (currency == null)
-            {
-                return NotFound();
-            }
-
-            _context.Currency.Remove(currency);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CurrencyExists(int id)
-        {
-            return _context.Currency.Any(e => e.Id == id);
-        }
+			return NoContent();
+		}
     }
 }

@@ -64,13 +64,17 @@ namespace NotkaAPI.Repository
 
 		public async Task DeleteRole(int userId, int id)
 		{
-			var role = await Context.Role.SingleOrDefaultAsync(tag => tag.Id == id);
+			var role = await Context.Role.SingleOrDefaultAsync(role => role.Id == id);
 
 			if (role == null)
 			{
 				throw new NotFoundException();
 			}
-			//FIXME user powinien mieć uprawnienia
+			//Tylko admin może to zrobić
+			if (!Context.User.Any(u => u.Id == userId && u.RoleUsers.Any(ru => ru.RoleId == 3)))
+			{
+				throw new UnauthorizedException();
+			}
 
 			Delete(role);
 			await Context.SaveChangesAsync();

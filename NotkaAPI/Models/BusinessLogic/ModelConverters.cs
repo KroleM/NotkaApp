@@ -1,6 +1,7 @@
 ﻿using NotkaAPI.Helpers;
 using NotkaAPI.Models.CMS;
 using NotkaAPI.Models.General;
+using NotkaAPI.Models.Investments;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
@@ -46,6 +47,10 @@ namespace NotkaAPI.Models.BusinessLogic
 		public static FeedForView ConvertToFeedForView(Feed? feed)
 		{
 			return new FeedForView { }.CopyProperties(feed);
+		}
+		public static CurrencyForView ConvertToCurrencyForView(Currency? currency)
+		{
+			return new CurrencyForView { }.CopyProperties(currency);
 		}
 	}
 }

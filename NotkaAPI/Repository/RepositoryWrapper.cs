@@ -12,6 +12,7 @@ namespace NotkaAPI.Repository
 		private INoteRepository? _note;
 		private ITagRepository? _tag;
 		private IListRepository? _list;
+		private ICurrencyRepository? _currency;
 
 		public IUserRepository User
 		{
@@ -83,6 +84,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _list;
+			}
+		}
+		public ICurrencyRepository Currency
+		{
+			get
+			{
+				if (_currency == null)
+				{
+					_currency = new CurrencyRepository(_context);
+				}
+
+				return _currency;
 			}
 		}
 
