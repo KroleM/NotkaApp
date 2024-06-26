@@ -8,7 +8,6 @@ using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
-using System.Diagnostics;
 
 namespace NotkaAPI.Repository
 {

@@ -52,5 +52,9 @@ namespace NotkaAPI.Models.BusinessLogic
 		{
 			return new CurrencyForView { }.CopyProperties(currency);
 		}
+		public static CountryForView ConvertToCountryForView(Country? country)
+		{
+			return new CountryForView { }.CopyProperties(country);
+		}
 	}
 }

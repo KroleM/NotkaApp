@@ -13,6 +13,7 @@ namespace NotkaAPI.Repository
 		private ITagRepository? _tag;
 		private IListRepository? _list;
 		private ICurrencyRepository? _currency;
+		private ICountryRepository? _country;
 
 		public IUserRepository User
 		{
@@ -98,7 +99,18 @@ namespace NotkaAPI.Repository
 				return _currency;
 			}
 		}
+		public ICountryRepository Country
+		{
+			get
+			{
+				if (_country == null)
+				{
+					_country = new CountryRepository(_context);
+				}
 
+				return _country;
+			}
+		}
 		public RepositoryWrapper(NotkaDatabaseContext context)
 		{
 			_context = context;

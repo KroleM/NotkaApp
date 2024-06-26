@@ -17,6 +17,7 @@ namespace NotkaDesktop.ViewModels
 		private UserDataStore _userDataStore = new UserDataStore();
 		private RoleDataStore _roleDataStore = new RoleDataStore();
 		private FeedDataStore _feedDataStore = new FeedDataStore();
+		private CurrencyDataStore _currencyDataStore = new CurrencyDataStore();
 		#endregion
 
 		#region ViewModels
@@ -29,6 +30,9 @@ namespace NotkaDesktop.ViewModels
 		private FeedsViewModel? _feedsViewModel;
 		private NewFeedViewModel? _newFeedViewModel;
 		private FeedEditViewModel? _feedEditViewModel;
+		private CurrenciesViewModel? _currenciesViewModel;
+		private NewCurrencyViewModel? _newCurrencyViewModel;
+		private CurrencyEditViewModel? _currencyEditViewModel;
 		
 		#endregion
 
@@ -97,6 +101,9 @@ namespace NotkaDesktop.ViewModels
 				new CommandViewModel(
 					"Aktualności",
 					new RelayCommand(() => this.ShowFeed())),
+				new CommandViewModel(
+					"Waluty",
+					new RelayCommand(() => this.ShowCurrencies())),
 			};
 		}
 
@@ -116,7 +123,7 @@ namespace NotkaDesktop.ViewModels
 				case MainWindowView.EditUser:
 					ShowEditUser();
 					break;
-				case MainWindowView.Roles:	//??
+				case MainWindowView.Roles:
 					ShowRoles();
 					break;
 				case MainWindowView.NewRole:
@@ -133,6 +140,15 @@ namespace NotkaDesktop.ViewModels
 					break;
 				case MainWindowView.EditFeed:
 					ShowEditFeed();
+					break;
+				case MainWindowView.Currencies: 
+					ShowCurrencies();
+					break;
+				case MainWindowView.NewCurrency:
+					ShowNewCurrency();
+					break;
+				case MainWindowView.EditCurrency:
+					ShowEditCurrency();
 					break;
 			}
 		}
@@ -162,6 +178,7 @@ namespace NotkaDesktop.ViewModels
 		{
 			RightPanelViewModel = _mainPageViewModel;
 		}
+		//User
 		private void ShowUsers()
 		{
 			if (RightPanelViewModel == _usersViewModel) return;	//could cause bad behavior when using Delete
@@ -181,6 +198,7 @@ namespace NotkaDesktop.ViewModels
 			_userEditViewModel = new(_userDataStore, _roleDataStore, itemId);
 			RightPanelViewModel = _userEditViewModel;	//change view
 		}
+		//Role
 		private void ShowRoles()
 		{
 			_rolesViewModel = new(_roleDataStore);
@@ -207,6 +225,7 @@ namespace NotkaDesktop.ViewModels
 			_roleEditViewModel = new(_roleDataStore, itemId);
 			RightPanelViewModel = _roleEditViewModel;
 		}
+		//Feed
 		private void ShowFeed()
 		{
 			_feedsViewModel = new(_feedDataStore);
@@ -232,6 +251,33 @@ namespace NotkaDesktop.ViewModels
 			(RightPanelViewModel as FeedsViewModel).NewSelectedItem = null;
 			_feedEditViewModel = new(_feedDataStore, itemId);
 			RightPanelViewModel = _feedEditViewModel;
+		}
+		//Currency
+		private void ShowCurrencies()
+		{
+			_currenciesViewModel = new(_currencyDataStore);
+			RightPanelViewModel = _currenciesViewModel;
+		}
+		private void ShowNewCurrency()
+		{
+			if (RightPanelViewModel == _newCurrencyViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Currencies;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			_newCurrencyViewModel = new(_currencyDataStore);
+			RightPanelViewModel = _newCurrencyViewModel;
+		}
+		private void ShowEditCurrency()
+		{
+			if (RightPanelViewModel == _currencyEditViewModel) return;
+			if (RightPanelViewModel is not CurrenciesViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Currencies;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as CurrenciesViewModel).SelectedItem.Id;
+			(RightPanelViewModel as CurrenciesViewModel).SelectedItem = null;
+			_currencyEditViewModel = new(_currencyDataStore, itemId);
+			RightPanelViewModel = _currencyEditViewModel;
 		}
 		#endregion
 	}

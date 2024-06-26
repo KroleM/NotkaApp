@@ -9,6 +9,7 @@
 		ITagRepository Tag { get; }
 		IListRepository List { get; }
 		ICurrencyRepository Currency { get; }
+		ICountryRepository Country { get; }
 		Task SaveAsync();
 	}
 }

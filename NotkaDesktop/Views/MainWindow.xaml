@@ -21,6 +21,7 @@
                     <TextBox Text="{Binding Email}" />
                     <Label Content="Hasło" />
                     <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                    <!--<PasswordBox Password="{Binding Password}"/>-->
                     <!--<StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding IsHidden}" />
                         <Label Content="Ukryj hasło" />

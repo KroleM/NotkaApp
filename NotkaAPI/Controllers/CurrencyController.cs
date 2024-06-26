@@ -1,13 +1,8 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Contracts;
-using NotkaAPI.Data;
 using NotkaAPI.Helpers;
-using NotkaAPI.Models.Investments;
-using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
-using System.Data;
 
 namespace NotkaAPI.Controllers
 {

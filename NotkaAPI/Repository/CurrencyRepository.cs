@@ -20,9 +20,9 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<CurrencyForView>> GetCurrencies(int userId, CurrencyParameters currencyParameters)
 		{
-			var currenciesForView = Context.Currency.Select(currency => ModelConverters.ConvertToCurrencyForView(currency));
+			var currencies = Context.Currency.OrderBy(c => c.ShortName);
 
-			return await PagedList<CurrencyForView>.CreateAsync(currenciesForView.OrderBy(f => f.ShortName),
+			return await PagedList<CurrencyForView>.CreateAsync(currencies.Select(currency => ModelConverters.ConvertToCurrencyForView(currency)),
 										currencyParameters.PageNumber,
 										currencyParameters.PageSize);
 		}
@@ -86,7 +86,7 @@ namespace NotkaAPI.Repository
 
 		private bool CurrencyExists(int id)
 		{
-			return Context.Currency.Any(e => e.Id == id);
+			return Context.Currency.Any(c => c.Id == id);
 		}
 	}
 }

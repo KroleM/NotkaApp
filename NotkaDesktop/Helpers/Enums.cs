@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NotkaDesktop.Helpers
+﻿namespace NotkaDesktop.Helpers
 {
 	public enum MainWindowView
 	{
@@ -17,6 +11,9 @@ namespace NotkaDesktop.Helpers
 		EditUser,
 		Feeds,
 		NewFeed,
-		EditFeed
+		EditFeed,
+		Currencies,
+		NewCurrency,
+		EditCurrency,
 	}
 }

@@ -21,7 +21,7 @@ namespace NotkaDesktop.Services
 
 		public override async Task<bool> DeleteItemFromService(CurrencyForView item)
 		{
-			return await _service.FeedDELETEAsync(ApplicationViewModel.s_userId, item.Id).HandleRequest();
+			return await _service.CurrencyDELETEAsync(ApplicationViewModel.s_userId, item.Id).HandleRequest();
 		}
 
 		public override async Task<CurrencyForView> Find(CurrencyForView item)
@@ -53,7 +53,7 @@ namespace NotkaDesktop.Services
 
 		protected override void EraseParameters()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 	}
 }
