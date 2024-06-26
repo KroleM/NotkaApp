@@ -4,7 +4,8 @@
                     xmlns:userviews="clr-namespace:NotkaDesktop.Views.User"
                     xmlns:roleviews="clr-namespace:NotkaDesktop.Views.Role"
                     xmlns:feedviews="clr-namespace:NotkaDesktop.Views.Feed" 
-                    xmlns:currencyviews="clr-namespace:NotkaDesktop.Views.Currency" >
+                    xmlns:currencyviews="clr-namespace:NotkaDesktop.Views.Currency"
+                    xmlns:countryviews="clr-namespace:NotkaDesktop.Views.Country">
 
     <!--Connection between ViewModels and Views necessary to show Views in the MainView-->
     <DataTemplate DataType="{x:Type viewmodels:MainPageViewModel}">
@@ -42,6 +43,15 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:CurrencyEditViewModel}">
         <currencyviews:CurrencyEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:CountriesViewModel}">
+        <countryviews:CountriesView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:NewCountryViewModel}">
+        <countryviews:NewCountryView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:CountryEditViewModel}">
+        <countryviews:CountryEditView/>
     </DataTemplate>
 
 </ResourceDictionary>

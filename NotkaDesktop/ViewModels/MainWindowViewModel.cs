@@ -18,6 +18,7 @@ namespace NotkaDesktop.ViewModels
 		private RoleDataStore _roleDataStore = new RoleDataStore();
 		private FeedDataStore _feedDataStore = new FeedDataStore();
 		private CurrencyDataStore _currencyDataStore = new CurrencyDataStore();
+		private CountryDataStore _countryDataStore = new CountryDataStore();
 		#endregion
 
 		#region ViewModels
@@ -33,7 +34,10 @@ namespace NotkaDesktop.ViewModels
 		private CurrenciesViewModel? _currenciesViewModel;
 		private NewCurrencyViewModel? _newCurrencyViewModel;
 		private CurrencyEditViewModel? _currencyEditViewModel;
-		
+		private CountriesViewModel? _countriesViewModel;
+		private NewCountryViewModel? _newCountryViewModel;
+		private CountryEditViewModel? _countryEditViewModel;
+
 		#endregion
 
 		#region Fields & Properties
@@ -104,6 +108,9 @@ namespace NotkaDesktop.ViewModels
 				new CommandViewModel(
 					"Waluty",
 					new RelayCommand(() => this.ShowCurrencies())),
+				new CommandViewModel(
+					"Kraje",
+					new RelayCommand(() => this.ShowCountries())),
 			};
 		}
 
@@ -149,6 +156,15 @@ namespace NotkaDesktop.ViewModels
 					break;
 				case MainWindowView.EditCurrency:
 					ShowEditCurrency();
+					break;
+				case MainWindowView.Countries:
+					ShowCountries();
+					break;
+				case MainWindowView.NewCountry:
+					ShowNewCountry();
+					break;
+				case MainWindowView.EditCountry:
+					ShowEditCountry();
 					break;
 			}
 		}
@@ -278,6 +294,33 @@ namespace NotkaDesktop.ViewModels
 			(RightPanelViewModel as CurrenciesViewModel).SelectedItem = null;
 			_currencyEditViewModel = new(_currencyDataStore, itemId);
 			RightPanelViewModel = _currencyEditViewModel;
+		}
+		//Country
+		private void ShowCountries()
+		{
+			_countriesViewModel = new(_countryDataStore);
+			RightPanelViewModel = _countriesViewModel;
+		}
+		private void ShowNewCountry()
+		{
+			if (RightPanelViewModel == _newCountryViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Countries;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			_newCountryViewModel = new(_countryDataStore);
+			RightPanelViewModel = _newCountryViewModel;
+		}
+		private void ShowEditCountry()
+		{
+			if (RightPanelViewModel == _countryEditViewModel) return;
+			if (RightPanelViewModel is not CountriesViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Countries;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as CountriesViewModel).SelectedItem.Id;
+			(RightPanelViewModel as CountriesViewModel).SelectedItem = null;
+			_countryEditViewModel = new(_countryDataStore, itemId);
+			RightPanelViewModel = _countryEditViewModel;
 		}
 		#endregion
 	}

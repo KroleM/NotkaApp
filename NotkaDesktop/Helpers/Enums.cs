@@ -15,5 +15,9 @@
 		Currencies,
 		NewCurrency,
 		EditCurrency,
+		Countries,
+		NewCountry,
+		EditCountry,
+
 	}
 }

@@ -25,3 +25,4 @@ Na potrzeby instrukcji zakładam, że tworzę obsługę tabeli `Note`:
 3. ViewModele (Lista, New, Edit)
 4. View (dziedziczenie z klasy generycznej?)
 5. Wpis do `MainWindowViewModel.cs` odnośnie tworzonej zakładki (tworzenie przycisku, nawigacja)
+6. Dodanie powiązań w `MainViewResources.xaml` (połączenie view z VM)
