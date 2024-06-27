@@ -18,6 +18,9 @@
 		Countries,
 		NewCountry,
 		EditCountry,
+		StockExchanges,
+		NewStockExchange,
+		EditStockExchange,
 
 	}
 }

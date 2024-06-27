@@ -5,7 +5,6 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Investments;
-using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Repository

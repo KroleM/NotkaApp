@@ -10,6 +10,7 @@
 		IListRepository List { get; }
 		ICurrencyRepository Currency { get; }
 		ICountryRepository Country { get; }
+		IStockExchangeRepository StockExchange { get; }
 		Task SaveAsync();
 	}
 }

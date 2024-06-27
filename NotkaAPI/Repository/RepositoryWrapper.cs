@@ -14,6 +14,7 @@ namespace NotkaAPI.Repository
 		private IListRepository? _list;
 		private ICurrencyRepository? _currency;
 		private ICountryRepository? _country;
+		private IStockExchangeRepository? _stockExchange;
 
 		public IUserRepository User
 		{
@@ -109,6 +110,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _country;
+			}
+		}
+		public IStockExchangeRepository StockExchange
+		{
+			get
+			{
+				if (_stockExchange == null)
+				{
+					_stockExchange = new StockExchangeRepository(_context);
+				}
+
+				return _stockExchange;
 			}
 		}
 		public RepositoryWrapper(NotkaDatabaseContext context)

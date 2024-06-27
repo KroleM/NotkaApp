@@ -1,108 +1,129 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NotkaAPI.Data;
-using NotkaAPI.Models.Investments;
+using NotkaAPI.Contracts;
+using NotkaAPI.Helpers;
+using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class StockExchangeController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public StockExchangeController(NotkaDatabaseContext context)
+		public StockExchangeController(IRepositoryWrapper repository)
+		{
+			_repository = repository;
+		}
+
+		// GET: api/StockExchange
+		[HttpGet("{userId}", Name = "StockExchangeGETAll")]
+		public async Task<ActionResult<PagedList<StockExchangeForView>>> GetStockExchange(int userId, [FromQuery] StockExchangeParameters stockExchangeParameters)
+		{
+			PagedList<StockExchangeForView> stockExchanges;
+			try
+			{
+				stockExchanges = await _repository.StockExchange.GetStockExchanges(userId, stockExchangeParameters);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return stockExchanges;
+		}
+
+		// GET: api/StockExchange/5
+		[HttpGet("{userId}/{id}", Name = "StockExchangeGET")]
+		public async Task<ActionResult<StockExchangeForView>> GetStockExchange(int userId, int id)
+		{
+			try
+			{
+				return await _repository.StockExchange.GetStockExchangeById(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		// PUT: api/StockExchange/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}", Name = "StockExchangePUT")]
+		public async Task<IActionResult> PutStockExchange(int id, StockExchangeForView stockExchange)
         {
-            _context = context;
-        }
+			if (id != stockExchange.Id)
+			{
+				return BadRequest();
+			}
 
-        // GET: api/StockExchange
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<StockExchange>>> GetStockExchange()
+			try
+			{
+				await _repository.StockExchange.UpdateStockExchange(id, stockExchange);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return NoContent();
+		}
+
+		// POST: api/StockExchange
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost(Name = "StockExchangePOST")]
+		public async Task<ActionResult<StockExchangeForView>> PostStockExchange(StockExchangeForView stockExchange)
         {
-            return await _context.StockExchange.ToListAsync();
-        }
+			if (stockExchange == null) return Forbid();
 
-        // GET: api/StockExchange/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<StockExchange>> GetStockExchange(int id)
-        {
-            var stockExchange = await _context.StockExchange.FindAsync(id);
+			StockExchangeForView uploadedStockExchange;
+			try
+			{
+				uploadedStockExchange = await _repository.StockExchange.CreateStockExchange(stockExchange);
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            if (stockExchange == null)
-            {
-                return NotFound();
-            }
+			return Ok(uploadedStockExchange);
+		}
 
-            return stockExchange;
-        }
+		// DELETE: api/StockExchange/5
+		[HttpDelete("{userId}/{id}", Name = "StockExchangeDELETE")]
+		public async Task<IActionResult> DeleteStockExchange(int userId, int id)
+		{
+			try
+			{
+				await _repository.StockExchange.DeleteStockExchange(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (ForbidException)
+			{
+				return Forbid();
+			}
 
-        // PUT: api/StockExchange/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStockExchange(int id, StockExchange stockExchange)
-        {
-            if (id != stockExchange.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(stockExchange).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExchangeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/StockExchange
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<StockExchange>> PostStockExchange(StockExchange stockExchange)
-        {
-            _context.StockExchange.Add(stockExchange);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStockExchange", new { id = stockExchange.Id }, stockExchange);
-        }
-
-        // DELETE: api/StockExchange/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStockExchange(int id)
-        {
-            var stockExchange = await _context.StockExchange.FindAsync(id);
-            if (stockExchange == null)
-            {
-                return NotFound();
-            }
-
-            _context.StockExchange.Remove(stockExchange);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool StockExchangeExists(int id)
-        {
-            return _context.StockExchange.Any(e => e.Id == id);
-        }
+			return NoContent();
+		}
     }
 }

@@ -19,6 +19,7 @@ namespace NotkaDesktop.ViewModels
 		private FeedDataStore _feedDataStore = new FeedDataStore();
 		private CurrencyDataStore _currencyDataStore = new CurrencyDataStore();
 		private CountryDataStore _countryDataStore = new CountryDataStore();
+		private StockExchangeDataStore _stockExchangeDataStore = new StockExchangeDataStore();
 		#endregion
 
 		#region ViewModels
@@ -37,6 +38,9 @@ namespace NotkaDesktop.ViewModels
 		private CountriesViewModel? _countriesViewModel;
 		private NewCountryViewModel? _newCountryViewModel;
 		private CountryEditViewModel? _countryEditViewModel;
+		private StockExchangesViewModel? _stockExchangesViewModel;
+		private StockExchangeEditViewModel? _stockExchangeEditViewModel;
+		private NewStockExchangeViewModel? _newStockExchangeEditViewModel;
 
 		#endregion
 
@@ -111,6 +115,9 @@ namespace NotkaDesktop.ViewModels
 				new CommandViewModel(
 					"Kraje",
 					new RelayCommand(() => this.ShowCountries())),
+				new CommandViewModel(
+					"Giełdy",
+					new RelayCommand(() => this.ShowStockExchanges())),
 			};
 		}
 
@@ -165,6 +172,15 @@ namespace NotkaDesktop.ViewModels
 					break;
 				case MainWindowView.EditCountry:
 					ShowEditCountry();
+					break;
+				case MainWindowView.StockExchanges:
+					ShowStockExchanges();
+					break;
+				case MainWindowView.NewStockExchange:
+					ShowNewStockExchange();
+					break;
+				case MainWindowView.EditStockExchange:
+					ShowEditStockExchange();
 					break;
 			}
 		}
@@ -321,6 +337,33 @@ namespace NotkaDesktop.ViewModels
 			(RightPanelViewModel as CountriesViewModel).SelectedItem = null;
 			_countryEditViewModel = new(_countryDataStore, itemId);
 			RightPanelViewModel = _countryEditViewModel;
+		}
+		//StockExchange
+		private void ShowStockExchanges()
+		{
+			_stockExchangesViewModel = new(_stockExchangeDataStore);
+			RightPanelViewModel = _stockExchangesViewModel;
+		}
+		private void ShowNewStockExchange()
+		{
+			if (RightPanelViewModel == _newStockExchangeEditViewModel) return;
+
+			_previousRightPanelType = MainWindowView.StockExchanges;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			_newStockExchangeEditViewModel = new(_stockExchangeDataStore, _countryDataStore);
+			RightPanelViewModel = _newStockExchangeEditViewModel;
+		}
+		private void ShowEditStockExchange()
+		{
+			if (RightPanelViewModel == _countryEditViewModel) return;
+			if (RightPanelViewModel is not StockExchangesViewModel) return;
+
+			_previousRightPanelType = MainWindowView.StockExchanges;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as StockExchangesViewModel).SelectedItem.Id;
+			(RightPanelViewModel as StockExchangesViewModel).SelectedItem = null;
+			_stockExchangeEditViewModel = new(_stockExchangeDataStore, _countryDataStore, itemId);
+			RightPanelViewModel = _stockExchangeEditViewModel;
 		}
 		#endregion
 	}

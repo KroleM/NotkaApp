@@ -1,0 +1,54 @@
+﻿<views:EditViewBase x:Class="NotkaDesktop.Views.StockExchange.StockExchangeEditView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:local="clr-namespace:NotkaDesktop.Views.StockExchange"
+                    xmlns:views="clr-namespace:NotkaDesktop.Views"
+                    xmlns:viewmodels="clr-namespace:NotkaDesktop.ViewModels"
+                    mc:Ignorable="d" 
+                    d:DataContext="{d:DesignInstance Type=viewmodels:StockExchangeEditViewModel}"
+                    d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Skrót" />
+        <TextBox Grid.Column="1" Margin="1" 
+             Text="{Binding ShortName, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="1" Content="Nazwa" />
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="1" 
+             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="2" Content="Opis"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="1" 
+             TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+             Text="{Binding Description}"/>
+        <Label Grid.Row="3" Content="Kraj"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" Margin="1" 
+                  Width="250" HorizontalAlignment="Left"                
+                  ItemsSource="{Binding Countries}"
+                  SelectedItem="{Binding SelectedCountry}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock VerticalAlignment="Center">
+                        <Run Text="{Binding ShortName}"/>
+                        <Run Text=" - "/>
+                        <Run Text="{Binding Name}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Grid.Row="4" Content="Czy aktywny"/>
+        <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"
+              IsChecked="{Binding IsActive}" />
+    </Grid>
+</views:EditViewBase>

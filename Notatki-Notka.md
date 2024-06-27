@@ -9,6 +9,8 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * `HashSet<T>` ma bardziej wydajne wyszukiwanie dla dużej liczby tabel, ale nie zachowuje stabilnej kolejności. Jeśli nawigacja jest zapisana w kodzie jako `IEnumerable`, `ICollection` albo `ISet`, to zostanie zainicjalizowana jako `HashSet`
 * Pairing of relationships only works when there is a single relationship between two types. Multiple relationships between two types must be configured explicitly.
 * Generowanie skryptów BD albo konkretnych obiektów w [MS SQL Server Management Studio][link1].
+* `In entity framework, the columns in the tables are represented by the non-virtual properties; the virtual properties represent the relations between the tables.`
+* [Bardzo dobry opis EF][link18]
 * Operacje PUT - [modyfikowanie rekordów w BD][link4].
 * `SaveChanges(Async)` wysyła wartości właściwości danej encji do bazy danych.
 * [Serwer vs. Client][link9] - rozwiązywanie kwerend IQueryable vs. IEnumerable.
@@ -128,3 +130,4 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link15]: https://docs.devexpress.com/MAUI/DevExpress.Maui.Controls.BottomSheet?v=23.1
 [link16]: https://stackoverflow.com/questions/75593079/programmatically-setting-the-selecteditem-of-a-collectionview-is-not-working-on
 [link17]: https://github.com/dotnet/maui/issues/18933
+[link18]: https://stackoverflow.com/questions/65606752/ef-core-correct-way-to-query-data-multiple-levels-deep-in-related-one-to-many-e

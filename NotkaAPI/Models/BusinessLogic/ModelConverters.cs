@@ -56,5 +56,23 @@ namespace NotkaAPI.Models.BusinessLogic
 		{
 			return new CountryForView { }.CopyProperties(country);
 		}
+		public static StockExchangeForView ConvertToStockExchangeForView(StockExchange? stockExchange)
+		{
+			return new StockExchangeForView 
+			{
+				//Do przypisania CountryShortName jest konieczne Include(Country)
+				CountryShortName = stockExchange?.Country.ShortName ?? string.Empty,
+				StocksForView = stockExchange?.Stocks.Select(stock => ConvertToStockForView(stock)).ToList() ?? new(),
+			}.CopyProperties(stockExchange);
+		}
+		public static StockForView ConvertToStockForView(Stock? stock)
+		{
+			return new StockForView
+			{
+				StockExchangeShortName = stock?.StockExchange.ShortName ?? string.Empty,
+				CurrencyShortName = stock?.Currency.ShortName ?? string.Empty,
+				//Listy?
+			}.CopyProperties(stock);
+		}
 	}
 }
