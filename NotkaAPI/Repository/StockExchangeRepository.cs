@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
-using NotkaAPI.Migrations;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Investments;
 using NotkaAPI.ViewModels;
@@ -43,13 +42,12 @@ namespace NotkaAPI.Repository
 
 			var result = Context.StockExchange.Include(se => se.Country).SingleOrDefault(se => se.Id == stockExchangeToAdd.Id);
 
-			//return ModelConverters.ConvertToStockExchangeForView(stockExchangeToAdd);
 			return ModelConverters.ConvertToStockExchangeForView(result);
 		}
 
 		public async Task UpdateStockExchange(int id, StockExchangeForView stockExchange)
 		{
-			var stockExchangeToAdd = new StockExchange().CopyProperties(stockExchange);
+			var stockExchangeToAdd = new StockExchange().CopyProperties(stockExchange);	// czy działa prawidłowo? ConvertToStock??
 			Context.Entry(stockExchangeToAdd).State = EntityState.Modified;
 
 			try
@@ -77,7 +75,7 @@ namespace NotkaAPI.Repository
 			{
 				throw new NotFoundException();
 			}
-			//Tylko admin może to zrobić
+			//Only Admin
 			if (!Context.User.Any(u => u.Id == userId && u.RoleUsers.Any(ru => ru.RoleId == 3)))
 			{
 				throw new UnauthorizedException();

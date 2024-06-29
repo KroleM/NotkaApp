@@ -11,6 +11,7 @@
 		ICurrencyRepository Currency { get; }
 		ICountryRepository Country { get; }
 		IStockExchangeRepository StockExchange { get; }
+		IStockRepository Stock { get; }
 		Task SaveAsync();
 	}
 }

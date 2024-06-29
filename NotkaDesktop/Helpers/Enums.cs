@@ -21,6 +21,8 @@
 		StockExchanges,
 		NewStockExchange,
 		EditStockExchange,
-
+		Stocks,
+		NewStock,
+		EditStock,
 	}
 }

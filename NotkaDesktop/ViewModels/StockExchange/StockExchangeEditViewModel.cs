@@ -9,7 +9,7 @@ namespace NotkaDesktop.ViewModels
 {
 	public partial class StockExchangeEditViewModel : AEditViewModel<StockExchangeForView, StockExchangeParameters>
 	{
-		public StockExchangeEditViewModel(StockExchangeDataStore dataStore, CountryDataStore countryDataStore, int itemId) 
+		public StockExchangeEditViewModel(StockExchangeDataStore dataStore, CountryDataStore countryDataStore, int itemId)
 			: base("Edycja giełdy", dataStore, itemId)
 		{
 			LoadCountries(countryDataStore);
@@ -46,18 +46,15 @@ namespace NotkaDesktop.ViewModels
 
 		public override StockExchangeForView SetItem()
 		{
-			return new StockExchangeForView
-			{
-				Id = 0,
-				IsActive = this.IsActive,
-				Name = this.Name,
-				Description = this.Description,
-				CreatedDate = DateTimeOffset.Now,
-				ModifiedDate = DateTimeOffset.Now,
-				ShortName = this.ShortName,
-				CountryId = SelectedCountry.Id,
-				CountryShortName = SelectedCountry.ShortName,
-			};
+			Item.IsActive = this.IsActive;
+			Item.Name = this.Name;
+			Item.Description = this.Description;
+			Item.ModifiedDate = DateTimeOffset.Now;
+			Item.ShortName = this.ShortName;
+			Item.CountryId = SelectedCountry.Id;
+			Item.CountryShortName = SelectedCountry.ShortName;
+
+			return Item;
 		}
 
 		public override bool ValidateSave()

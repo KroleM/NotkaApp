@@ -3534,95 +3534,70 @@
         }
       }
     },
-    "/api/Stock": {
+    "/api/Stock/{userId}": {
       "get": {
         "tags": [
           "Stock"
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                }
-              }
+        "operationId": "StockGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        }
-      },
-      "post": {
-        "tags": [
-          "Stock"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForViewPagedList"
                 }
               }
             }
@@ -3630,12 +3605,22 @@
         }
       }
     },
-    "/api/Stock/{id}": {
+    "/api/Stock/{userId}/{id}": {
       "get": {
         "tags": [
           "Stock"
         ],
+        "operationId": "StockGET",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -3652,27 +3637,61 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForView"
                 }
               }
             }
           }
         }
       },
+      "delete": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Stock/{id}": {
       "put": {
         "tags": [
           "Stock"
         ],
+        "operationId": "StockPUT",
         "parameters": [
           {
             "name": "id",
@@ -3690,7 +3709,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Stock"
+                    "$ref": "#/components/schemas/StockForView"
                   }
                 ]
               }
@@ -3699,7 +3718,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Stock"
+                    "$ref": "#/components/schemas/StockForView"
                   }
                 ]
               }
@@ -3708,7 +3727,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Stock"
+                    "$ref": "#/components/schemas/StockForView"
                   }
                 ]
               }
@@ -3720,25 +3739,65 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/Stock": {
+      "post": {
         "tags": [
           "Stock"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "operationId": "StockPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockForView"
+                  }
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockForView"
+                }
+              }
+            }
           }
         }
       }
@@ -7583,6 +7642,46 @@
           "currencyShortName": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "additionalProperties": false

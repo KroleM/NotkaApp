@@ -10,6 +10,7 @@ namespace NotkaAPI.Models.BusinessLogic
 {
 	public static class ModelConverters
 	{
+		//ViewModels
 		public static NoteForView ConvertToNoteForView(Note? note)
 		{
 			return new NoteForView
@@ -74,5 +75,17 @@ namespace NotkaAPI.Models.BusinessLogic
 				//Listy?
 			}.CopyProperties(stock);
 		}
+
+
+		//Models
+		//public static StockExchange ConvertToStockExchange(StockExchangeForView? stockExchangeForView)
+		//{
+		//	return new StockExchange
+		//	{
+		//		//Do przypisania CountryShortName jest konieczne Include(Country)
+		//		CountryShortName = stockExchange?.Country.ShortName ?? string.Empty,
+		//		StocksForView = stockExchange?.Stocks.Select(stock => ConvertToStockForView(stock)).ToList() ?? new(),
+		//	}.CopyProperties(stockExchange);
+		//}
 	}
 }

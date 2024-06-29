@@ -20,6 +20,7 @@ namespace NotkaDesktop.ViewModels
 		private CurrencyDataStore _currencyDataStore = new CurrencyDataStore();
 		private CountryDataStore _countryDataStore = new CountryDataStore();
 		private StockExchangeDataStore _stockExchangeDataStore = new StockExchangeDataStore();
+		private StockDataStore _stockDataStore = new StockDataStore();
 		#endregion
 
 		#region ViewModels
@@ -41,6 +42,9 @@ namespace NotkaDesktop.ViewModels
 		private StockExchangesViewModel? _stockExchangesViewModel;
 		private StockExchangeEditViewModel? _stockExchangeEditViewModel;
 		private NewStockExchangeViewModel? _newStockExchangeEditViewModel;
+		private StocksViewModel? _stocksViewModel;
+		private NewStockViewModel? _newStockViewModel;
+		private StockEditViewModel? _stockEditViewModel;
 
 		#endregion
 
@@ -118,6 +122,9 @@ namespace NotkaDesktop.ViewModels
 				new CommandViewModel(
 					"Giełdy",
 					new RelayCommand(() => this.ShowStockExchanges())),
+				new CommandViewModel(
+					"Spółki",
+					new RelayCommand(() => this.ShowStocks())),
 			};
 		}
 
@@ -181,6 +188,15 @@ namespace NotkaDesktop.ViewModels
 					break;
 				case MainWindowView.EditStockExchange:
 					ShowEditStockExchange();
+					break;
+				case MainWindowView.Stocks:
+					ShowStocks();
+					break;
+				case MainWindowView.NewStock:
+					ShowNewStock();
+					break;
+				case MainWindowView.EditStock:
+					ShowEditStock();
 					break;
 			}
 		}
@@ -364,6 +380,33 @@ namespace NotkaDesktop.ViewModels
 			(RightPanelViewModel as StockExchangesViewModel).SelectedItem = null;
 			_stockExchangeEditViewModel = new(_stockExchangeDataStore, _countryDataStore, itemId);
 			RightPanelViewModel = _stockExchangeEditViewModel;
+		}
+		//Stock
+		private void ShowStocks()
+		{
+			_stocksViewModel = new(_stockDataStore);
+			RightPanelViewModel = _stocksViewModel;
+		}		
+		private void ShowNewStock()
+		{
+			if (RightPanelViewModel == _newStockViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Stocks;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			_newStockViewModel = new(_stockDataStore, _stockExchangeDataStore, _currencyDataStore);
+			RightPanelViewModel = _newStockViewModel;
+		}
+		private void ShowEditStock()
+		{
+			if (RightPanelViewModel == _stockEditViewModel) return;
+			if (RightPanelViewModel is not StocksViewModel) return;
+
+			_previousRightPanelType = MainWindowView.Stocks;
+			_previousRightPanelViewModel = RightPanelViewModel;
+			int itemId = (RightPanelViewModel as StocksViewModel).SelectedItem.Id;
+			(RightPanelViewModel as StocksViewModel).SelectedItem = null;
+			_stockEditViewModel = new(_stockDataStore, _stockExchangeDataStore, _currencyDataStore, itemId);
+			RightPanelViewModel = _stockEditViewModel;
 		}
 		#endregion
 	}

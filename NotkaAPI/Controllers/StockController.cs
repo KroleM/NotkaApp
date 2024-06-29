@@ -1,108 +1,132 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NotkaAPI.Data;
+using NotkaAPI.Contracts;
+using NotkaAPI.Helpers;
 using NotkaAPI.Models.Investments;
+using NotkaAPI.Models.Users;
+using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class StockController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public StockController(NotkaDatabaseContext context)
+		public StockController(IRepositoryWrapper repository)
+		{
+			_repository = repository;
+		}
+
+		// GET: api/Stock
+		[HttpGet("{userId}", Name = "StockGETAll")]
+		public async Task<ActionResult<PagedList<StockForView>>> GetStock(int userId, [FromQuery] StockParameters stockParameters)
+		{
+			PagedList<StockForView> stocks;
+			try
+			{
+				stocks = await _repository.Stock.GetStocks(userId, stockParameters);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return stocks;
+		}
+
+		// GET: api/Stock/5
+		[HttpGet("{userId}/{id}", Name = "StockGET")]
+		public async Task<ActionResult<StockForView>> GetStock(int userId, int id)
+		{
+			try
+			{
+				return await _repository.Stock.GetStockById(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
+
+		// PUT: api/Stock/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}", Name = "StockPUT")]
+		public async Task<IActionResult> PutStock(int id, StockForView stock)
         {
-            _context = context;
-        }
+			if (id != stock.Id)
+			{
+				return BadRequest();
+			}
 
-        // GET: api/Stock
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Stock>>> GetStock()
+			try
+			{
+				await _repository.Stock.UpdateStock(id, stock);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+
+			return NoContent();
+		}
+
+		// POST: api/Stock
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost(Name = "StockPOST")]
+		public async Task<ActionResult<StockForView>> PostStock(StockForView stock)
         {
-            return await _context.Stock.ToListAsync();
-        }
+			if (stock == null) return Forbid();
 
-        // GET: api/Stock/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Stock>> GetStock(int id)
-        {
-            var stock = await _context.Stock.FindAsync(id);
+			StockForView uploadedStock;
+			try
+			{
+				uploadedStock = await _repository.Stock.CreateStock(stock);
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            if (stock == null)
-            {
-                return NotFound();
-            }
+			return Ok(uploadedStock);
+		}
 
-            return stock;
-        }
+		// DELETE: api/Stock/5
+		[HttpDelete("{userId}/{id}", Name = "StockDELETE")]
+		public async Task<IActionResult> DeleteStock(int userId, int id)
+		{
+			try
+			{
+				await _repository.Stock.DeleteStock(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (ForbidException)
+			{
+				return Forbid();
+			}
 
-        // PUT: api/Stock/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStock(int id, Stock stock)
-        {
-            if (id != stock.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(stock).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Stock
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Stock>> PostStock(Stock stock)
-        {
-            _context.Stock.Add(stock);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStock", new { id = stock.Id }, stock);
-        }
-
-        // DELETE: api/Stock/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStock(int id)
-        {
-            var stock = await _context.Stock.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            _context.Stock.Remove(stock);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool StockExists(int id)
-        {
-            return _context.Stock.Any(e => e.Id == id);
-        }
+			return NoContent();
+		}
     }
 }

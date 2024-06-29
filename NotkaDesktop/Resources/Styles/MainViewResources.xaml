@@ -6,7 +6,9 @@
                     xmlns:feedviews="clr-namespace:NotkaDesktop.Views.Feed" 
                     xmlns:currencyviews="clr-namespace:NotkaDesktop.Views.Currency"
                     xmlns:countryviews="clr-namespace:NotkaDesktop.Views.Country"
-                    xmlns:stockexchangeviews="clr-namespace:NotkaDesktop.Views.StockExchange">
+                    xmlns:stockexchangeviews="clr-namespace:NotkaDesktop.Views.StockExchange"
+                    xmlns:stockviews="clr-namespace:NotkaDesktop.Views.Stock"
+                    >
 
     <!--Connection between ViewModels and Views necessary to show Views in the MainView-->
     <DataTemplate DataType="{x:Type viewmodels:MainPageViewModel}">
@@ -62,6 +64,15 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:StockExchangeEditViewModel}">
         <stockexchangeviews:StockExchangeEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:StocksViewModel}">
+        <stockviews:StocksView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:NewStockViewModel}">
+        <stockviews:NewStockView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:StockEditViewModel}">
+        <stockviews:StockEditView/>
     </DataTemplate>
 
 </ResourceDictionary>
