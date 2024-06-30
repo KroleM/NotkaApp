@@ -5,10 +5,52 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Currency": {
+    "/api/Countries/{userId}": {
       "get": {
         "tags": [
-          "Currency"
+          "Countries"
+        ],
+        "operationId": "CountryGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -16,84 +58,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Currency"
-                  }
+                  "$ref": "#/components/schemas/CountryForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Currency"
-                  }
+                  "$ref": "#/components/schemas/CountryForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Currency"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Currency"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Currency"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Currency"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Currency"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Currency"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Currency"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Currency"
+                  "$ref": "#/components/schemas/CountryForViewPagedList"
                 }
               }
             }
@@ -101,12 +76,22 @@
         }
       }
     },
-    "/api/Currency/{id}": {
+    "/api/Countries/{userId}/{id}": {
       "get": {
         "tags": [
-          "Currency"
+          "Countries"
         ],
+        "operationId": "CountryGET",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -123,27 +108,61 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Currency"
+                  "$ref": "#/components/schemas/CountryForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Currency"
+                  "$ref": "#/components/schemas/CountryForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Currency"
+                  "$ref": "#/components/schemas/CountryForView"
                 }
               }
             }
           }
         }
       },
+      "delete": {
+        "tags": [
+          "Countries"
+        ],
+        "operationId": "CountryDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Countries/{id}": {
       "put": {
         "tags": [
-          "Currency"
+          "Countries"
         ],
+        "operationId": "CountryPUT",
         "parameters": [
           {
             "name": "id",
@@ -161,7 +180,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Currency"
+                    "$ref": "#/components/schemas/CountryForView"
                   }
                 ]
               }
@@ -170,7 +189,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Currency"
+                    "$ref": "#/components/schemas/CountryForView"
                   }
                 ]
               }
@@ -179,7 +198,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Currency"
+                    "$ref": "#/components/schemas/CountryForView"
                   }
                 ]
               }
@@ -191,12 +210,204 @@
             "description": "OK"
           }
         }
+      }
+    },
+    "/api/Countries": {
+      "post": {
+        "tags": [
+          "Countries"
+        ],
+        "operationId": "CountryPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CountryForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CountryForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CountryForView"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountryForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountryForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountryForView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Currency/{userId}": {
+      "get": {
+        "tags": [
+          "Currency"
+        ],
+        "operationId": "CurrencyGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForViewPagedList"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForViewPagedList"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForViewPagedList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Currency/{userId}/{id}": {
+      "get": {
+        "tags": [
+          "Currency"
+        ],
+        "operationId": "CurrencyGET",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForView"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
           "Currency"
         ],
+        "operationId": "CurrencyDELETE",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -210,6 +421,122 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Currency/{id}": {
+      "put": {
+        "tags": [
+          "Currency"
+        ],
+        "operationId": "CurrencyPUT",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CurrencyForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CurrencyForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CurrencyForView"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Currency": {
+      "post": {
+        "tags": [
+          "Currency"
+        ],
+        "operationId": "CurrencyPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CurrencyForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CurrencyForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CurrencyForView"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyForView"
+                }
+              }
+            }
           }
         }
       }
@@ -2103,10 +2430,31 @@
         }
       }
     },
-    "/api/Portfolio": {
+    "/api/Portfolio/{userId}/{id}": {
       "get": {
         "tags": [
           "Portfolio"
+        ],
+        "operationId": "PortfolioGET",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -2114,84 +2462,89 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               }
             }
           }
         }
       },
-      "post": {
+      "delete": {
         "tags": [
           "Portfolio"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
-                ]
-              }
+        "operationId": "PortfolioDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
-        },
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Portfolio/{userId}": {
+      "get": {
+        "tags": [
+          "Portfolio"
+        ],
+        "operationId": "PortfolioGETByUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               }
             }
@@ -2200,48 +2553,11 @@
       }
     },
     "/api/Portfolio/{id}": {
-      "get": {
-        "tags": [
-          "Portfolio"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
-                }
-              }
-            }
-          }
-        }
-      },
       "put": {
         "tags": [
           "Portfolio"
         ],
+        "operationId": "PortfolioPUT",
         "parameters": [
           {
             "name": "id",
@@ -2259,7 +2575,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Portfolio"
+                    "$ref": "#/components/schemas/PortfolioForView"
                   }
                 ]
               }
@@ -2268,7 +2584,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Portfolio"
+                    "$ref": "#/components/schemas/PortfolioForView"
                   }
                 ]
               }
@@ -2277,7 +2593,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Portfolio"
+                    "$ref": "#/components/schemas/PortfolioForView"
                   }
                 ]
               }
@@ -2289,25 +2605,65 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/Portfolio": {
+      "post": {
         "tags": [
           "Portfolio"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "operationId": "PortfolioPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioForView"
+                  }
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioForView"
+                }
+              }
+            }
           }
         }
       }
@@ -3207,95 +3563,70 @@
         }
       }
     },
-    "/api/Stock": {
+    "/api/Stock/{userId}": {
       "get": {
         "tags": [
           "Stock"
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                }
-              }
+        "operationId": "StockGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        }
-      },
-      "post": {
-        "tags": [
-          "Stock"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Stock"
-                  }
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForViewPagedList"
                 }
               }
             }
@@ -3303,12 +3634,22 @@
         }
       }
     },
-    "/api/Stock/{id}": {
+    "/api/Stock/{userId}/{id}": {
       "get": {
         "tags": [
           "Stock"
         ],
+        "operationId": "StockGET",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -3325,27 +3666,61 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stock"
+                  "$ref": "#/components/schemas/StockForView"
                 }
               }
             }
           }
         }
       },
+      "delete": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Stock/{id}": {
       "put": {
         "tags": [
           "Stock"
         ],
+        "operationId": "StockPUT",
         "parameters": [
           {
             "name": "id",
@@ -3363,7 +3738,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Stock"
+                    "$ref": "#/components/schemas/StockForView"
                   }
                 ]
               }
@@ -3372,7 +3747,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Stock"
+                    "$ref": "#/components/schemas/StockForView"
                   }
                 ]
               }
@@ -3381,7 +3756,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Stock"
+                    "$ref": "#/components/schemas/StockForView"
                   }
                 ]
               }
@@ -3393,11 +3768,227 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/Stock": {
+      "post": {
         "tags": [
           "Stock"
         ],
+        "operationId": "StockPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockForView"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockForView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/StockExchange/{userId}": {
+      "get": {
+        "tags": [
+          "StockExchange"
+        ],
+        "operationId": "StockExchangeGETAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockExchangeForViewPagedList"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockExchangeForViewPagedList"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockExchangeForViewPagedList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/StockExchange/{userId}/{id}": {
+      "get": {
+        "tags": [
+          "StockExchange"
+        ],
+        "operationId": "StockExchangeGET",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockExchangeForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockExchangeForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockExchangeForView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "StockExchange"
+        ],
+        "operationId": "StockExchangeDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/StockExchange/{id}": {
+      "put": {
+        "tags": [
+          "StockExchange"
+        ],
+        "operationId": "StockExchangePUT",
         "parameters": [
           {
             "name": "id",
@@ -3409,6 +4000,37 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchangeForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchangeForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/StockExchangeForView"
+                  }
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -3417,53 +4039,18 @@
       }
     },
     "/api/StockExchange": {
-      "get": {
-        "tags": [
-          "StockExchange"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StockExchange"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StockExchange"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StockExchange"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "StockExchange"
         ],
+        "operationId": "StockExchangePOST",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/StockExchange"
+                    "$ref": "#/components/schemas/StockExchangeForView"
                   }
                 ]
               }
@@ -3472,7 +4059,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/StockExchange"
+                    "$ref": "#/components/schemas/StockExchangeForView"
                   }
                 ]
               }
@@ -3481,7 +4068,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/StockExchange"
+                    "$ref": "#/components/schemas/StockExchangeForView"
                   }
                 ]
               }
@@ -3494,133 +4081,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/StockExchange"
+                  "$ref": "#/components/schemas/StockExchangeForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StockExchange"
+                  "$ref": "#/components/schemas/StockExchangeForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StockExchange"
+                  "$ref": "#/components/schemas/StockExchangeForView"
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/StockExchange/{id}": {
-      "get": {
-        "tags": [
-          "StockExchange"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/StockExchange"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StockExchange"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StockExchange"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "StockExchange"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/StockExchange"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/StockExchange"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/StockExchange"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "StockExchange"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -5675,7 +6149,7 @@
   },
   "components": {
     "schemas": {
-      "Currency": {
+      "Country": {
         "required": [
           "name"
         ],
@@ -5709,12 +6183,204 @@
             "type": "string",
             "nullable": true
           },
-          "stocks": {
+          "stockExchanges": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Stock"
+              "$ref": "#/components/schemas/StockExchange"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CountryForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CountryForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CountryForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Currency": {
+        "required": [
+          "name",
+          "shortName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortName": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CurrencyForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CurrencyForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurrencyForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -6416,6 +7082,50 @@
         },
         "additionalProperties": false
       },
+      "PortfolioForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stocksForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockForView"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PortfolioStock": {
         "type": "object",
         "properties": {
@@ -6809,6 +7519,63 @@
       },
       "StockExchange": {
         "required": [
+          "name",
+          "shortName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "stocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Stock"
+            },
+            "nullable": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "country": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Country"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockExchangeForView": {
+        "required": [
           "name"
         ],
         "type": "object",
@@ -6841,12 +7608,153 @@
             "type": "string",
             "nullable": true
           },
-          "stocks": {
+          "stocksForView": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Stock"
+              "$ref": "#/components/schemas/StockForView"
             },
             "nullable": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "countryShortName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockExchangeForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockExchangeForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "ticker": {
+            "type": "string",
+            "nullable": true
+          },
+          "stockExchangeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockExchangeShortName": {
+            "type": "string",
+            "nullable": true
+          },
+          "currencyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currencyShortName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockForViewPagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockForView"
+            },
+            "nullable": true
+          },
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "additionalProperties": false

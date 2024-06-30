@@ -74,7 +74,7 @@ namespace NotkaMobile.ViewModels
 		private async Task GoToMainPage()
 		{
 			//await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
-			await Shell.Current.GoToAsync($"//Feed");
+			await Shell.Current.GoToAsync($"//FeedPage");
 		}
 		[RelayCommand]
 		private async Task GoToRegisterPage()

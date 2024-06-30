@@ -16,6 +16,7 @@ namespace NotkaAPI.Repository
 		private ICountryRepository? _country;
 		private IStockExchangeRepository? _stockExchange;
 		private IStockRepository? _stock;
+		private IPortfolioRepository? _portfolio;
 
 		public IUserRepository User
 		{
@@ -135,6 +136,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _stock;
+			}
+		}
+		public IPortfolioRepository Portfolio
+		{
+			get
+			{
+				if (_portfolio == null)
+				{
+					_portfolio = new PortfolioRepository(_context);
+				}
+
+				return _portfolio;
 			}
 		}
 

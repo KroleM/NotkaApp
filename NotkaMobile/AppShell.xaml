@@ -34,7 +34,7 @@
             <ShellContent
                 Title="Aktualności"
                 ContentTemplate="{DataTemplate feed:FeedsPage}"
-                Route="Feed"/>
+                Route="FeedPage"/>
         </Tab>
         <Tab Title="Notatnik"
              Route="NotesModulePage"
@@ -56,7 +56,14 @@
                 ContentTemplate="{DataTemplate tags:TagsPage}"
                 Route="TagsModulePage"/>
         </Tab>
-        <!--Tu powinny znaleźć się kolejne analogiczne taby-->
+        <Tab Title="Portfolio"
+             Route="PortfolioPage"
+             Icon="material_tag">
+            <ShellContent
+                Title="Portfolio"
+                ContentTemplate="{DataTemplate tags:TagsPage}"
+                Route="PortfolioPage"/>
+        </Tab>
     </TabBar>
 
 </Shell>

@@ -1,108 +1,153 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NotkaAPI.Data;
+using NotkaAPI.Contracts;
+using NotkaAPI.Helpers;
 using NotkaAPI.Models.Investments;
+using NotkaAPI.ViewModels;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class PortfolioController : ControllerBase
     {
-        private readonly NotkaDatabaseContext _context;
+		private readonly IRepositoryWrapper _repository;
 
-        public PortfolioController(NotkaDatabaseContext context)
-        {
-            _context = context;
-        }
+		public PortfolioController(IRepositoryWrapper repository)
+		{
+			_repository = repository;
+		}
 
-        // GET: api/Portfolio
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Portfolio>>> GetPortfolio()
-        {
-            return await _context.Portfolio.ToListAsync();
-        }
+		//// GET: api/Portfolio
+		//[HttpGet("{userId}", Name = "PortfolioGETAll")]
+		//public async Task<ActionResult<PagedList<PortfolioForView>>> GetPortfolio(int userId, [FromQuery] PortfolioParameters portfolioParameters)
+		//{
+		//	PagedList<PortfolioForView> portfolios;
+		//	try
+		//	{
+		//		portfolios = await _repository.Portfolio.GetPortfolios(userId, portfolioParameters);
+		//	}
+		//	catch (NotFoundException)
+		//	{
+		//		return NotFound();
+		//	}
+		//	catch
+		//	{
+		//		return BadRequest();
+		//	}
 
-        // GET: api/Portfolio/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Portfolio>> GetPortfolio(int id)
-        {
-            var portfolio = await _context.Portfolio.FindAsync(id);
+		//	return portfolios;
+		//}
 
-            if (portfolio == null)
-            {
-                return NotFound();
-            }
+		// GET: api/Portfolio/5/12
+		[HttpGet("{userId}/{id}", Name = "PortfolioGET")]
+		public async Task<ActionResult<PortfolioForView>> GetPortfolio(int userId, int id)
+		{
+			try
+			{
+				return await _repository.Portfolio.GetPortfolioById(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
 
-            return portfolio;
-        }
+		// GET: api/Portfolio/5
+		[HttpGet("{userId}", Name = "PortfolioGETByUser")]
+		public async Task<ActionResult<PortfolioForView>> GetPortfolioByUser(int userId)
+		{
+			try
+			{
+				return await _repository.Portfolio.GetPortfolioByUser(userId);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (UnauthorizedException)
+			{
+				return Unauthorized();
+			}
+			catch
+			{
+				return BadRequest();
+			}
+		}
 
-        // PUT: api/Portfolio/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPortfolio(int id, Portfolio portfolio)
+		// PUT: api/Portfolio/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}", Name = "PortfolioPUT")]
+		public async Task<IActionResult> PutPortfolio(int id, PortfolioForView portfolio)
         {
             if (id != portfolio.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(portfolio).State = EntityState.Modified;
+			try
+			{
+				await _repository.Portfolio.UpdatePortfolio(id, portfolio);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PortfolioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			return NoContent();
+		}
 
-            return NoContent();
-        }
-
-        // POST: api/Portfolio
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Portfolio>> PostPortfolio(Portfolio portfolio)
+		// POST: api/Portfolio
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost(Name = "PortfolioPOST")]
+		public async Task<ActionResult<PortfolioForView>> PostPortfolio(PortfolioForView portfolio)
         {
-            _context.Portfolio.Add(portfolio);
-            await _context.SaveChangesAsync();
+			if (portfolio == null) return Forbid();
 
-            return CreatedAtAction("GetPortfolio", new { id = portfolio.Id }, portfolio);
-        }
+			PortfolioForView uploadedPortfolio;
+			try
+			{
+				uploadedPortfolio = await _repository.Portfolio.CreatePortfolio(portfolio);
+			}
+			catch
+			{
+				return BadRequest();
+			}
 
-        // DELETE: api/Portfolio/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePortfolio(int id)
-        {
-            var portfolio = await _context.Portfolio.FindAsync(id);
-            if (portfolio == null)
-            {
-                return NotFound();
-            }
+			return Ok(uploadedPortfolio);
+		}
 
-            _context.Portfolio.Remove(portfolio);
-            await _context.SaveChangesAsync();
+		// DELETE: api/Portfolio/5
+		[HttpDelete("{userId}/{id}", Name = "PortfolioDELETE")]
+		public async Task<IActionResult> DeletePortfolio(int userId, int id)
+		{
+			try
+			{
+				await _repository.Portfolio.DeletePortfolio(userId, id);
+			}
+			catch (NotFoundException)
+			{
+				return NotFound();
+			}
+			catch (ForbidException)
+			{
+				return Forbid();
+			}
 
-            return NoContent();
-        }
-
-        private bool PortfolioExists(int id)
-        {
-            return _context.Portfolio.Any(e => e.Id == id);
-        }
+			return NoContent();
+		}
     }
 }

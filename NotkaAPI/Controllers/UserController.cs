@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApiSharedClasses.QueryParameters;
-using Azure;
-using Microsoft.AspNetCore.Http;
+﻿using ApiSharedClasses.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NotkaAPI.Contracts;
-using NotkaAPI.Data;
 using NotkaAPI.Helpers;
-using NotkaAPI.Models.Notes;
-using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
-using NuGet.Protocol.Core.Types;
 
 namespace NotkaAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {

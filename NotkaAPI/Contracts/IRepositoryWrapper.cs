@@ -12,6 +12,7 @@
 		ICountryRepository Country { get; }
 		IStockExchangeRepository StockExchange { get; }
 		IStockRepository Stock { get; }
+		IPortfolioRepository Portfolio { get; }
 		Task SaveAsync();
 	}
 }

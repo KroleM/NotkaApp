@@ -75,17 +75,13 @@ namespace NotkaAPI.Models.BusinessLogic
 				//Listy?
 			}.CopyProperties(stock);
 		}
-
-
-		//Models
-		//public static StockExchange ConvertToStockExchange(StockExchangeForView? stockExchangeForView)
-		//{
-		//	return new StockExchange
-		//	{
-		//		//Do przypisania CountryShortName jest konieczne Include(Country)
-		//		CountryShortName = stockExchange?.Country.ShortName ?? string.Empty,
-		//		StocksForView = stockExchange?.Stocks.Select(stock => ConvertToStockForView(stock)).ToList() ?? new(),
-		//	}.CopyProperties(stockExchange);
-		//}
+		public static PortfolioForView ConvertToPortfolioForView(Portfolio? portfolio)
+		{
+			return new PortfolioForView 
+			{
+				//StocksForView = portfolio?.PortfolioStocks.Select(ps => new StockForView().CopyProperties(ps.Stock)).ToList() ?? new(),
+				StocksForView = portfolio?.PortfolioStocks.Select(ps => ModelConverters.ConvertToStockForView(ps.Stock)).ToList() ?? new(),
+			}.CopyProperties(portfolio);
+		}
 	}
 }

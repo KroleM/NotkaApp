@@ -51,6 +51,8 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddSingleton<ListDataStore>();
 			mauiAppBuilder.Services.AddSingleton<TagDataStore>();
 			mauiAppBuilder.Services.AddSingleton<FeedDataStore>();
+			mauiAppBuilder.Services.AddSingleton<StockDataStore>();
+			mauiAppBuilder.Services.AddSingleton<PortfolioDataStore>();
 			return mauiAppBuilder;
 		}
 		public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
