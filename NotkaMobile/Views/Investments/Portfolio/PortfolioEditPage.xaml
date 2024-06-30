@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Investments.Portfolio.PortfolioEditPage"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.PortfolioVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             x:DataType="viewmodel:PortfolioEditViewModel"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate
+            x:Key="WithDesktop"
+            x:DataType="{x:Type model:StockForView}">
+                <Grid Padding="0,0,0,5">
+                    <Border Style="{StaticResource SimpleBorder}"
+                            HeightRequest="40">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PortfolioEditViewModel}}, Path=SelectStockCommand}"
+                                      CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="60, *, 80">
+                            <Label Text="{Binding Ticker}" VerticalOptions="Center" FontSize="14" FontAttributes="Bold" Padding="0,0,5,0"/>
+                            <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" FontSize="12"/>
+                            <Button Grid.Column="2"
+                                    HeightRequest="40"
+                                    WidthRequest="40"
+                                    Text="Usuń"
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PortfolioEditViewModel}}, Path=RemoveStockCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate
+            x:Key="WithoutDesktop"
+            x:DataType="{x:Type model:StockForView}">
+                <Grid Padding="0,0,0,5">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Usuń"
+                                   BackgroundColor="Red"
+                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PortfolioEditViewModel}}, Path=RemoveStockCommand}"
+                                   CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border Style="{StaticResource SimpleBorder}"
+                                HeightRequest="40">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PortfolioEditViewModel}}, Path=SelectStockCommand}"
+                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="60, *">
+                                <Label Text="{Binding Ticker}" VerticalOptions="Center" FontSize="14" FontAttributes="Bold" Padding="0,0,5,0"/>
+                                <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" FontSize="12"/>
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj +" Command="{Binding AddStockCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="5">
+        <CollectionView ItemsLayout="VerticalList"
+                        ItemsSource="{Binding Stocks}"
+                        ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
+                        SelectionMode="None">
+        </CollectionView>
+    </Grid>
+</ContentPage>

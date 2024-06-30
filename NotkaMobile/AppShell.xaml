@@ -9,6 +9,7 @@
     xmlns:notes="clr-namespace:NotkaMobile.Views.Notes.Note"
     xmlns:lists="clr-namespace:NotkaMobile.Views.Notes.List"
     xmlns:tags="clr-namespace:NotkaMobile.Views.Notes.Tag"
+    xmlns:portfolio="clr-namespace:NotkaMobile.Views.Investments.Portfolio"
     Shell.FlyoutBehavior="Disabled"
     Title="NotkaMobile">
 
@@ -28,7 +29,7 @@
                 ContentTemplate="{DataTemplate views:MainPage}"
                 Route="MainPage"/>
         </Tab>-->
-        <Tab Title="Strona domowa"
+        <Tab Title="Aktualności"
              Route="Feed"
              Icon="material_home">
             <ShellContent
@@ -61,7 +62,7 @@
              Icon="material_tag">
             <ShellContent
                 Title="Portfolio"
-                ContentTemplate="{DataTemplate tags:TagsPage}"
+                ContentTemplate="{DataTemplate portfolio:PortfolioEditPage}"
                 Route="PortfolioPage"/>
         </Tab>
     </TabBar>

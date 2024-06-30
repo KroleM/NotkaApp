@@ -10,9 +10,7 @@ namespace NotkaAPI.ViewModels
 		public string StockExchangeShortName { get; set; }
 		public int CurrencyId { get; set; }
 		public string CurrencyShortName { get; set; }
-		//public List<StockPrice> StockPrices { get; set; } = new();
-		//public List<StockNote> StockNotes { get; set; } = new();
-		//public List<PortfolioStock> PortfolioStocks { get; set; } = new();
-		//public List<WatchlistStock> WatchlistStocks { get; set; } = new();
+		public List<NoteForView> NotesForViews { get; set; } = new();
+
 	}
 }

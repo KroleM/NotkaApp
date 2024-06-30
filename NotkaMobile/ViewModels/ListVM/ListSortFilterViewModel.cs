@@ -28,8 +28,6 @@ namespace NotkaMobile.ViewModels.ListVM
 		}
 		public override async Task OnExecute()
 		{
-			Debug.WriteLine(DataStore.Params.SortOrder);
-			Debug.WriteLine(SelectedSortValue?.SortEnum.ToString());
 			DataStore.Params.SortOrder = SelectedSortValue?.SortEnum.ToString() ?? string.Empty;
 			await base.OnExecute();
 		}

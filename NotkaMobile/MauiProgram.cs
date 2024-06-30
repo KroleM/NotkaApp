@@ -5,10 +5,14 @@ using NotkaMobile.ViewModels;
 using NotkaMobile.ViewModels.FeedVM;
 using NotkaMobile.ViewModels.ListVM;
 using NotkaMobile.ViewModels.NoteVM;
+using NotkaMobile.ViewModels.PortfolioVM;
+using NotkaMobile.ViewModels.StockVM;
 using NotkaMobile.ViewModels.TagVM;
 using NotkaMobile.ViewModels.UserVM;
 using NotkaMobile.Views;
 using NotkaMobile.Views.Feed;
+using NotkaMobile.Views.Investments.Portfolio;
+using NotkaMobile.Views.Investments.Stock;
 using NotkaMobile.Views.Notes.List;
 using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
@@ -86,6 +90,12 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<ListDetailsViewModel>();
 			mauiAppBuilder.Services.AddTransient<ListEditViewModel>();
 			mauiAppBuilder.Services.AddTransient<ListSortFilterViewModel>();
+			//Portfolio
+			mauiAppBuilder.Services.AddTransient<PortfolioEditViewModel>();
+			//Stock
+			mauiAppBuilder.Services.AddTransient<StocksViewModel>();
+			mauiAppBuilder.Services.AddTransient<StockDetailsViewModel>();
+			mauiAppBuilder.Services.AddTransient<StockSortFilterViewModel>();
 			//
 
 			return mauiAppBuilder;
@@ -121,6 +131,12 @@ namespace NotkaMobile
 			mauiAppBuilder.Services.AddTransient<ListDetailsPage>();
 			mauiAppBuilder.Services.AddTransient<ListEditPage>();
 			mauiAppBuilder.Services.AddTransient<ListSortFilterPage>();
+			//Portfolio
+			mauiAppBuilder.Services.AddTransient<PortfolioEditPage>();
+			//Stock
+			mauiAppBuilder.Services.AddTransient<StocksPage>();
+			mauiAppBuilder.Services.AddTransient<StockDetailsPage>();
+			mauiAppBuilder.Services.AddTransient<StockSortFilterPage>();
 
 			return mauiAppBuilder;
 		}

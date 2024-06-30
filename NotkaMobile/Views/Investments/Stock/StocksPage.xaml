@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotkaMobile.Views.Investments.Stock.StocksPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.StockVM"
+             xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
+             x:DataType="viewmodel:StocksViewModel"
+             Title="{Binding Title}">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+        <!--W powyższym event Appearing można by zamienić na nowocześniejszy: NavigatedFrom-->
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto, Auto, *" 
+      RowSpacing="5"
+      Padding="5">
+        <SearchBar x:Name="searchBar" 
+               Placeholder="Wyszukaj"
+               SearchCommand="{Binding PerformSearchCommand}"
+               SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    Command = "{Binding SearchTextChangedCommand}"
+                    CommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                    EventName="TextChanged" />
+            </SearchBar.Behaviors>
+        </SearchBar>
+        <Button Grid.Row="1" 
+            Text="Sortowanie/Filtrowanie"
+            Command="{Binding SortFilterCommand}"/>
+        <RefreshView Grid.Row="2" 
+                 Command="{Binding LoadItemsCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView ItemsSource="{Binding Items}"
+                            SelectionMode="None"
+                            RemainingItemsThreshold="1"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
+                            ItemsUpdatingScrollMode="KeepScrollOffset">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:StockForView}">
+                        <Grid Padding="0,0,0,3">
+                            <Border Style="{StaticResource SimpleBorder}"
+                                HeightRequest="38">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:StocksViewModel}}, Path=ItemTapped}"
+                                      CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,Auto,*,Auto" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"/>
+                                    <Label Grid.Column="1" Margin="5,0,0,0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="("/>
+                                                <Span Text="{Binding Ticker}"/>
+                                                <Span Text=")"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Button Grid.Column="3" Text="Dodaj" 
+                                            Padding="10,2"
+                                            Style="{StaticResource SmallButton}" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:StocksViewModel}}, Path=SelectStockCommand}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

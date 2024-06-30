@@ -7715,6 +7715,13 @@
           "currencyShortName": {
             "type": "string",
             "nullable": true
+          },
+          "notesForViews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoteForView"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

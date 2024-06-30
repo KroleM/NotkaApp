@@ -1,5 +1,7 @@
 ﻿using NotkaMobile.Views;
 using NotkaMobile.Views.Feed;
+using NotkaMobile.Views.Investments.Portfolio;
+using NotkaMobile.Views.Investments.Stock;
 using NotkaMobile.Views.Notes.List;
 using NotkaMobile.Views.Notes.Note;
 using NotkaMobile.Views.Notes.Tag;
@@ -38,6 +40,12 @@ namespace NotkaMobile
 			//Feed
 			Routing.RegisterRoute(nameof(FeedsPage), typeof(FeedsPage));
 			Routing.RegisterRoute(nameof(FeedDetailsPage), typeof(FeedDetailsPage));
+			//Portfolio
+			Routing.RegisterRoute(nameof(PortfolioEditPage), typeof(PortfolioEditPage));
+			//Stock
+			Routing.RegisterRoute(nameof(StocksPage), typeof(StocksPage));
+			Routing.RegisterRoute(nameof(StockDetailsPage), typeof(StockDetailsPage));
+			Routing.RegisterRoute(nameof(StockSortFilterPage), typeof(StockSortFilterPage));
 		}
 	}
 }
