@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
+using NotkaMobile.ViewModels.StockVM;
 using NotkaMobile.Views.Investments.Stock;
 using System.Collections.ObjectModel;
 
@@ -14,21 +15,20 @@ namespace NotkaMobile.ViewModels.PortfolioVM
 		//FIXME tryb dla użytkowników Premium?
 		#region Constructor
 
-		public PortfolioEditViewModel(PortfolioDataStore dataStore, StockDataStore stockDataStore) 
+		public PortfolioEditViewModel(PortfolioDataStore dataStore) 
 			: base("Portfolio", dataStore)
 		{
+			ItemId = 0;	//allows to load portfolio
 		}
 
 		#endregion
 		#region Fields & Properties
 
-		private StockDataStore _stockDataStore;
-
 		[ObservableProperty]
 		ObservableCollection<StockForView> _stocks = new();
 
 		[ObservableProperty]
-		StockForView? _selectedStock;
+		StockForView? _selectedStock;	//czy potrzebny?
 
 		#endregion
 		#region Methods
@@ -67,12 +67,17 @@ namespace NotkaMobile.ViewModels.PortfolioVM
 		private async Task RemoveStock(StockForView stock)
 		{
 			Stocks.Remove(stock);
+			await DataStore.UpdateItemAsync(SetItem());
 		}
 
 		[RelayCommand]
-		private void SelectStock(StockForView stock)
+		private async Task SelectStock(StockForView stock)
 		{
-			SelectedStock = stock;
+			if (stock == null)
+			{
+				return;
+			}
+			await Shell.Current.GoToAsync($"{nameof(StockDetailsPage)}?{nameof(StockDetailsViewModel.ItemId)}={stock.Id}");
 		}
 
 		#endregion

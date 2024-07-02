@@ -1,9 +1,11 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
-using NotkaMobile.Services.Abstract;
 using NotkaMobile.ViewModels.Abstract;
+using NotkaMobile.ViewModels.NoteVM;
+using NotkaMobile.Views.Notes.Note;
 using System.Collections.ObjectModel;
 
 namespace NotkaMobile.ViewModels.StockVM
@@ -22,10 +24,6 @@ namespace NotkaMobile.ViewModels.StockVM
 		[ObservableProperty]
 		string _description;
 		[ObservableProperty]
-		DateTime _createdDate;
-		[ObservableProperty]
-		DateTime _modifiedDate;
-		[ObservableProperty]
 		string _stockExchangeShortName;
 		[ObservableProperty]
 		string _currencyShortName;
@@ -37,16 +35,31 @@ namespace NotkaMobile.ViewModels.StockVM
 			Ticker = item.Ticker;
 			Name = item.Name;
 			Description = item.Description;
-			CreatedDate = item.CreatedDate.LocalDateTime;
-			ModifiedDate = item.ModifiedDate.LocalDateTime;
 			StockExchangeShortName = item.StockExchangeShortName;
 			CurrencyShortName = item.CurrencyShortName;
 
+			//NotesForView = item.NotesForViews;
 			NotesForView.Clear();
 			foreach (var stock in item.NotesForViews)
 			{
 				NotesForView.Add(stock);
 			}
+		}
+
+		[RelayCommand]
+		async Task AddNote()
+		{
+
+		}
+
+		[RelayCommand]
+		async Task NoteTapped(NoteForView item)
+		{
+			if (item == null)
+			{
+				return;
+			}
+			await Shell.Current.GoToAsync($"{nameof(NoteDetailsPage)}?{nameof(NoteDetailsViewModel.ItemId)}={item.Id}");
 		}
 	}
 }

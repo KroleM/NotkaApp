@@ -32,7 +32,12 @@ namespace NotkaAPI.Repository
 			var portfolio = await Context.Portfolio
 					.Include(portfolio => portfolio.PortfolioStocks)
 					.ThenInclude(ps => ps.Stock)
+					.ThenInclude(s => s.Currency)
+					.Include(portfolio => portfolio.PortfolioStocks)
+					.ThenInclude(ps => ps.Stock)
+					.ThenInclude(s => s.StockExchange)
 					.SingleOrDefaultAsync(p => p.Id == id);
+
 			if (portfolio.UserId != userId)
 			{
 				throw new UnauthorizedException();
@@ -50,6 +55,10 @@ namespace NotkaAPI.Repository
 			var portfolio = await Context.Portfolio
 					.Include(portfolio => portfolio.PortfolioStocks)
 					.ThenInclude(ps => ps.Stock)
+					.ThenInclude(s => s.Currency)
+					.Include(portfolio => portfolio.PortfolioStocks)
+					.ThenInclude(ps => ps.Stock)
+					.ThenInclude(s => s.StockExchange)
 					.FirstOrDefaultAsync(p => p.UserId == userId);
 
 			return ModelConverters.ConvertToPortfolioForView(portfolio);
@@ -61,8 +70,8 @@ namespace NotkaAPI.Repository
 
 			using (var dbContextTransaction = Context.Database.BeginTransaction())
 			{
-				//This goes first, so that later portfolioToAdd.Id can be extracted
-				//Context.Note.Add(portfolioToAdd);
+				//This goes first, so that later portfolioToUpdate.Id can be extracted
+				//Context.Note.Add(portfolioToUpdate);
 				Create(portfolioToAdd);
 				await Context.SaveChangesAsync();
 
@@ -87,8 +96,8 @@ namespace NotkaAPI.Repository
 
 		public async Task UpdatePortfolio(int id, PortfolioForView portfolio)
 		{
-			var portfolioToAdd = new Portfolio().CopyProperties(portfolio);
-			Context.Entry(portfolioToAdd).State = EntityState.Modified;
+			var portfolioToUpdate = new Portfolio().CopyProperties(portfolio);
+			Context.Entry(portfolioToUpdate).State = EntityState.Modified;
 
 			try
 			{
@@ -96,21 +105,21 @@ namespace NotkaAPI.Repository
 				//using (var dbContextTransaction = Context.Database.BeginTransaction())
 				//{
 				//	//PortfolioStocks
-				//	Context.PortfolioStock.RemoveRange(await Context.PortfolioStock.Where(ps => ps.StockId == portfolioToAdd.Id).ToArrayAsync());
+				//	Context.PortfolioStock.RemoveRange(await Context.PortfolioStock.Where(ps => ps.PortfolioId == portfolioToUpdate.Id).ToArrayAsync());
 				//	if (!portfolio.StocksForView.IsNullOrEmpty())
 				//	{
 				//		foreach (var stockForView in portfolio.StocksForView)
 				//		{
-				//			await AddToContextPortfolioStockAsync(stockForView, portfolioToAdd.Id);
+				//			await AddToContextPortfolioStockAsync(stockForView, portfolioToUpdate.Id);
 				//		}
 				//	}
 
 				//	await Context.SaveChangesAsync();
 				//	dbContextTransaction.Commit();
 				//}
-				
+
 				// V2 - Dodaje rekordy do tabeli PortfolioStocks, ale tylko jeśli dana spółka nie była jeszcze przyporządkowana do tego Portfolio
-				using (var dbContextTransaction = Context.Database.BeginTransaction())	//czy to konieczne?
+				using (var dbContextTransaction = Context.Database.BeginTransaction())  //czy to konieczne?
 				{
 					//PortfolioStocks
 					var stockIds = await Context.PortfolioStock.Where(ps => ps.PortfolioId == portfolio.Id).Select(ps => ps.StockId).ToListAsync();
@@ -119,10 +128,20 @@ namespace NotkaAPI.Repository
 					{
 						foreach (var stockForView in portfolio.StocksForView)
 						{
-							if (stockIds.Contains(stockForView.Id)) continue;
-							await AddToContextPortfolioStockAsync(stockForView, portfolioToAdd.Id);
+							if (stockIds.Contains(stockForView.Id))
+							{
+								stockIds.Remove(stockForView.Id);
+								continue;
+							}
+							await AddToContextPortfolioStockAsync(stockForView, portfolioToUpdate.Id);
 						}
 					}
+					foreach (var stockId in stockIds)
+					{
+						Context.PortfolioStock.Remove(
+							await Context.PortfolioStock.Where(ps => ps.StockId == stockId && ps.PortfolioId == portfolioToUpdate.Id).FirstAsync());
+					}
+					//FIXME brakuje usunięcia usuniętych akcji
 					await Context.SaveChangesAsync();
 					dbContextTransaction.Commit();
 				}

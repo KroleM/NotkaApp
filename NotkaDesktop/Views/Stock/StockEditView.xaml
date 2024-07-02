@@ -25,14 +25,15 @@
         </Grid.RowDefinitions>
         <Label Content="Ticker" />
         <TextBox Grid.Column="1" Margin="1" 
-             Text="{Binding Ticker, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Ticker, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Row="1" Content="Nazwa" />
         <TextBox Grid.Row="1" Grid.Column="1" Margin="1" 
-             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Row="2" Content="Opis"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="1" 
-             TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-             Text="{Binding Description}"/>
+        <TextBox Grid.Row="2" Grid.Column="1" 
+                 Margin="1" MaxWidth="800"
+                 TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+                 Text="{Binding Description}"/>
         <Label Grid.Row="3" Content="Giełda"/>
         <ComboBox Grid.Row="3" Grid.Column="1" Margin="1" 
               Width="150" HorizontalAlignment="Left"                  

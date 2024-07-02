@@ -6,9 +6,11 @@ using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
+using NotkaAPI.Models.Investments;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
+using System.Diagnostics;
 using System.Security.Policy;
 
 namespace NotkaAPI.Repository
@@ -72,11 +74,37 @@ namespace NotkaAPI.Repository
 			}
 
 			var userToAdd = new User().CopyProperties(user);
-
-			Context.User.Add(userToAdd);
+			Create(userToAdd);  // = Context.User.Add(userToAdd);
+			await Context.SaveChangesAsync();   //assigns Id in the DB
+			//give role
+			Context.RoleUser.Add(new RoleUser
+			{
+				Id = 0,
+				IsActive = true,
+				CreatedDate = DateTimeOffset.Now,
+				ModifiedDate = DateTimeOffset.Now,
+				UserId = userToAdd.Id,
+				RoleId = 4,
+			});
+			//create portfolio
+			var newPortfolio = new Portfolio
+			{
+				Id = 0,
+				IsActive = true,
+				CreatedDate = DateTimeOffset.Now,
+				ModifiedDate = DateTimeOffset.Now,
+				UserId = userToAdd.Id,
+				Name = (string.IsNullOrWhiteSpace(user.FirstName) ? user.Email : user.FirstName) + "_portfolio",
+			};
+			Context.Portfolio.Add(newPortfolio);
 			await Context.SaveChangesAsync();
 
-			return ModelConverters.ConvertToUserForView(userToAdd);
+			var addedUser = await Context.User
+					.Include(user => user.RoleUsers)
+					.ThenInclude(roleuser => roleuser.Role)
+					.SingleOrDefaultAsync(user => user.Id == userToAdd.Id);
+
+			return ModelConverters.ConvertToUserForView(addedUser);
 		}
 		public async Task UpdateUser(int id, UserForView user)
 		{

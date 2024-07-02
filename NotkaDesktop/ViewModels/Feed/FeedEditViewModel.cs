@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using NotkaDesktop.Service.Reference;
 using NotkaDesktop.Services;
 using NotkaDesktop.ViewModels.Abstract;
-using NotkaDesktop.Helpers;
 using System.Windows.Media;
 using System.IO;
 using System.Windows.Media.Imaging;

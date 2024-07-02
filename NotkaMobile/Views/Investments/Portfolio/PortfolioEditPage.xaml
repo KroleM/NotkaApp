@@ -19,14 +19,15 @@
                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PortfolioEditViewModel}}, Path=SelectStockCommand}"
                                       CommandParameter="{Binding .}"/>
                         </Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="60, *, 80">
+                        <Grid ColumnDefinitions="60, *, Auto">
                             <Label Text="{Binding Ticker}" VerticalOptions="Center" FontSize="14" FontAttributes="Bold" Padding="0,0,5,0"/>
                             <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" FontSize="12"/>
                             <Button Grid.Column="2"
+                                    Padding="10,2"
+                                    Style="{StaticResource SmallButton}"
                                     HeightRequest="40"
-                                    WidthRequest="40"
                                     Text="Usuń"
-                                    BackgroundColor="Red"
+                                    Background="Red"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PortfolioEditViewModel}}, Path=RemoveStockCommand}"
                                     CommandParameter="{Binding .}"/>
                         </Grid>
