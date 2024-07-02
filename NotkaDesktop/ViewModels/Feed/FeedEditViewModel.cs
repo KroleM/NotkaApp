@@ -40,7 +40,11 @@ namespace NotkaDesktop.ViewModels
 			Name = Item.Name;
 			Description = Item.Description;
 			IsActive = Item.IsActive;
-			if (Item.Picture != null) { _bytesArray = Item.Picture.BitPicture; }
+			if (Item.Picture != null) 
+			{ 
+				_bytesArray = Item.Picture.BitPicture;
+				Photo = Item.Picture;
+			}
 			PhotoSource = LoadPhoto(Item.Picture);
 		}
 

@@ -27,10 +27,11 @@
                         <Label Content="Ukryj hasło" />
                     </StackPanel>-->
                     <Label Style="{StaticResource ErrorLabel}"
+                           VerticalContentAlignment="Center"
                            Content="{Binding ErrorText}"
                            Visibility="{Binding ErrorText, Converter={StaticResource stringToVisibilityConverter}}"/>
                     <Button Content="Zaloguj się" 
-                            Margin="0,3"
+                            Margin="0,5"
                             Command="{Binding LoginCommand}" />
                 </StackPanel>
             </Border>

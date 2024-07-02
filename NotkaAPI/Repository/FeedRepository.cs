@@ -67,9 +67,13 @@ namespace NotkaAPI.Repository
 				using (var dbContextTransaction = Context.Database.BeginTransaction())
 				{
 					//Picture
-					if (feedToAdd.Picture != null)
+					if (feedToAdd.Picture != null)	
 					{
-						await Context.Picture.AddAsync(feedToAdd.Picture);
+						//when we get the same picture, we don't want to save it once again
+						if (feedToAdd.Picture.Id == 0) 
+							await Context.Picture.AddAsync(feedToAdd.Picture);
+						else
+							feedToAdd.PictureId = feedToAdd.Picture.Id;
 					}
 
 					await Context.SaveChangesAsync();

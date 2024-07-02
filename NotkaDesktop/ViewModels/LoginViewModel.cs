@@ -52,6 +52,7 @@ namespace NotkaDesktop.ViewModels
 
 				ApplicationViewModel.s_userId = User.Id;
 				Password = string.Empty;
+				ErrorText = string.Empty;
 				LoggedIn?.Invoke(this, EventArgs.Empty);
 			}
 			catch (ApiException ex)

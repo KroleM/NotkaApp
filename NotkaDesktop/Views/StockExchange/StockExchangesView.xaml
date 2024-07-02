@@ -18,7 +18,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Skrót" Binding="{Binding Path=ShortName}" />
                 <DataGridTextColumn Header="Nazwa" Binding="{Binding Path=Name}" />
-                <DataGridTextColumn Header="Opis" Binding="{Binding Path=Description}" />
+                <DataGridTextColumn Header="Opis" Binding="{Binding Path=Description}" MaxWidth="200" />
                 <DataGridTextColumn Header="Kraj" Binding="{Binding Path=CountryShortName}" />
                 <DataGridTextColumn Header="Data utworzenia" Binding="{Binding Path=CreatedDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
                 <DataGridTextColumn Header="Data ost. modyfikacji" Binding="{Binding Path=ModifiedDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
