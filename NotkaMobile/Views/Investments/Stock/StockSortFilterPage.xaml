@@ -43,7 +43,7 @@
                HorizontalOptions="Center" />
         <Grid Grid.Row="3"
               RowDefinitions="Auto, Auto, *"
-              ColumnDefinitions="200, *"
+              ColumnDefinitions="150, *"
               RowSpacing="5"
               Margin="5,0,5,5">
             <Label Text="Giełda:"

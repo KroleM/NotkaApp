@@ -6265,15 +6265,15 @@ namespace NotkaMobile.Service.Reference
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<StockForViewPagedList> StockGETAllAsync(int userId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase)
+        public virtual System.Threading.Tasks.Task<StockForViewPagedList> StockGETAllAsync(int userId, int? stockExchangeId, int? currencyId, bool? isActive, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase)
         {
-            return StockGETAllAsync(userId, pageNumber, pageSize, sortOrder, searchPhrase, System.Threading.CancellationToken.None);
+            return StockGETAllAsync(userId, stockExchangeId, currencyId, isActive, pageNumber, pageSize, sortOrder, searchPhrase, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<StockForViewPagedList> StockGETAllAsync(int userId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<StockForViewPagedList> StockGETAllAsync(int userId, int? stockExchangeId, int? currencyId, bool? isActive, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
@@ -6293,6 +6293,18 @@ namespace NotkaMobile.Service.Reference
                     urlBuilder_.Append("api/Stock/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('?');
+                    if (stockExchangeId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("StockExchangeId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(stockExchangeId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (currencyId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("CurrencyId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(currencyId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (isActive != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("IsActive")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(isActive, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
                     if (pageNumber != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');

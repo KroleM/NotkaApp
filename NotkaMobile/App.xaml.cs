@@ -28,7 +28,7 @@ namespace NotkaMobile
 		private async void OnActivated(object? sender, EventArgs e)
 		{
 #if WINDOWS
-				const int DefaultWidth = 480;
+				const int DefaultWidth = 520;
 				const int DefaultHeight = 800;
 
 				var window = sender as Window;

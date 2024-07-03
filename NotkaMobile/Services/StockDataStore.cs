@@ -35,7 +35,8 @@ namespace NotkaMobile.Services
 
 		public override async Task RefreshListFromService()
 		{
-			var PagedList = _service.StockGETAllAsync(Preferences.Default.Get("userId", 0), Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase).Result;
+			var PagedList = _service.StockGETAllAsync(Preferences.Default.Get("userId", 0), 
+				Params.StockExchangeId, Params.CurrencyId, Params.IsActive, Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase).Result;
 			Items = PagedList.Items.ToList();
 			PageParameters.CurrentPage = PagedList.CurrentPage;
 			PageParameters.TotalPages = PagedList.TotalPages;
@@ -52,7 +53,7 @@ namespace NotkaMobile.Services
 
 		protected override void EraseParameters()
 		{
-			//throw new NotImplementedException();
+			Params = new StockParameters();
 		}
 	}
 }

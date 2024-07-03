@@ -24,11 +24,11 @@ namespace NotkaAPI.Repository
 				throw new NotFoundException();
 			}
 			
-			var notes = FindByCondition(n => n.UserId == userId
-										&& n.CreatedDate >= noteParameters.MinDateOfCreation
-										&& n.CreatedDate <= noteParameters.MaxDateOfCreation
-										&& ((noteParameters.HasPicture ?? false) ? n.Picture != null : ((noteParameters.HasPicture ?? true) ? (n.Picture != null || n.Picture == null) : n.Picture == null))
-										);
+			var notes = FindByCondition(n => n.UserId == userId)
+				.Where(n => n.CreatedDate >= noteParameters.MinDateOfCreation)
+				.Where(n => n.CreatedDate <= noteParameters.MaxDateOfCreation)
+				.Where(n => ((noteParameters.HasPicture ?? false) ? n.Picture != null : ((noteParameters.HasPicture ?? true) ? (n.Picture != null || n.Picture == null) : n.Picture == null))
+				);
 
 			SearchByPhrase(ref notes, noteParameters.SearchPhrase);
 
