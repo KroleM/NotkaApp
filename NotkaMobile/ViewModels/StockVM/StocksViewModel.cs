@@ -15,6 +15,7 @@ namespace NotkaMobile.ViewModels.StockVM
 			: base("Spółki", dataStore)
 		{
 			LoadPortfolio(portfolioDataStore);
+			DataStore.Params.PageSize = 15;
 		}
 
 		private PortfolioDataStore _portfolioDataStore;

@@ -78,10 +78,11 @@ namespace NotkaDesktop.ViewModels.Abstract
 			IsBusy = true;
 		}
 		[RelayCommand]
-		private void PerformSearch(string query)
+		private async Task PerformSearch(string query)
 		{
 			DataStore.Params.SearchPhrase = query;
-			IsBusy = true;
+			await ExecuteLoadItemsCommand();
+			LoadMoreItemsCommand.NotifyCanExecuteChanged();
 		}
 		[RelayCommand]
 		private void SearchTextChanged(string newText)
@@ -92,7 +93,8 @@ namespace NotkaDesktop.ViewModels.Abstract
 			}
 			return;
 		}
-		[RelayCommand]
+
+		[RelayCommand(CanExecute = nameof(HasNextPage))]
 		private async Task LoadMoreItems()  //virtual?
 		{
 			try
@@ -112,6 +114,10 @@ namespace NotkaDesktop.ViewModels.Abstract
 			{
 				Debug.WriteLine(ex);
 			}
+		}
+		protected bool HasNextPage()
+		{
+			return DataStore.PageParameters.HasNext;
 		}
 
 		public abstract Task GoToAddPage();

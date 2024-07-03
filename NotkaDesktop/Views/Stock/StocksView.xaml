@@ -10,6 +10,15 @@
                     d:DataContext="{d:DesignInstance Type=viewmodels:StocksViewModel}"
                     d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" Margin="0,5">
+            <TextBox Width="200" HorizontalAlignment="Left" 
+                     x:Name="searchBar" />
+            <Button Width="100" Content="Wyszukaj" Margin="5,0"
+                    Command="{Binding PerformSearchCommand}"
+                    CommandParameter="{Binding ElementName=searchBar, Path=Text}"/>
+            <!--CommandParameter="{Binding Source={x:Reference Name=searchBar}, Path=Text}"/>-->
+        </StackPanel>
+
         <DataGrid AutoGenerateColumns="False" 
                   ItemsSource="{Binding Items}" 
                   SelectedItem="{Binding SelectedItem}"
@@ -26,5 +35,9 @@
                 <DataGridCheckBoxColumn Header="Czy aktywny" Binding="{Binding Path=IsActive}" />
             </DataGrid.Columns>
         </DataGrid>
+        
+        <Button Width="150" Margin="5"
+                Content="Załaduj więcej"
+                Command="{Binding LoadMoreItemsCommand}"/>
     </StackPanel>
 </views:ListViewBase>

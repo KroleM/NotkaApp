@@ -124,9 +124,5 @@ namespace NotkaDesktop.ViewModels
 				Debug.WriteLine(ex);
 			}
 		}
-		private bool HasNextPage()
-		{
-			return DataStore.PageParameters.HasNext;
-		}
 	}
 }

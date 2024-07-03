@@ -63,7 +63,7 @@
             <ShellContent
                 Title="Portfolio"
                 ContentTemplate="{DataTemplate portfolio:PortfolioEditPage}"
-                Route="PortfolioEditPage?ItemId=0"/>
+                Route="PortfolioPage"/>
         </Tab>
     </TabBar>
 

@@ -36,7 +36,7 @@ namespace NotkaMobile.Services
 		public async override Task RefreshListFromService()
 		{
 			var PagedList = _service.ListGETAllAsync(Preferences.Default.Get("userId", 0),
-							Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase)
+								Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase)
 							.Result;
 			Items = PagedList.Items.ToList();
 			PageParameters.CurrentPage = PagedList.CurrentPage;

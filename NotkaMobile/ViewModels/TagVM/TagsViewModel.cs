@@ -1,9 +1,9 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.Views.Notes.Tag;
-using TagForView = NotkaMobile.Service.Reference.TagForView;
 
 namespace NotkaMobile.ViewModels.TagVM
 {
@@ -12,6 +12,7 @@ namespace NotkaMobile.ViewModels.TagVM
 		public TagsViewModel(TagDataStore dataStore) 
 			: base("Tagi", dataStore)
 		{
+			DataStore.Params.PageSize = 12;
 		}
 
 		public override async Task GoToAddPage()

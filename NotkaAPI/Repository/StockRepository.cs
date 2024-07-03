@@ -5,6 +5,7 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Investments;
+using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
 
@@ -19,10 +20,13 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<StockForView>> GetStocks(int userId, StockParameters stockParameters)
 		{
-			var stocks = Context.Stock.OrderBy(s => s.Ticker).Include(s => s.Currency).Include(s => s.StockExchange);
+			var stocks = Context.Stock.AsQueryable();	//.OrderBy(s => s.Ticker).Include(s => s.Currency).Include(s => s.StockExchange);
 			//Filtrowanie i wyszukiwanie?
+			SearchByPhrase(ref stocks, stockParameters.SearchPhrase);
 
-			return await PagedList<StockForView>.CreateAsync(stocks.Select(stock => ModelConverters.ConvertToStockForView(stock)),
+			var stocksWithIncludes = stocks.OrderBy(s => s.Ticker).Include(s => s.Currency).Include(s => s.StockExchange);
+
+			return await PagedList<StockForView>.CreateAsync(stocksWithIncludes.Select(stock => ModelConverters.ConvertToStockForView(stock)),
 										stockParameters.PageNumber,
 										stockParameters.PageSize);
 		}
@@ -92,6 +96,14 @@ namespace NotkaAPI.Repository
 		private bool StockExists(int id)
 		{
 			return Context.Currency.Any(c => c.Id == id);
+		}
+
+		private void SearchByPhrase(ref IQueryable<Stock> stocks, string? searchPhrase)
+		{
+			if (!stocks.Any() || string.IsNullOrWhiteSpace(searchPhrase))
+				return;
+			stocks = stocks.Where(s => s.Name.ToLower().Contains(searchPhrase.Trim().ToLower())
+						|| s.Ticker.ToLower().Contains(searchPhrase.Trim().ToLower()));
 		}
 	}
 }

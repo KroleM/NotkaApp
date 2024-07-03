@@ -115,6 +115,7 @@ namespace NotkaMobile.ViewModels.Abstract
 				{
 					DataStore.Params.PageNumber++;
 					Debug.WriteLine("Page number: {0}", DataStore.Params.PageNumber);
+					Debug.WriteLine("Page size: {0}", DataStore.Params.PageSize);
 					var items = await DataStore.GetItemsAsync(true);
 					foreach (var item in items)
 					{
