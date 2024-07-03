@@ -72,7 +72,7 @@ namespace NotkaAPI.Models.BusinessLogic
 			{
 				StockExchangeShortName = stock?.StockExchange.ShortName ?? string.Empty,
 				CurrencyShortName = stock?.Currency.ShortName ?? string.Empty,
-				//Listy?
+				NotesForViews = stock?.StockNotes.Select(stocknote => ConvertToNoteForView(stocknote?.Note)).ToList() ?? new(),
 			}.CopyProperties(stock);
 		}
 		public static PortfolioForView ConvertToPortfolioForView(Portfolio? portfolio)
@@ -80,7 +80,7 @@ namespace NotkaAPI.Models.BusinessLogic
 			return new PortfolioForView 
 			{
 				//StocksForView = portfolio?.PortfolioStocks.Select(ps => new StockForView().CopyProperties(ps.Stock)).ToList() ?? new(),
-				StocksForView = portfolio?.PortfolioStocks.Select(ps => ModelConverters.ConvertToStockForView(ps.Stock)).ToList() ?? new(),
+				StocksForView = portfolio?.PortfolioStocks.Select(ps => ConvertToStockForView(ps.Stock)).ToList() ?? new(),
 			}.CopyProperties(portfolio);
 		}
 	}

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Investments.Portfolio.PortfolioEditPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.PortfolioVM"
              xmlns:model="clr-namespace:NotkaMobile.Service.Reference"
              x:DataType="viewmodel:PortfolioEditViewModel"
@@ -67,11 +68,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Dodaj +" Command="{Binding AddStockCommand}" />
+        <ToolbarItem Text="Dodaj +" 
+                     Command="{Binding AddStockCommand}" 
+                     IsEnabled="{Binding IsUserPremium}"/>
     </ContentPage.ToolbarItems>
 
     <Grid Padding="5">
-        <CollectionView ItemsLayout="VerticalList"
+        <Label Margin="10" 
+               Text="Ta zakładka jest dostępna tylko dla użytkowników Premium!" 
+               IsVisible="{Binding IsUserPremium, Converter={toolkit:InvertedBoolConverter}}"/>
+        <CollectionView IsVisible="{Binding IsUserPremium}"
+                        ItemsLayout="VerticalList"
                         ItemsSource="{Binding Stocks}"
                         ItemTemplate="{OnPlatform WinUI={StaticResource WithDesktop}, MacCatalyst={StaticResource WithDesktop}, Default={StaticResource WithoutDesktop}}"
                         SelectionMode="None">

@@ -1,5 +1,4 @@
 ﻿using NotkaAPI.Models;
-using NotkaAPI.Models.Investments;
 
 namespace NotkaAPI.ViewModels
 {

@@ -6,11 +6,7 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Investments;
-using NotkaAPI.Models.Notes;
-using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
-using System.Diagnostics;
-using static Azure.Core.HttpHeader;
 
 namespace NotkaAPI.Repository
 {
@@ -23,8 +19,6 @@ namespace NotkaAPI.Repository
 
 		public async Task<PagedList<StockForView>> GetStocks(int userId, StockParameters stockParameters)
 		{
-			//var stocks = Context.Stock.AsQueryable();	//.OrderBy(s => s.Ticker).Include(s => s.Currency).Include(s => s.StockExchange);
-			//Filtrowanie i wyszukiwanie?
 			var stocks = FindByCondition(s => stockParameters.StockExchangeId == 0 ? s.StockExchangeId > 0 : s.StockExchangeId == stockParameters.StockExchangeId)
 							.Where(s => stockParameters.CurrencyId == 0 ? s.CurrencyId > 0 : s.CurrencyId == stockParameters.CurrencyId)
 							.Where(s => stockParameters.IsActive == null ? true : s.IsActive == stockParameters.IsActive)
@@ -43,7 +37,14 @@ namespace NotkaAPI.Repository
 
 		public async Task<StockForView> GetStockById(int userId, int id)
 		{
-			var stock = await Context.Stock.Include(s => s.Currency).Include(s => s.StockExchange).SingleOrDefaultAsync(s => s.Id == id);
+			var stock = await Context.Stock
+				.Include(s => s.Currency)
+				.Include(s => s.StockExchange)
+				.Include(s => s.StockNotes.Where(sn => sn.Note.UserId == userId))
+				.ThenInclude(sn => sn.Note)
+				.ThenInclude(n => n.NoteTags)
+				.ThenInclude(nt => nt.Tag)
+				.SingleOrDefaultAsync(s => s.Id == id);
 
 			return ModelConverters.ConvertToStockForView(stock);
 		}
@@ -58,7 +59,9 @@ namespace NotkaAPI.Repository
 			var result = Context.Stock
 				.Include(s => s.Currency)
 				.Include(s => s.StockExchange)
-				.SingleOrDefault(se => se.Id == stockToAdd.Id);
+				.Include(s => s.StockNotes)
+				.ThenInclude(sn => sn.Note)
+				.SingleOrDefault(s => s.Id == stockToAdd.Id);
 
 			return ModelConverters.ConvertToStockForView(result);
 		}

@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace NotkaMobile.ViewModels.NoteVM
 {
+	[QueryProperty(nameof(StockId), nameof(StockId))]
 	public partial class NewNoteViewModel : ANewViewModel<NoteForView, NoteParameters>
 	{
 		#region Constructor
@@ -20,6 +21,13 @@ namespace NotkaMobile.ViewModels.NoteVM
 
 		#endregion
 		#region Fields & Properties
+
+		private int _stockId;
+		public int StockId
+		{
+			get => _stockId;
+			set => _stockId = value;
+		}
 
 		private TagDataStore _tagDataStore;
 		private byte[] _bytesArray;
@@ -92,7 +100,8 @@ namespace NotkaMobile.ViewModels.NoteVM
 				ModifiedDate = DateTimeOffset.Now,
 				UserId = Preferences.Default.Get("userId", 0),
 				TagsForView = SelectedTags,
-				Picture = PhotoSource == null ? null : Photo
+				Picture = PhotoSource == null ? null : Photo,
+				StockId = this.StockId == 0 ? null : this.StockId,
 			};
 		}
 		public override bool ValidateSave()

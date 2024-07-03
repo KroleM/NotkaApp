@@ -13,9 +13,9 @@
     </ContentPage.ToolbarItems>
     
     <ScrollView>
-        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, *" Padding="5">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *" Padding="5">
             <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="0,5"/>
-            <Label Grid.Row="1" FontSize="Micro" Margin="0,0,0,5">
+            <Label Grid.Row="1" Margin="0,0,0,5">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Ticker: "/>
@@ -23,7 +23,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Grid.Row="2" FontSize="Micro" Margin="0,0,0,5">
+            <Label Grid.Row="2" Margin="0,0,0,5">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Giełda: "/>
@@ -31,7 +31,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Grid.Row="3" FontSize="Micro" Margin="0,0,0,5">
+            <Label Grid.Row="3" Margin="0,0,0,5">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Waluta: "/>
@@ -66,7 +66,8 @@
                     <Label Text="{Binding Description}" />
                 </Border>
             </toolkit:Expander>
-            <Grid Grid.Row="5" Padding="0,5">
+            <Label Grid.Row="5" Text="Notatki" HorizontalOptions="Center" TextDecorations="Underline"/>
+            <Grid Grid.Row="6" Padding="0,5">
                 <CollectionView ItemsSource="{Binding NotesForView}"
                                 SelectionMode="None">
                     <CollectionView.ItemTemplate>

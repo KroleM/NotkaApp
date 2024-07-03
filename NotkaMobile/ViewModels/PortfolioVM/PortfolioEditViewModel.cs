@@ -1,12 +1,14 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.ViewModels.StockVM;
 using NotkaMobile.Views.Investments.Stock;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace NotkaMobile.ViewModels.PortfolioVM
 {
@@ -18,11 +20,15 @@ namespace NotkaMobile.ViewModels.PortfolioVM
 		public PortfolioEditViewModel(PortfolioDataStore dataStore) 
 			: base("Portfolio", dataStore)
 		{
-			ItemId = 0;	//allows to load portfolio
+			ItemId = 0; //allows to load portfolio
+			WeakReferenceMessenger.Default.Register<UserForView>(this, (r, m) => ChangeUser(m));
+			IsUserPremium = Preferences.Default.Get("role", "Basic") == "Premium";
 		}
 
 		#endregion
 		#region Fields & Properties
+		[ObservableProperty]
+		bool _isUserPremium;
 
 		[ObservableProperty]
 		ObservableCollection<StockForView> _stocks = new();
@@ -52,6 +58,12 @@ namespace NotkaMobile.ViewModels.PortfolioVM
 		public override bool ValidateSave()
 		{
 			return true;
+		}
+
+		private void ChangeUser(UserForView user)
+		{
+			IsUserPremium = Preferences.Default.Get("role", "Basic") == "Premium";
+			ItemId = 0;	//way to update the portfolio
 		}
 
 		#endregion

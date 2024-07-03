@@ -7,6 +7,7 @@ using NotkaMobile.ViewModels.Abstract;
 using NotkaMobile.ViewModels.NoteVM;
 using NotkaMobile.Views.Notes.Note;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.StockVM
 {
@@ -49,7 +50,8 @@ namespace NotkaMobile.ViewModels.StockVM
 		[RelayCommand]
 		async Task AddNote()
 		{
-
+			Debug.WriteLine(ItemId);
+			await Shell.Current.GoToAsync($"{nameof(NewNotePage)}?{nameof(NewNoteViewModel.StockId)}={ItemId}");
 		}
 
 		[RelayCommand]

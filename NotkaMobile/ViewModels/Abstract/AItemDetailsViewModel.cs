@@ -4,6 +4,8 @@ using System.Diagnostics;
 
 namespace NotkaMobile.ViewModels.Abstract
 {
+	//QueryProperty: first argument specifies the name of property that will receive the data;
+	//second argument specifies parameter id
 	[QueryProperty(nameof(ItemId), nameof(ItemId))]
 	public abstract class AItemDetailsViewModel<T, U> : BaseViewModel
 	{

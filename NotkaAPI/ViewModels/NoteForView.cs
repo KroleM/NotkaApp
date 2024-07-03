@@ -8,5 +8,6 @@ namespace NotkaAPI.ViewModels
 		public int UserId { get; set; }
 		public List<TagForView> TagsForView { get; set; } = new();  //FIXME new() może nie być konieczne
 		public Picture? Picture { get; set; }
+		public int? StockId { get; set; }
 	}
 }

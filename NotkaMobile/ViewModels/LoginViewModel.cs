@@ -8,6 +8,7 @@ using NotkaMobile.Views;
 using NotkaMobile.Views.User;
 using NotkaMobile.Views.Feed;
 using System.Diagnostics;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace NotkaMobile.ViewModels
 {
@@ -102,7 +103,7 @@ namespace NotkaMobile.ViewModels
 					User = await _loginDataStore.LoginUser(Email, Password);
 				}
 
-				if (!User.RolesForView.Any(r => r.Id == 3 || r.Id == 4))
+				if (!User.RolesForView.Any(r => r.Id == 4 || r.Id == 5))
 				{
 					await Shell.Current.DisplayAlert("Niepoprawne dane użytkownika", 
 						"Brak odpowiednich uprawnień", "OK");
@@ -110,11 +111,11 @@ namespace NotkaMobile.ViewModels
 				}
 
 				string role = string.Empty;
-				if (User.RolesForView.Any(r => r.Id == 4))
+				if (User.RolesForView.Any(r => r.Id == 5))
 				{
 					role = UserRoles.Premium.ToString();
 				}
-				else if(User.RolesForView.Any(r => r.Id == 3))
+				else if(User.RolesForView.Any(r => r.Id == 4))
 				{
 					role = UserRoles.Basic.ToString();
 				}
@@ -124,6 +125,7 @@ namespace NotkaMobile.ViewModels
 				Preferences.Default.Set("userId", User.Id);
 				Preferences.Default.Set("role", role);
 				Password = string.Empty;
+				WeakReferenceMessenger.Default.Send(User);
 				await GoToMainPage();
 			}
 			catch (ApiException ex)

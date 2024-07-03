@@ -6,6 +6,7 @@ using NotkaAPI.Contracts;
 using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
+using NotkaAPI.Models.Investments;
 using NotkaAPI.Models.Notes;
 using NotkaAPI.ViewModels;
 
@@ -74,7 +75,7 @@ namespace NotkaAPI.Repository
 				//Context.Note.Add(noteToAdd);
 				Create(noteToAdd);
 				await Context.SaveChangesAsync();
-
+				//TagsForView
 				if (!note.TagsForView.IsNullOrEmpty())
 				{
 					foreach (var tagForView in note.TagsForView)
@@ -82,6 +83,18 @@ namespace NotkaAPI.Repository
 						await AddToContextNoteTagAsync(tagForView, noteToAdd.Id);
 						await Context.SaveChangesAsync();
 					}
+				}
+				//StockNote
+				if (note.StockId != null)
+				{
+					Context.StockNote.Add(new StockNote
+					{
+						Id = 0,
+						IsActive = true,
+						NoteId = noteToAdd.Id,
+						StockId = (int)note.StockId,
+					});
+					await Context.SaveChangesAsync();
 				}
 				dbContextTransaction.Commit();
 			}
