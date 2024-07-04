@@ -59,7 +59,7 @@ namespace NotkaMobile.ViewModels.Abstract
 			IsBusy = true;
 			SelectedItem = default(T);
 		}
-		protected async Task ExecuteLoadItemsCommand()
+		protected async virtual Task ExecuteLoadItemsCommand()
 		{
 			IsBusy = true;
 			try

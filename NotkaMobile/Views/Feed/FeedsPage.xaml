@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NotkaMobile.Views.Feed.FeedsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:NotkaMobile.ViewModels.FeedVM"
              x:DataType="viewmodel:FeedsViewModel"
              Title="{Binding Title}">
@@ -46,19 +47,29 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+        <!--W powyższym event Appearing można by zamienić na nowocześniejszy: NavigatedFrom-->
+    </ContentPage.Behaviors>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="material_settings.png"
                      Command="{Binding GoToSettingsCommand}"/>
     </ContentPage.ToolbarItems>
 
+    <!--RefreshView??-->
     <Grid Padding="5">
-        <CollectionView 
+        <RefreshView Grid.Row="2" 
+                     Command="{Binding LoadItemsCommand}"
+                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <CollectionView 
                 ItemsSource="{Binding ItemsWithImage}"
                 ItemTemplate="{StaticResource FeedItem}"
                 SelectionMode="None"
                 RemainingItemsThreshold="1"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsWithImageCommand}"
                 ItemsUpdatingScrollMode="KeepScrollOffset">
-        </CollectionView>
+            </CollectionView>
+        </RefreshView>
     </Grid>
 </ContentPage>

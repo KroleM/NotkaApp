@@ -15,8 +15,6 @@ namespace NotkaMobile.ViewModels.FeedVM
 		public FeedsViewModel(FeedDataStore dataStore) 
 			: base("Aktualności", dataStore)
 		{
-			ExecuteLoadItemsCommand();
-			CreateFeedWithImageList();
 		}
 		public ObservableCollection<FeedWithImageViewModel> ItemsWithImage { get; } = new();
 
@@ -117,6 +115,12 @@ namespace NotkaMobile.ViewModels.FeedVM
 			{
 				Debug.WriteLine(ex);
 			}
+		}
+
+		protected async override Task ExecuteLoadItemsCommand()
+		{
+			await base.ExecuteLoadItemsCommand();
+			CreateFeedWithImageList();
 		}
 	}
 }

@@ -59,7 +59,7 @@
         </Tab>
         <Tab Title="Portfolio"
              Route="PortfolioPage"
-             Icon="material_tag">
+             Icon="material_atm">
             <ShellContent
                 Title="Portfolio"
                 ContentTemplate="{DataTemplate portfolio:PortfolioEditPage}"

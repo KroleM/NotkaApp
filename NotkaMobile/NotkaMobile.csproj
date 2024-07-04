@@ -63,6 +63,7 @@
 	  <None Remove="Resources\Fonts\SansitaSwashed-Bold.ttf" />
 	  <None Remove="Resources\Fonts\SansitaSwashed-Regular.ttf" />
 	  <None Remove="Resources\Images\material_add.svg" />
+	  <None Remove="Resources\Images\material_atm.svg" />
 	  <None Remove="Resources\Images\material_close.svg" />
 	  <None Remove="Resources\Images\material_delete.svg" />
 	  <None Remove="Resources\Images\material_edit.svg" />
