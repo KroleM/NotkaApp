@@ -1,6 +1,7 @@
 ﻿using ApiSharedClasses.QueryParameters;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using NotkaMobile.Helpers;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
@@ -16,7 +17,7 @@ namespace NotkaMobile.ViewModels.UserVM
 		}
 
 		[ObservableProperty]
-		string _email;
+		string _email = string.Empty;
 		[ObservableProperty]
 		string _firstName = string.Empty;
 		[ObservableProperty]
@@ -24,7 +25,7 @@ namespace NotkaMobile.ViewModels.UserVM
 		[ObservableProperty]
 		DateTime? _birthDate;
 		[ObservableProperty]
-		string _password;
+		string _password = string.Empty;
 		[ObservableProperty]
 		private bool _isHidden = true;
 		public override UserForView SetItem()
@@ -35,11 +36,11 @@ namespace NotkaMobile.ViewModels.UserVM
 				IsActive = true,
 				CreatedDate = DateTimeOffset.Now,
 				ModifiedDate = DateTimeOffset.Now,
-				Email = _email,
-				FirstName = _firstName,
-				LastName = _lastName,
-				BirthDate = _birthDate,
-				PasswordHash = _password,
+				Email = this.Email,
+				FirstName = this.FirstName,
+				LastName = this.LastName,
+				BirthDate = this.BirthDate,
+				Password = this.Password,
 			};
 		}
 

@@ -13,6 +13,7 @@ namespace NotkaAPI.Models.Users
 		public string Email { get; set; }
 		[Required]
 		public string PasswordHash { get; set; }
+		public byte[] PasswordSalt { get; set; }
 		public string? FirstName { get; set; }
 		public string? LastName { get; set; }
 		[Column(TypeName = "DATE")]

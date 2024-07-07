@@ -4,9 +4,7 @@ using NotkaMobile.Helpers;
 using NotkaMobile.Service.Reference;
 using NotkaMobile.Services;
 using NotkaMobile.ViewModels.Abstract;
-using NotkaMobile.Views;
 using NotkaMobile.Views.User;
-using NotkaMobile.Views.Feed;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -35,12 +33,12 @@ namespace NotkaMobile.ViewModels
 		private async Task Appearing()
 		{
 			if (!Preferences.Default.ContainsKey("userEmail")) return;
-			if (!Preferences.Default.ContainsKey("passwordHash")) return;
+			if (!Preferences.Default.ContainsKey("password")) return;
 
 			string userEmail = Preferences.Default.Get("userEmail", string.Empty);
-			string passwordHash = Preferences.Default.Get("passwordHash", string.Empty);
+			string password = Preferences.Default.Get("password", string.Empty);
 
-			if (IsBusy)
+			if (IsBusy) 
 				return;
 
 			try
@@ -53,13 +51,23 @@ namespace NotkaMobile.ViewModels
 				}
 
 				IsBusy = true;
-				if (!string.IsNullOrWhiteSpace(userEmail) && !string.IsNullOrWhiteSpace(passwordHash))
+				if (!string.IsNullOrWhiteSpace(userEmail) && !string.IsNullOrWhiteSpace(password))
 				{
-					User = await _loginDataStore.LoginUser(userEmail, passwordHash);
+					User = await _loginDataStore.LoginUser(userEmail, password);
 				}
-
-				Preferences.Default.Set("userId", User.Id);
-				await GoToMainPage();
+				if (User != null)
+				{
+					Preferences.Default.Set("userId", User.Id);
+					Preferences.Default.Set("role", GetRole(User));
+					await GoToMainPage();
+				}
+				else
+				{
+					Preferences.Default.Set("userEmail", string.Empty);
+					Preferences.Default.Set("password", string.Empty);
+					Preferences.Default.Set("userId", string.Empty);
+					Preferences.Default.Set("role", string.Empty);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -110,20 +118,10 @@ namespace NotkaMobile.ViewModels
 					return;
 				}
 
-				string role = string.Empty;
-				if (User.RolesForView.Any(r => r.Id == 5))
-				{
-					role = UserRoles.Premium.ToString();
-				}
-				else if(User.RolesForView.Any(r => r.Id == 4))
-				{
-					role = UserRoles.Basic.ToString();
-				}
-
 				Preferences.Default.Set("userEmail", Email);
-				Preferences.Default.Set("passwordHash", Password);
+				Preferences.Default.Set("password", Password);
 				Preferences.Default.Set("userId", User.Id);
-				Preferences.Default.Set("role", role);
+				Preferences.Default.Set("role", GetRole(User));
 				Password = string.Empty;
 				WeakReferenceMessenger.Default.Send(User);
 				await GoToMainPage();
@@ -147,6 +145,23 @@ namespace NotkaMobile.ViewModels
 				IsBusy = false;
 				//IsRefreshing = false;
 			}
+		}
+
+		private string GetRole(UserForView userForView)
+		{
+			string role = string.Empty;
+			if (userForView != null)
+			{
+				if (userForView.RolesForView.Any(r => r.Id == 5))
+				{
+					role = UserRoles.Premium.ToString();
+				}
+				else if (userForView.RolesForView.Any(r => r.Id == 4))
+				{
+					role = UserRoles.Basic.ToString();
+				}
+			}
+			return role;
 		}
 	}
 }

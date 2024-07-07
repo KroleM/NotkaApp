@@ -1,5 +1,4 @@
 ﻿using ApiSharedClasses.QueryParameters;
-using Azure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NotkaAPI.Contracts;
@@ -7,11 +6,9 @@ using NotkaAPI.Data;
 using NotkaAPI.Helpers;
 using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Investments;
-using NotkaAPI.Models.Notes;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
-using System.Diagnostics;
-using System.Security.Policy;
+using NotkaMobile.Helpers;
 
 namespace NotkaAPI.Repository
 {
@@ -48,7 +45,7 @@ namespace NotkaAPI.Repository
 
 			return ModelConverters.ConvertToUserForView(user);
 		}
-		public async Task<UserForView> GetUserWithAuth(string email, string hash)
+		public async Task<UserForView> GetUserWithAuth(string email, string password)
 		{
 			var user = await Context.User
 				.Include(user => user.RoleUsers)
@@ -59,7 +56,7 @@ namespace NotkaAPI.Repository
 			{
 				throw new NotFoundException();
 			}
-			if (hash != user.PasswordHash)
+			if (!PasswordHelper.VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
 			{
 				throw new NotFoundException();
 			}
@@ -74,6 +71,11 @@ namespace NotkaAPI.Repository
 			}
 
 			var userToAdd = new User().CopyProperties(user);
+
+			byte[] passwordSalt;
+			userToAdd.PasswordHash = PasswordHelper.HashPassword(user.Password, out passwordSalt);
+			userToAdd.PasswordSalt = passwordSalt;
+
 			Create(userToAdd);  // = Context.User.Add(userToAdd);
 			await Context.SaveChangesAsync();   //assigns Id in the DB
 			//give role
@@ -109,6 +111,13 @@ namespace NotkaAPI.Repository
 		public async Task UpdateUser(int id, UserForView user)
 		{
 			var userToAdd = new User().CopyProperties(user);
+			if (!string.IsNullOrWhiteSpace(user.Password))
+			{
+				byte[] passwordSalt;
+				userToAdd.PasswordHash = PasswordHelper.HashPassword(user.Password, out passwordSalt);
+				userToAdd.PasswordSalt = passwordSalt;
+			}
+
 			Context.Entry(userToAdd).State = EntityState.Modified;
 
 			try

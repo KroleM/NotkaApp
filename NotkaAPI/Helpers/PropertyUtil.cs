@@ -17,11 +17,11 @@ namespace NotkaAPI.Helpers
 		{
 			foreach (var property in typeof(T).GetProperties().Where(p => p.CanWrite))
 			{
-				Func<PropertyInfo, bool> CheckIfPropertyExistInSource =
+				Func<PropertyInfo, bool> CheckIfPropertyExistsInSource =
 					prop => string.Equals(property.Name, prop.Name, StringComparison.InvariantCultureIgnoreCase)
 					&& prop.PropertyType.Equals(property.PropertyType);
 
-				if (sourceObject.GetType().GetProperties().Any(CheckIfPropertyExistInSource))
+				if (sourceObject.GetType().GetProperties().Any(CheckIfPropertyExistsInSource))
 				{
 					property.SetValue(targetObject, sourceObject.GetPropertyValue(property.Name), null);
 				}

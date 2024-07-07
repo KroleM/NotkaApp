@@ -27,7 +27,7 @@ namespace NotkaMobile.ViewModels.UserVM
 		public override UserForView SetItem()
 		{
 			Item.IsActive = true;
-			Item.PasswordHash = this.NewPassword;
+			Item.Password = this.NewPassword;
 			Item.ModifiedDate = DateTimeOffset.Now;
 			Preferences.Default.Set("passwordHash", NewPassword);
 
@@ -38,7 +38,7 @@ namespace NotkaMobile.ViewModels.UserVM
 		{
 			if (!string.IsNullOrEmpty(CurrentPassword))
 			{
-				if (CurrentPassword != Preferences.Default.Get("passwordHash", ""))
+				if (CurrentPassword != Preferences.Default.Get("password", ""))
 					return false;
 				if (NewPassword.Length > 2)
 					return true;

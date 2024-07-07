@@ -38,6 +38,13 @@ namespace NotkaDesktop.ViewModels
 
 		[ObservableProperty]
 		bool _isActive = true;
+
+		[ObservableProperty]
+		string _newPassword = string.Empty;
+
+		[ObservableProperty]
+		string _repeatPassword = string.Empty;
+
 		#endregion
 		#region Methods
 		public override void LoadProperties()
@@ -62,13 +69,14 @@ namespace NotkaDesktop.ViewModels
 			Item.BirthDate = this.BirthDate;
 			Item.ModifiedDate = DateTimeOffset.Now;
 			Item.RolesForView = this.SelectedRoles;
+			Item.Password = this.NewPassword;
 			return Item;
 		}
 
 		public override bool ValidateSave()
 		{
-			return !string.IsNullOrEmpty(FirstName);
-			//rola też musi być przydzielona!
+			return SelectedRoles.Any()
+				&& !string.IsNullOrWhiteSpace(NewPassword) ? true : NewPassword == RepeatPassword;
 		}
 
 		private async Task LoadRoles(RoleDataStore roleDataStore)
@@ -83,7 +91,7 @@ namespace NotkaDesktop.ViewModels
 		[RelayCommand]
 		private void AddRole()
 		{
-			if (!SelectedRoles.Contains(NewRole) && NewRole != null)
+			if (NewRole != null && !SelectedRoles.Select(sr => sr.Id).Contains(NewRole.Id))
 			{
 				SelectedRoles.Add(NewRole);
 			}

@@ -11,9 +11,9 @@ namespace NotkaMobile.Services
 		{ 
 			Params = new UserParameters();
 		}
-		public async Task<UserForView> LoginUser(string email, string passwordHash)
+		public async Task<UserForView> LoginUser(string email, string password)
 		{
-			return await _service.UserGETWithAuthAsync(email, passwordHash);
+			return await _service.UserGETWithAuthAsync(email, password);
 		}
 
 		public override async Task<UserForView> AddItemToService(UserForView item)
@@ -53,7 +53,7 @@ namespace NotkaMobile.Services
 		public override async Task<UserForView> GetItemAsync(int id)
 		{
 			var email = Preferences.Default.Get("userEmail", "");
-			var pass = Preferences.Default.Get("passwordHash", "");
+			var pass = Preferences.Default.Get("password", "");
 			return await Task.FromResult(await LoginUser(email, pass));
 		}
 	}

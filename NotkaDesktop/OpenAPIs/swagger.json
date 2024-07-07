@@ -2430,10 +2430,31 @@
         }
       }
     },
-    "/api/Portfolio": {
+    "/api/Portfolio/{userId}/{id}": {
       "get": {
         "tags": [
           "Portfolio"
+        ],
+        "operationId": "PortfolioGET",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -2441,84 +2462,89 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               }
             }
           }
         }
       },
-      "post": {
+      "delete": {
         "tags": [
           "Portfolio"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Portfolio"
-                  }
-                ]
-              }
+        "operationId": "PortfolioDELETE",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
-        },
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Portfolio/{userId}": {
+      "get": {
+        "tags": [
+          "Portfolio"
+        ],
+        "operationId": "PortfolioGETByUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
+                  "$ref": "#/components/schemas/PortfolioForView"
                 }
               }
             }
@@ -2527,48 +2553,11 @@
       }
     },
     "/api/Portfolio/{id}": {
-      "get": {
-        "tags": [
-          "Portfolio"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Portfolio"
-                }
-              }
-            }
-          }
-        }
-      },
       "put": {
         "tags": [
           "Portfolio"
         ],
+        "operationId": "PortfolioPUT",
         "parameters": [
           {
             "name": "id",
@@ -2586,7 +2575,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Portfolio"
+                    "$ref": "#/components/schemas/PortfolioForView"
                   }
                 ]
               }
@@ -2595,7 +2584,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Portfolio"
+                    "$ref": "#/components/schemas/PortfolioForView"
                   }
                 ]
               }
@@ -2604,7 +2593,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/Portfolio"
+                    "$ref": "#/components/schemas/PortfolioForView"
                   }
                 ]
               }
@@ -2616,25 +2605,65 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/Portfolio": {
+      "post": {
         "tags": [
           "Portfolio"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "operationId": "PortfolioPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioForView"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioForView"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PortfolioForView"
+                  }
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioForView"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioForView"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioForView"
+                }
+              }
+            }
           }
         }
       }
@@ -3548,6 +3577,29 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "StockExchangeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CurrencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IsActive",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -6870,6 +6922,11 @@
               }
             ],
             "nullable": true
+          },
+          "stockId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -7047,6 +7104,50 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PortfolioStock"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PortfolioForView": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stocksForView": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockForView"
             },
             "nullable": true
           }
@@ -7642,6 +7743,13 @@
           "currencyShortName": {
             "type": "string",
             "nullable": true
+          },
+          "notesForViews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoteForView"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -8111,6 +8219,11 @@
             "minLength": 1,
             "type": "string"
           },
+          "passwordSalt": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
           "firstName": {
             "type": "string",
             "nullable": true
@@ -8188,7 +8301,7 @@
             "type": "string",
             "nullable": true
           },
-          "passwordHash": {
+          "password": {
             "type": "string",
             "nullable": true
           },

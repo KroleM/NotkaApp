@@ -19,6 +19,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Content="Imię"/>
@@ -71,5 +73,11 @@
         <CheckBox Grid.Row="4" Grid.Column="1" 
                   VerticalAlignment="Center" HorizontalAlignment="Left" Width="50"
                   IsChecked="{Binding IsActive}"/>
+        <Label Grid.Row="5" Content="Nowe hasło"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="1" 
+                 Text="{Binding NewPassword}"/>
+        <Label Grid.Row="6" Content="Powtórz hasło"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="1" 
+                 Text="{Binding RepeatPassword}"/>
     </Grid>
 </views:EditViewBase>
