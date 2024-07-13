@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotkaDesktop.Views.User"
+             xmlns:viewmodels="clr-namespace:NotkaDesktop.ViewModels" 
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:UsersViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
+
     <StackPanel Orientation="Vertical" Margin="5">
         <Border BorderThickness="0,0,0,2" HorizontalAlignment="Left" Margin="5" BorderBrush="CadetBlue" >
             <Label Content="{Binding Title}"/>
@@ -13,6 +16,39 @@
         <Button Grid.Column="1" Margin="0,0,5,5" HorizontalAlignment="Left"
                 Content="{Binding EditText}"
                 Command="{Binding EditItemCommand}"/>
+        <StackPanel Orientation="Horizontal" Margin="0,3">
+            <Label Content="Filtruj po:"/>
+            <Border BorderThickness="1" BorderBrush="Black" Padding="3,0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Tylko aktywne "/>
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsActive}"/>
+                </StackPanel>
+            </Border>
+            <Border BorderThickness="1" BorderBrush="Black" Padding="3,3" Margin="5,0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Rola"/>
+                    <ComboBox ItemsSource="{Binding Roles}" 
+                      SelectedValuePath="Id"
+                      SelectedValue="{Binding SelectedRoleId}"
+                      MinWidth="120">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,3">
+            <Label Content="Sortuj po:"/>
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,3">
+            <Button Content="Zastosuj"
+                    Margin="0,0,5,0"/>
+            <Button Content="Wyczyść"/>
+        </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   ItemsSource="{Binding Items}" 
                   SelectedItem="{Binding SelectedItem}"

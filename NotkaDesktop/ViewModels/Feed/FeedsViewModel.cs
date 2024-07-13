@@ -14,12 +14,17 @@ namespace NotkaDesktop.ViewModels
 {
 	public partial class FeedsViewModel : AListViewModel<FeedForView, FeedParameters>
 	{
+		#region Constructor
+
 		public FeedsViewModel(FeedDataStore dataStore) 
 			: base("Aktualności", dataStore)
 		{
 			CreateFeedWithImageList();
 			IsActive = DataStore.Params.IsActive;
 		}
+
+		#endregion
+		#region Fields & Properties
 
 		public ObservableCollection<FeedWithImageViewModel> ItemsWithImage { get; } = new();
 
@@ -37,6 +42,9 @@ namespace NotkaDesktop.ViewModels
 				else SelectedItem = new FeedForView();
 			}
 		}
+
+		#endregion
+		#region Public methods
 
 		public override Task GoToAddPage()
 		{
@@ -58,6 +66,9 @@ namespace NotkaDesktop.ViewModels
 			WeakReferenceMessenger.Default.Send(new ViewRequestMessage(MainWindowView.EditFeed));
 			return Task.CompletedTask;
 		}
+
+		#endregion
+		#region Private methods
 
 		private void CreateFeedWithImageList()
 		{
@@ -85,7 +96,7 @@ namespace NotkaDesktop.ViewModels
 		}
 
 		[RelayCommand]
-		async Task Filter()
+		private async Task Filter()
 		{
 			DataStore.Params.IsActive = IsActive;
 			await ExecuteLoadItemsCommand();
@@ -124,5 +135,7 @@ namespace NotkaDesktop.ViewModels
 				Debug.WriteLine(ex);
 			}
 		}
+
+		#endregion
 	}
 }

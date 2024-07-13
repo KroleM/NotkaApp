@@ -36,7 +36,8 @@ namespace NotkaDesktop.Services
 
 		public override async Task RefreshListFromService()
 		{
-			var PagedList = _service.StockGETAllAsync(ApplicationViewModel.s_userId, Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase).Result;
+			var PagedList = _service.StockGETAllAsync(ApplicationViewModel.s_userId, 
+				null, null, null, Params.PageNumber, Params.PageSize, Params.SortOrder, Params.SearchPhrase).Result;
 			Items = PagedList.Items.ToList();
 			PageParameters.CurrentPage = PagedList.CurrentPage;
 			PageParameters.TotalPages = PagedList.TotalPages;

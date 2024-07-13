@@ -231,7 +231,7 @@ namespace NotkaDesktop.ViewModels
 		{
 			if (RightPanelViewModel == _usersViewModel) return;	//could cause bad behavior when using Delete
 
-			_usersViewModel = new(_userDataStore);
+			_usersViewModel = new(_userDataStore, _roleDataStore);
 			RightPanelViewModel = _usersViewModel;
 		}
 		private void ShowEditUser()

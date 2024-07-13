@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace NotkaMobile.Helpers
+namespace NotkaAPI.Helpers
 {
 	public static class PasswordHelper
 	{

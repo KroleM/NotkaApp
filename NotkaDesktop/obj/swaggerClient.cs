@@ -9557,15 +9557,15 @@ namespace NotkaDesktop.Service.Reference
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UserForViewPagedList> UserGETAllAsync(int userId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase)
+        public virtual System.Threading.Tasks.Task<UserForViewPagedList> UserGETAllAsync(int userId, bool? isActive, int? roleId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase)
         {
-            return UserGETAllAsync(userId, pageNumber, pageSize, sortOrder, searchPhrase, System.Threading.CancellationToken.None);
+            return UserGETAllAsync(userId, isActive, roleId, pageNumber, pageSize, sortOrder, searchPhrase, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UserForViewPagedList> UserGETAllAsync(int userId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UserForViewPagedList> UserGETAllAsync(int userId, bool? isActive, int? roleId, int? pageNumber, int? pageSize, string sortOrder, string searchPhrase, System.Threading.CancellationToken cancellationToken)
         {
             if (userId == null)
                 throw new System.ArgumentNullException("userId");
@@ -9585,6 +9585,14 @@ namespace NotkaDesktop.Service.Reference
                     urlBuilder_.Append("api/User/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('?');
+                    if (isActive != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("IsActive")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(isActive, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (roleId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("RoleId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(roleId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
                     if (pageNumber != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("PageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');

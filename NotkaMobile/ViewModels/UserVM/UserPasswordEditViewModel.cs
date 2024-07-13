@@ -29,7 +29,7 @@ namespace NotkaMobile.ViewModels.UserVM
 			Item.IsActive = true;
 			Item.Password = this.NewPassword;
 			Item.ModifiedDate = DateTimeOffset.Now;
-			Preferences.Default.Set("passwordHash", NewPassword);
+			Preferences.Default.Set("password", NewPassword);
 
 			return Item;
 		}

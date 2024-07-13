@@ -8,7 +8,6 @@ using NotkaAPI.Models.BusinessLogic;
 using NotkaAPI.Models.Investments;
 using NotkaAPI.Models.Users;
 using NotkaAPI.ViewModels;
-using NotkaMobile.Helpers;
 
 namespace NotkaAPI.Repository
 {
@@ -27,9 +26,15 @@ namespace NotkaAPI.Repository
 				throw new UnauthorizedException();
 			}
 
-			var usersForView = Context.User.Select(user => ModelConverters.ConvertToUserForView(user));
+			var users = FindByCondition(u => ((userParameters.IsActive ? u.IsActive == true : (u.IsActive == true || u.IsActive == false))))
+							.Include(u => u.RoleUsers)
+							.ThenInclude(ru => ru.Role)
+							//.Where(r => r.Id == userParameters.RoleId);	//tutaj obsłużyć RoleId == 0  !!!
+							.Where(r => userParameters.RoleId == 0 ? true : r.Id == userParameters.RoleId);
 
-			return await PagedList<UserForView>.CreateAsync(usersForView, 1, 10);
+			return await PagedList<UserForView>.CreateAsync(users.Select(user => ModelConverters.ConvertToUserForView(user)),
+										userParameters.PageNumber,
+										userParameters.PageSize);
 		}
 		public async Task<UserForView> GetUserById(int userId, int id)
 		{
@@ -76,7 +81,7 @@ namespace NotkaAPI.Repository
 			userToAdd.PasswordHash = PasswordHelper.HashPassword(user.Password, out passwordSalt);
 			userToAdd.PasswordSalt = passwordSalt;
 
-			Create(userToAdd);  // = Context.User.Add(userToAdd);
+			Create(userToAdd);  // = Context.User.Add(userToEdit);
 			await Context.SaveChangesAsync();   //assigns Id in the DB
 			//give role
 			Context.RoleUser.Add(new RoleUser
@@ -110,27 +115,33 @@ namespace NotkaAPI.Repository
 		}
 		public async Task UpdateUser(int id, UserForView user)
 		{
-			var userToAdd = new User().CopyProperties(user);
+			var userToEdit = await Context.User.SingleOrDefaultAsync(user => user.Id == id);
+
+			if (user == null)
+			{
+				throw new NotFoundException();
+			}
+			userToEdit.CopyProperties(user);
 			if (!string.IsNullOrWhiteSpace(user.Password))
 			{
 				byte[] passwordSalt;
-				userToAdd.PasswordHash = PasswordHelper.HashPassword(user.Password, out passwordSalt);
-				userToAdd.PasswordSalt = passwordSalt;
+				userToEdit.PasswordHash = PasswordHelper.HashPassword(user.Password, out passwordSalt);
+				userToEdit.PasswordSalt = passwordSalt;
 			}
 
-			Context.Entry(userToAdd).State = EntityState.Modified;
+			Context.Entry(userToEdit).State = EntityState.Modified;
 
 			try
 			{
 				using (var dbContextTransaction = Context.Database.BeginTransaction())
 				{
 					//RoleUser
-					Context.RoleUser.RemoveRange(await Context.RoleUser.Where(ru => ru.UserId == userToAdd.Id).ToArrayAsync());
+					Context.RoleUser.RemoveRange(await Context.RoleUser.Where(ru => ru.UserId == userToEdit.Id).ToArrayAsync());
 					if (!user.RolesForView.IsNullOrEmpty())
 					{
 						foreach (var roleForView in user.RolesForView)
 						{
-							await AddToContextRoleUserAsync(roleForView, userToAdd.Id);
+							await AddToContextRoleUserAsync(roleForView, userToEdit.Id);
 						}
 					}
 					await Context.SaveChangesAsync();

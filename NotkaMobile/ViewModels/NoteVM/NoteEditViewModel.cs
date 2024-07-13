@@ -23,7 +23,7 @@ namespace NotkaMobile.ViewModels.NoteVM
 
 		private TagDataStore _tagDataStore;
 		private byte[] _bytesArray;
-		public List<TagForView> Tags { get; set; } = new();
+		public List<TagForView> Tags { get; private set; } = new();
 		[ObservableProperty]
 		string _name;
 		[ObservableProperty]
