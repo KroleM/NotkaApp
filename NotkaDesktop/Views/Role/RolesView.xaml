@@ -1,16 +1,44 @@
 ﻿<views:ListViewBase x:Class="NotkaDesktop.Views.Role.RolesView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NotkaDesktop.Views.Role"
-             xmlns:views="clr-namespace:NotkaDesktop.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:local="clr-namespace:NotkaDesktop.Views.Role"
+                    xmlns:views="clr-namespace:NotkaDesktop.Views"
+                    xmlns:viewmodels="clr-namespace:NotkaDesktop.ViewModels"
+                    mc:Ignorable="d" 
+                    d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:UsersViewModel}">
+            <StackPanel Orientation="Vertical" Margin="0,5">
+                <Border BorderThickness="0,0,0,2" HorizontalAlignment="Left" Margin="5" BorderBrush="CadetBlue" >
+                    <Label Content="Użytkownicy dla roli"/>
+                </Border>
+                <DataGrid AutoGenerateColumns="False" 
+                  ItemsSource="{Binding Items}" 
+                  IsHitTestVisible="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Imię" Binding="{Binding Path=FirstName}" />
+                        <DataGridTextColumn Header="Nazwisko" Binding="{Binding Path=LastName}" />
+                        <DataGridTextColumn Header="Adres e-mail" Binding="{Binding Path=Email}" />
+                        <DataGridTextColumn Header="Data urodzenia" Binding="{Binding Path=BirthDate, StringFormat=\{0:dd.MM.yyyy\}}" />
+                        <DataGridTextColumn Header="Data utworzenia" Binding="{Binding Path=CreatedDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
+                        <DataGridTextColumn Header="Data ost. modyfikacji" Binding="{Binding Path=ModifiedDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
+                        <DataGridCheckBoxColumn Header="Czy aktywny" Binding="{Binding Path=IsActive}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Width="150" Content="Załaduj więcej" Margin="0,5"
+                        Command="{Binding LoadMoreItemsCommand}"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <StackPanel Orientation="Vertical">
         <DataGrid AutoGenerateColumns="False" 
                   ItemsSource="{Binding Items}" 
-                  SelectedItem="{Binding SelectedItem}"
+                  SelectedItem="{Binding SelectedRole}"
                   CanUserAddRows="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
@@ -21,5 +49,7 @@
                 <DataGridCheckBoxColumn Header="Czy aktywny" Binding="{Binding Path=IsActive}" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <ContentControl Grid.Column="1" Content="{Binding UsersViewModel}"/>
     </StackPanel>
 </views:ListViewBase>

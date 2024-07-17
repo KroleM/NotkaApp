@@ -16,6 +16,12 @@
         <Button Grid.Column="1" Margin="0,0,5,5" HorizontalAlignment="Left"
                 Content="{Binding EditText}"
                 Command="{Binding EditItemCommand}"/>
+        <StackPanel Orientation="Horizontal" Margin="0,5">
+            <TextBox Width="200" HorizontalAlignment="Left" 
+                     Text="{Binding SearchPhrase}"/>
+            <Button Width="100" Content="Wyszukaj" Margin="5,0"
+                    Command="{Binding SearchCommand}"/>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,3">
             <Label Content="Filtruj po:"/>
             <Border BorderThickness="1" BorderBrush="Black" Padding="3,0">
@@ -28,9 +34,9 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Rola"/>
                     <ComboBox ItemsSource="{Binding Roles}" 
-                      SelectedValuePath="Id"
-                      SelectedValue="{Binding SelectedRoleId}"
-                      MinWidth="120">
+                              SelectedItem="{Binding SelectedRole}"
+                              VerticalContentAlignment="Center"
+                              MinWidth="120">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
@@ -39,15 +45,22 @@
                     </ComboBox>
                 </StackPanel>
             </Border>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,3">
             <Label Content="Sortuj po:"/>
-
+            <ComboBox ItemsSource="{Binding SortItems}" 
+                      SelectedItem="{Binding SelectedSortValue}" 
+                      VerticalContentAlignment="Center"
+                      MinWidth="150">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,3">
-            <Button Content="Zastosuj"
+            <Button Content="Zastosuj" Command="{Binding FilterCommand}"
                     Margin="0,0,5,0"/>
-            <Button Content="Wyczyść"/>
+            <Button Content="Wyczyść" Command="{Binding ClearChoicesCommand}"/>
         </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   ItemsSource="{Binding Items}" 
@@ -64,5 +77,7 @@
                 <DataGridCheckBoxColumn Header="Czy aktywny" Binding="{Binding Path=IsActive}" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button Width="150" Content="Załaduj więcej" Margin="0,5"
+                Command="{Binding LoadMoreItemsCommand}"/>
     </StackPanel>
 </UserControl>

@@ -15,6 +15,7 @@ namespace NotkaDesktop.ViewModels
 
 		#region DataStores
 		private UserDataStore _userDataStore = new UserDataStore();
+		private UserDataStore _userDataStoreForRole = new UserDataStore();
 		private RoleDataStore _roleDataStore = new RoleDataStore();
 		private FeedDataStore _feedDataStore = new FeedDataStore();
 		private CurrencyDataStore _currencyDataStore = new CurrencyDataStore();
@@ -249,7 +250,7 @@ namespace NotkaDesktop.ViewModels
 		//Role
 		private void ShowRoles()
 		{
-			_rolesViewModel = new(_roleDataStore);
+			_rolesViewModel = new(_roleDataStore, _userDataStoreForRole);
 			RightPanelViewModel = _rolesViewModel;
 		}
 		private void ShowNewRole()
