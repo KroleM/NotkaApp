@@ -23,6 +23,7 @@ namespace NotkaDesktop.ViewModels
 		private StockExchangeDataStore _stockExchangeDataStore = new StockExchangeDataStore();
 		private StockDataStore _stockDataStore = new StockDataStore();
 		private ReportStocksDataStore _reportStocksDataStore = new ReportStocksDataStore();
+		private ReportUsersDataStore _reportUsersDataStore = new ReportUsersDataStore();
 		#endregion
 
 		#region ViewModels
@@ -416,7 +417,7 @@ namespace NotkaDesktop.ViewModels
 		//Report
 		private void ShowReports()
 		{
-			_reportsViewModel = new(_reportStocksDataStore);
+			_reportsViewModel = new(_reportStocksDataStore, _reportUsersDataStore);
 			RightPanelViewModel = _reportsViewModel;
 		}
 		#endregion

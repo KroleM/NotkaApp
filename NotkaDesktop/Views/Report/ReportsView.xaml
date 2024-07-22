@@ -31,7 +31,6 @@
                     Margin="5,0"
                     Command="{Binding GenerateReportCommand}"/>
         </StackPanel>
-        <Label Content="{Binding SelectedReportType}"/>
 
         <ContentControl Content="{Binding ContentViewModel}"/>
     </StackPanel>

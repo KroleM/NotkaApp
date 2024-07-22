@@ -1,6 +1,6 @@
 ﻿namespace NotkaAPI.ViewModels
 {
-	public class ReportStocksForView
+	public class ReportStockForView
 	{
 		public string Name { get; set; }
 		public string Ticker { get; set; }

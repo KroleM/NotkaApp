@@ -2877,10 +2877,10 @@
         }
       }
     },
-    "/api/Report/{userId}": {
+    "/api/ReportStocks/{userId}": {
       "get": {
         "tags": [
-          "Report"
+          "ReportStocks"
         ],
         "operationId": "GETStocksReport",
         "parameters": [
@@ -2930,17 +2930,97 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportStocksForViewPagedList"
+                  "$ref": "#/components/schemas/ReportStockForViewPagedList"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportStocksForViewPagedList"
+                  "$ref": "#/components/schemas/ReportStockForViewPagedList"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportStocksForViewPagedList"
+                  "$ref": "#/components/schemas/ReportStockForViewPagedList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ReportUsers/{userId}": {
+      "get": {
+        "tags": [
+          "ReportUsers"
+        ],
+        "operationId": "GETUsersReport",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortOrder",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchPhrase",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportUserForView"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportUserForView"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportUserForView"
+                  }
                 }
               }
             }
@@ -7294,7 +7374,7 @@
         },
         "additionalProperties": false
       },
-      "ReportStocksForView": {
+      "ReportStockForView": {
         "type": "object",
         "properties": {
           "name": {
@@ -7320,13 +7400,13 @@
         },
         "additionalProperties": false
       },
-      "ReportStocksForViewPagedList": {
+      "ReportStockForViewPagedList": {
         "type": "object",
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ReportStocksForView"
+              "$ref": "#/components/schemas/ReportStockForView"
             },
             "nullable": true
           },
@@ -7356,6 +7436,40 @@
           "hasNext": {
             "type": "boolean",
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReportUserForView": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfNotes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfLists": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfTags": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -82,5 +82,8 @@
     <DataTemplate DataType="{x:Type viewmodels:StocksReportViewModel}">
         <reportviews:StocksReportView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:UsersReportViewModel}">
+        <reportviews:UsersReportView/>
+    </DataTemplate>
 
 </ResourceDictionary>

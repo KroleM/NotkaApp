@@ -5,10 +5,10 @@ using NotkaDesktop.ViewModels.Abstract;
 
 namespace NotkaDesktop.ViewModels
 {
-	public class StocksReportViewModel : AListViewModel<ReportStockForView, ReportParameters>
+	public class UsersReportViewModel : AListViewModel<ReportUserForView, ReportParameters>
 	{
-		public StocksReportViewModel(ReportStocksDataStore dataStore) 
-			: base("Najpopularniejsze spółki", dataStore)
+		public UsersReportViewModel(ReportUsersDataStore dataStore) 
+			: base("Statystyki użytkowników", dataStore)
 		{
 		}
 

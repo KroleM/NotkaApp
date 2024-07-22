@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="NotkaDesktop.Views.Report.UsersReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotkaDesktop.Views.Report"
+             xmlns:viewmodels="clr-namespace:NotkaDesktop.ViewModels" 
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:UsersReportViewModel}" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Orientation="Vertical" Margin="0,5">
+        <Border BorderThickness="0,0,0,2" HorizontalAlignment="Left" Margin="5" BorderBrush="CadetBlue" >
+            <Label Content="{Binding Title}"/>
+        </Border>
+        <DataGrid AutoGenerateColumns="False" 
+                  ItemsSource="{Binding Items}" 
+                  IsHitTestVisible="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id użyt." Binding="{Binding Path=UserId}" />
+                <DataGridTextColumn Header="E-mail" Binding="{Binding Path=Email}" />
+                <DataGridTextColumn Header="Imię" Binding="{Binding Path=FirstName}" />
+                <DataGridTextColumn Header="Nazwisko" Binding="{Binding Path=LastName}" />
+                <DataGridTextColumn Header="Liczba notatek" Binding="{Binding Path=NumberOfNotes}" />
+                <DataGridTextColumn Header="Liczba list" Binding="{Binding Path=NumberOfLists}" />
+                <DataGridTextColumn Header="Liczba tagów" Binding="{Binding Path=NumberOfTags}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>

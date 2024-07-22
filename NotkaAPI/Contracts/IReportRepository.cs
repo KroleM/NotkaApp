@@ -6,6 +6,7 @@ namespace NotkaAPI.Contracts
 {
 	public interface IReportRepository
 	{
-		Task<PagedList<ReportStocksForView>> GetStocksReport(int userId, ReportParameters reportParameters);
+		Task<PagedList<ReportStockForView>> GetStocksReport(int userId, ReportParameters reportParameters);
+		Task<List<ReportUserForView>> GetUsersReport(int userId, ReportParameters reportParameters); 
 	}
 }

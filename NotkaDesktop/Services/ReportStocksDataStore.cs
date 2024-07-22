@@ -5,7 +5,7 @@ using NotkaDesktop.ViewModels;
 
 namespace NotkaDesktop.Services
 {
-	public class ReportStocksDataStore : AListDataStore<ReportStocksForView, ReportParameters>
+	public class ReportStocksDataStore : AListDataStore<ReportStockForView, ReportParameters>
 	{
 		public ReportStocksDataStore()
 		{
@@ -13,22 +13,22 @@ namespace NotkaDesktop.Services
 			Params.PageSize = 15;
 		}
 
-		public override Task<ReportStocksForView> AddItemToService(ReportStocksForView item)
+		public override Task<ReportStockForView> AddItemToService(ReportStockForView item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override Task<bool> DeleteItemFromService(ReportStocksForView item)
+		public override Task<bool> DeleteItemFromService(ReportStockForView item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override Task<ReportStocksForView> Find(ReportStocksForView item)
+		public override Task<ReportStockForView> Find(ReportStockForView item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override Task<ReportStocksForView> Find(int id)
+		public override Task<ReportStockForView> Find(int id)
 		{
 			throw new NotImplementedException();
 		}
@@ -46,7 +46,7 @@ namespace NotkaDesktop.Services
 			PageParameters.HasNext = PagedList.HasNext;
 		}
 
-		public override Task<bool> UpdateItemInService(ReportStocksForView item)
+		public override Task<bool> UpdateItemInService(ReportStockForView item)
 		{
 			throw new NotImplementedException();
 		}
