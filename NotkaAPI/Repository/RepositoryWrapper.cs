@@ -17,6 +17,7 @@ namespace NotkaAPI.Repository
 		private IStockExchangeRepository? _stockExchange;
 		private IStockRepository? _stock;
 		private IPortfolioRepository? _portfolio;
+		private IReportRepository? _report;
 
 		public IUserRepository User
 		{
@@ -148,6 +149,18 @@ namespace NotkaAPI.Repository
 				}
 
 				return _portfolio;
+			}
+		}
+		public IReportRepository Report
+		{
+			get
+			{
+				if (_report == null)
+				{
+					_report = new ReportRepository(_context);
+				}
+
+				return _report;
 			}
 		}
 

@@ -24,5 +24,13 @@
 		Stocks,
 		NewStock,
 		EditStock,
+		Reports
+	}
+
+	public enum ReportType
+	{
+		None,
+		MostPopularStocks,
+		UserStatistics,
 	}
 }

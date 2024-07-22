@@ -22,6 +22,7 @@ namespace NotkaDesktop.ViewModels
 		private CountryDataStore _countryDataStore = new CountryDataStore();
 		private StockExchangeDataStore _stockExchangeDataStore = new StockExchangeDataStore();
 		private StockDataStore _stockDataStore = new StockDataStore();
+		private ReportStocksDataStore _reportStocksDataStore = new ReportStocksDataStore();
 		#endregion
 
 		#region ViewModels
@@ -46,7 +47,7 @@ namespace NotkaDesktop.ViewModels
 		private StocksViewModel? _stocksViewModel;
 		private NewStockViewModel? _newStockViewModel;
 		private StockEditViewModel? _stockEditViewModel;
-
+		private ReportsViewModel? _reportsViewModel;
 		#endregion
 
 		#region Fields & Properties
@@ -126,6 +127,9 @@ namespace NotkaDesktop.ViewModels
 				new CommandViewModel(
 					"Spółki",
 					new RelayCommand(() => this.ShowStocks())),
+				new CommandViewModel(
+					"Raporty",
+					new RelayCommand(() => this.ShowReports())),
 			};
 		}
 
@@ -408,6 +412,12 @@ namespace NotkaDesktop.ViewModels
 			(RightPanelViewModel as StocksViewModel).SelectedItem = null;
 			_stockEditViewModel = new(_stockDataStore, _stockExchangeDataStore, _currencyDataStore, itemId);
 			RightPanelViewModel = _stockEditViewModel;
+		}
+		//Report
+		private void ShowReports()
+		{
+			_reportsViewModel = new(_reportStocksDataStore);
+			RightPanelViewModel = _reportsViewModel;
 		}
 		#endregion
 	}

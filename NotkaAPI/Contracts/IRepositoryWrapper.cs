@@ -13,6 +13,7 @@
 		IStockExchangeRepository StockExchange { get; }
 		IStockRepository Stock { get; }
 		IPortfolioRepository Portfolio { get; }
+		IReportRepository Report { get; }
 		Task SaveAsync();
 	}
 }
