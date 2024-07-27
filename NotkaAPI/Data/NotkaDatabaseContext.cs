@@ -18,18 +18,15 @@ namespace NotkaAPI.Data
 		#region DbSets
 		public DbSet<User> User { get; set; } = default!;
 		public DbSet<Role> Role { get; set; }
-		public DbSet<Login> Login { get; set; }
 		public DbSet<Feed> Feed { get; set; }
 		public DbSet<Picture> Picture { get; set; }
 		public DbSet<Request> Request { get; set; }
 		public DbSet<Tag> Tag { get; set; }
 		public DbSet<Note> Note { get; set; }
 		public DbSet<List> List { get; set; }
-		public DbSet<TaskClass> Task { get; set; }
 		public DbSet<ListElement> ListElement { get; set; }
 		public DbSet<ListTag> ListTag { get; set; }
 		public DbSet<NoteTag> NoteTag { get; set; }
-		public DbSet<TaskTag> TaskTag { get; set; }
 		public DbSet<RoleUser> RoleUser { get; set; }
 		public DbSet<Currency> Currency { get; set; }
 		public DbSet<Country> Country { get; set; }
@@ -40,8 +37,6 @@ namespace NotkaAPI.Data
 		public DbSet<Portfolio> Portfolio { get; set; }
 		public DbSet<PortfolioStock> PortfolioStock { get; set; }
 		public DbSet<Transaction> Transaction { get; set; }
-		public DbSet<Watchlist> Watchlist { get; set; }
-		public DbSet<WatchlistStock> WatchlistStock { get; set; }
 
 		#endregion
 

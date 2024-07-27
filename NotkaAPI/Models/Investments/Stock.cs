@@ -16,7 +16,6 @@ namespace NotkaAPI.Models.Investments
         public List<StockPrice> StockPrices { get; set; } = new();
 		public List<StockNote> StockNotes { get; set; } = new();
         public List<PortfolioStock> PortfolioStocks { get; set; } = new();
-        public List<WatchlistStock> WatchlistStocks { get; set; } = new();
         // Powiązane spółki??
     }
 }

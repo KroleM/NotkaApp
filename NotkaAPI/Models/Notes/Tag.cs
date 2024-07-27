@@ -10,6 +10,5 @@ namespace NotkaAPI.Models.Notes
         //public User User { get; set; }
 		public List<NoteTag> NoteTags { get; set; } = new();
 		public List<ListTag> ListTags { get; set; } = new();
-		public List<TaskTag> TaskTags { get; set; } = new();
 	}
 }

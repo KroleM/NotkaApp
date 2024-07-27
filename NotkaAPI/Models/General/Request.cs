@@ -17,6 +17,5 @@ namespace NotkaAPI.Models.General
         public int? ListId { get; set; }
         public List? List { get; set; }
 		public int? TaskId { get; set; }
-		public Notes.TaskClass? Task { get; set; }
 	}
 }
