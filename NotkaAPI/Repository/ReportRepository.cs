@@ -57,8 +57,6 @@ namespace NotkaAPI.Repository
 			//				 //NumberOfLists = listGrouping.Count(),
 			//			 };
 
-			Console.WriteLine("@@ testQUERY");
-
 			var userNotes = Context.Set<User>()
 				.GroupJoin(
 					Context.Set<Note>(),
@@ -100,11 +98,6 @@ namespace NotkaAPI.Repository
 						NumberOfLists = noteListUser.NumberOfLists,
 						NumberOfTags = tags.Count(),
 					}).ToList();
-
-			foreach (var item in userNotesListsTags)
-			{
-				Console.WriteLine("userId: {0}, email: {1}, notes: {2}, lists: {3}, tags: {4}", item.UserId, item.Email, item.NumberOfNotes, item.NumberOfLists, item.NumberOfTags);
-			}
 
 			return userNotesListsTags;
 		}

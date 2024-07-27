@@ -15,6 +15,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * `SaveChanges(Async)` wysyła wartości właściwości danej encji do bazy danych.
 * [Serwer vs. Client][link9] - rozwiązywanie kwerend IQueryable vs. IEnumerable.
 * Usunięcie ostatniej migracji można wykonać poleceniem `Remove-Migration`
+* Tworzenie połączonych tabel z agregatami: [link1][link19], [GroupJoin][link20]
 
 `Swagger`:
 * Właściwości będące typami referencyjnymi nie są standardowo udostępniane jako `nullable`, ale właściwości będące typami wartościowymi (np. int?, DateTime?) mogą być "nulowalne". Istotą problemu jest brak nullowalności typów referencyjnych. Aby to zmienić należy w konfiguracji projektu Web API użyć opcji `UseAllOfToExtendReferenceSchemas`:
@@ -131,3 +132,5 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link16]: https://stackoverflow.com/questions/75593079/programmatically-setting-the-selecteditem-of-a-collectionview-is-not-working-on
 [link17]: https://github.com/dotnet/maui/issues/18933
 [link18]: https://stackoverflow.com/questions/65606752/ef-core-correct-way-to-query-data-multiple-levels-deep-in-related-one-to-many-e
+[link19]: https://makolyte.com/ef-core-aggregate-select-queries/
+[link20]: https://stackoverflow.com/questions/15595289/linq-to-entities-join-vs-groupjoin
