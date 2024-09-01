@@ -16,6 +16,10 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 * [Serwer vs. Client][link9] - rozwiązywanie kwerend IQueryable vs. IEnumerable.
 * Usunięcie ostatniej migracji można wykonać poleceniem `Remove-Migration`
 * Tworzenie połączonych tabel z agregatami: [link1][link19], [GroupJoin][link20]
+* O `GroupJoin` na [blogu Johna Skeeta][link27]
+* [Split query][link28], aby uniknąć zbyt obszernych tabel łączonych joinem ([artykuł na blogu][link29])
+* [Eager Loading][link30] przy pomocy `Include`
+* [Artykuł][link31] o efektywnym tworzeniu zapytań do BD
 
 `Swagger`:
 * Właściwości będące typami referencyjnymi nie są standardowo udostępniane jako `nullable`, ale właściwości będące typami wartościowymi (np. int?, DateTime?) mogą być "nulowalne". Istotą problemu jest brak nullowalności typów referencyjnych. Aby to zmienić należy w konfiguracji projektu Web API użyć opcji `UseAllOfToExtendReferenceSchemas`:
@@ -48,6 +52,7 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     - Forbid => returns the 403 status code
     - StatusCode => returns the status code we provide as input
 * Trochę o generowanym pliku `swaggerClient.cs` - [LINK][link11], [LINK][link12]
+* [Seria artykułów][link32] o tworzeniu Web API. Porusza takie tematy jak paging, sorting, wyszukiwanie, wzorce (np. `Repository`), przekazywanie parametrów, itd.
 
 
 ## .NET MAUI
@@ -101,6 +106,18 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 ## [MediatR][link6]
 
 
+## Zdjęcia
+ * Zapis jako [ciąg byte][link21]
+ * Wybieranie zdjęć w MAUI: [artykuł][link22], [dokumentacja][link23]
+ * [File picker][link24]
+ * [Konwersja do `Image`][link25]
+ * Ciekawy artykuł podsumowujący funkcję 'streamów` w C# - [LINK][link26]
+
+
+## Logowanie
+[LINK1][link33] [LINK2][link34] [LINK3][link35]
+
+
 ## Czego się dziś nauczyłem?
  * 2024.02.19\
     Do solucji `NotkaAPI` dodałem osobny projekt typu `Class Library`, aby współdzielić go z `NotkaMobile`, w której to (jako że jest w osobnej solucji) musiałem najpierw dodać do solucji `ApiSharedClasses` jako 'external project', a następnie referencję do tego projektu z `NotkaMobile`.
@@ -111,7 +128,8 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
     [HttpGet("/orders/{id}", Name = nameof(GetOrder))]
     ```
     ConnectedServices -> Service References -> `swaggerClient.cs` - wygenerowany kod można rozszerzać poprzez utworzenie własnej klasy częściowej (partial) o tej samej nazwie. Daje to pewność, że w razie aktualizacji klienta HTTP wprowadzony kod nie zostanie utracony.
-* 2024.06.19 Gdy w API dwie ścieżki tego samego typu (Routes), np. GET, mają taką samą liczbę argumentów, to rozróżnić je można po `route constraint`. Atrybut ma wówczas taką postać: `[HttpGet("{userId:int}")]`
+ * 2024.06.19\
+    Gdy w API dwie ścieżki tego samego typu (Routes), np. GET, mają taką samą liczbę argumentów, to rozróżnić je można po `route constraint`. Atrybut ma wówczas taką postać: `[HttpGet("{userId:int}")]`
 
 
 [link1]: https://learn.microsoft.com/en-us/sql/ssms/scripting/generate-and-publish-scripts-wizard?view=sql-server-ver16
@@ -134,3 +152,18 @@ Tabela `Login` - zawiera wiele wpisów o jednym Userze, aby udokumentować, na k
 [link18]: https://stackoverflow.com/questions/65606752/ef-core-correct-way-to-query-data-multiple-levels-deep-in-related-one-to-many-e
 [link19]: https://makolyte.com/ef-core-aggregate-select-queries/
 [link20]: https://stackoverflow.com/questions/15595289/linq-to-entities-join-vs-groupjoin
+[link21]: https://www.johansmarius.dev/2021/12/using-pictures-in-aspnet-mvc-core-with.html
+[link22]: https://www.andreasnesheim.no/photo-capturing-options-for-your-net-maui-app/
+[link23]: https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/device-media/picker?view=net-maui-8.0&tabs=macios
+[link24]: https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-picker?view=net-maui-8.0&tabs=macios
+[link25]: https://stackoverflow.com/questions/57434077/images-saved-in-database-are-not-displaying-in-the-home-xaml-page-in-xamarin-for/57455100#57455100
+[link26]: https://jasonxiii.pl/streamwriter-w-jezyku-cs-zapis-do-pliku
+[link27]: https://codeblog.jonskeet.uk/2011/01/01/reimplementing-linq-to-objects-part-22-groupjoin/
+[link28]: https://learn.microsoft.com/en-us/ef/core/querying/single-split-queries
+[link29]: https://davecallan.com/using-split-queries-in-entity-framework-core-5-0-to-avoid-the-cartesian-explosion-problem/
+[link30]: https://learn.microsoft.com/en-us/ef/core/querying/related-data/eager
+[link31]: https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying
+[link32]: https://code-maze.com/net-core-series/
+[link33]: https://andrewlock.net/behind-logproperties-and-the-new-telemetry-logging-source-generator/
+[link34]: https://steven-giesel.com/blogPost/1add3827-4233-4e31-9ce9-bcc34d64e76f
+[link35]: https://learn.microsoft.com/en-us/dotnet/core/extensions/logging-providers
